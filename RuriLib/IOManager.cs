@@ -99,10 +99,10 @@ namespace RuriLib
 
         public static string SerializeConfig(Config config)
         {
-            bool logger = false;
-            string[] configString = config.Script.Split('\n');
-            List<String> requests = new List<String>();
-            List<String> logReq = new List<String>();
+            //bool logger = false;
+            //string[] configString = config.Script.Split('\n');
+            //List<String> requests = new List<String>();
+            //List<String> logReq = new List<String>();
             StringWriter writer = new StringWriter();
             writer.WriteLine("[SETTINGS]");
             writer.WriteLine(JsonConvert.SerializeObject(config.Settings, Formatting.Indented));

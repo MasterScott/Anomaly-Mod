@@ -58,12 +58,20 @@ namespace OpenBullet.ViewModels
                     type = File.ReadAllText(Globals.ProxySettings2).Trim();
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                var myFile = File.Create(@"Settings/ProxySite.txt");
-                myFile = File.Create(@"Settings/ProxyKey.txt");
-                myFile.Close();
-                goto Retry;
+                FileStream myFile;
+                if (ex.ToString().Contains("ProxySite")) {
+                    MessageBox.Show("ProxySite Settings file not found, generating a default one");
+                    myFile = File.Create(@"Settings/ProxySite.txt");
+                    myFile.Close();
+                }
+                if(ex.ToString().Contains("ProxyKey")) {
+                    MessageBox.Show("ProxyKey Settings file not found, generating a default one");
+                    myFile = File.Create(@"Settings/ProxyKey.txt");
+                    myFile.Close();
+                }
+            goto Retry;
             }
 
             return type;
