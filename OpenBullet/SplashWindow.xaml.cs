@@ -18,7 +18,7 @@ namespace OpenBullet
         // Local Version Number
         public string CurrentVersion = "1.2.8".Trim();
         // URL for the Changelog
-        public static string ChangelogURL = "https://raw.githubusercontent.com/PurityWasHere/UnSubRepo/master/Changelog";
+        public static string ChangelogURL = "https://raw.githubusercontent.com/PurityWasHere/Anomally-Mod-Hosting/master/Changelog";
         private readonly WebClient ChangelogGet = new WebClient();
 
         public SplashWindow()
@@ -65,7 +65,7 @@ namespace OpenBullet
         {
             //Update Check. Checks the Version Number from a URL and compares it to the Local Version
             var wc = new WebClient();
-            string NewestVersion = wc.DownloadString("https://raw.githubusercontent.com/PurityWasHere/UnSubRepo/master/CurrentVersion");
+            string NewestVersion = wc.DownloadString("https://raw.githubusercontent.com/PurityWasHere/Anomally-Mod-Hosting/master/VersionNumber");
             string NewVersionTrimmed = NewestVersion.Trim();
             if (CurrentVersion.Equals(NewVersionTrimmed))
             {
