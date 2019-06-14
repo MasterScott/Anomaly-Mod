@@ -32,10 +32,10 @@ namespace OpenBullet.ViewModels
         private int botsNumber = 1;
         public int BotsNumber { get { return botsNumber; } set { botsNumber = value; OnPropertyChanged("BotsNumber"); } }
   
-        public static string testURL = File.ReadAllText(Globals.ProxySettings).Trim();
+        public static string testURL = GetProxySettings("1");
         public string TestURL { get { return testURL; } set { testURL = value; OnPropertyChanged("TestURL"); } }
 
-        public string successKey = File.ReadAllText(Globals.ProxySettings2).Trim();
+        public string successKey = GetProxySettings("2");
         public string SuccessKey { get { return successKey; } set { successKey = value; OnPropertyChanged("SuccessKey"); } }
 
         private bool onlyUntested = true;
@@ -43,6 +43,31 @@ namespace OpenBullet.ViewModels
 
         private Decimal timeout = 2;
         public Decimal Timeout { get { return timeout; } set { timeout = value; OnPropertyChanged("Timeout"); } }
+
+        public static string GetProxySettings(string type)
+        {
+        Retry:
+            try
+            {
+                if (type == "1")
+                {
+                    type = File.ReadAllText(Globals.ProxySettings).Trim();
+                }
+                else
+                {
+                    type = File.ReadAllText(Globals.ProxySettings2).Trim();
+                }
+            }
+            catch
+            {
+                var myFile = File.Create(@"Settings/ProxySite.txt");
+                myFile = File.Create(@"Settings/ProxyKey.txt");
+                myFile.Close();
+                goto Retry;
+            }
+
+            return type;
+        }
 
         public void UpdateProperties()
         {

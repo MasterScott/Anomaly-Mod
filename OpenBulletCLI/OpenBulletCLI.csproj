@@ -77,9 +77,6 @@
     <Reference Include="CommandLine, Version=2.4.3.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.2.4.3\lib\netstandard2.0\CommandLine.dll</HintPath>
     </Reference>
-    <Reference Include="DiscordRPC">
-      <HintPath>..\..\..\discord-rpc-csharp-master\DiscordRPC\bin\Release\DiscordRPC.dll</HintPath>
-    </Reference>
     <Reference Include="Extreme.Net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Extreme.Net.dll</HintPath>

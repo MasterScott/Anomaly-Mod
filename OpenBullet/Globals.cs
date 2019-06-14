@@ -131,6 +131,6 @@ namespace OpenBullet
         {
             try { return (SolidColorBrush)App.Current.Resources[propertyName]; }
             catch { return (SolidColorBrush)App.Current.Resources["ForegroundMain"]; }
-        }               
+        }
     }
 }
