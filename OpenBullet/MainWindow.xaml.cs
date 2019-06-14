@@ -516,6 +516,6 @@ namespace OpenBullet
                 }
             }
             catch { }
-        }   
+        }
     }
 }

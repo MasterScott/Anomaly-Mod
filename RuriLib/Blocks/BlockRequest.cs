@@ -2,7 +2,6 @@
 using RuriLib.LS;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -55,29 +54,36 @@ namespace RuriLib
     public class BlockRequest : BlockBase
     {
         #region Variables
+
         private string url = "https://google.com";
+
         /// <summary>The URL to call, including additional GET query parameters.</summary>
         public string Url { get { return url; } set { url = value; OnPropertyChanged(); } }
 
         private RequestType requestType = RequestType.Standard;
+
         /// <summary>The request type.</summary>
         public RequestType RequestType { get { return requestType; } set { requestType = value; OnPropertyChanged(); } }
 
         // Basic Auth
         private string authUser = "";
+
         /// <summary>The username for basic auth requests.</summary>
         public string AuthUser { get { return authUser; } set { authUser = value; OnPropertyChanged(); } }
 
         private string authPass = "";
+
         /// <summary>The password for basic auth requests.</summary>
         public string AuthPass { get { return authPass; } set { authPass = value; OnPropertyChanged(); } }
 
         // Standard
         private string postData = "";
+
         /// <summary>The content of the request, sent after the headers. Use '\n' to input a linebreak.</summary>
         public string PostData { get { return postData; } set { postData = value; OnPropertyChanged(); } }
 
         private HttpMethod method = HttpMethod.GET;
+
         /// <summary>The method of the HTTP request.</summary>
         public HttpMethod Method { get { return method; } set { method = value; OnPropertyChanged(); } }
 
@@ -92,31 +98,38 @@ namespace RuriLib
         public Dictionary<string, string> CustomCookies { get; set; } = new Dictionary<string, string>() { };
 
         private string contentType = "application/x-www-form-urlencoded";
+
         /// <summary>The type of content the server should expect.</summary>
         public string ContentType { get { return contentType; } set { contentType = value; OnPropertyChanged(); } }
 
         private bool autoRedirect = true;
+
         /// <summary>Whether to perform automatic redirection in the case of 3xx headers.</summary>
         public bool AutoRedirect { get { return autoRedirect; } set { autoRedirect = value; OnPropertyChanged(); } }
 
         private bool readResponseSource = true;
+
         /// <summary>Whether to read the stream of data from the HTTP response. Set to false if only the headers are needed, in order to speed up the process.</summary>
         public bool ReadResponseSource { get { return readResponseSource; } set { readResponseSource = value; OnPropertyChanged(); } }
 
         private bool parseQuery = false;
+
         /// <summary>Whether to parse the GET parameters manually (fixes Extreme.NET issues on some websites).</summary>
         public bool ParseQuery { get { return parseQuery; } set { parseQuery = value; OnPropertyChanged(); } }
 
         private bool encodeContent = false;
+
         /// <summary>Whether to URL encode the content before sending it.</summary>
         public bool EncodeContent { get { return encodeContent; } set { encodeContent = value; OnPropertyChanged(); } }
 
         private bool acceptEncoding = true;
+
         /// <summary>Whether to automatically generate an Accept-Encoding header.</summary>
         public bool AcceptEncoding { get { return acceptEncoding; } set { acceptEncoding = value; OnPropertyChanged(); } }
 
         // Multipart
         private string multipartBoundary = "";
+
         /// <summary>The boundary that separates multipart contents.</summary>
         public string MultipartBoundary { get { return multipartBoundary; } set { multipartBoundary = value; OnPropertyChanged(); } }
 
@@ -124,13 +137,16 @@ namespace RuriLib
         public List<MultipartContent> MultipartContents { get; set; } = new List<MultipartContent>();
 
         private ResponseType responseType = ResponseType.String;
+
         /// <summary>The type of response expected from the server.</summary>
         public ResponseType ResponseType { get { return responseType; } set { responseType = value; OnPropertyChanged(); } }
 
         private string downloadPath = "";
+
         /// <summary>The path of the file where a FILE response needs to be stored.</summary>
         public string DownloadPath { get { return downloadPath; } set { downloadPath = value; OnPropertyChanged(); } }
-        #endregion
+
+        #endregion Variables
 
         /// <summary>
         /// Creates a Request block.
@@ -338,6 +354,7 @@ namespace RuriLib
             base.Process(data);
 
             #region Request
+
             // Set base URL
             var localUrl = ReplaceValues(url, data);
             var cType = ReplaceValues(contentType, data);
@@ -502,9 +519,11 @@ namespace RuriLib
             }
 
             data.LogNewLine();
-            #endregion
+
+            #endregion Request
 
             #region Response
+
             // Create the response
             HttpResponse response = null;
 
@@ -579,10 +598,12 @@ namespace RuriLib
 
                 if (!data.ConfigSettings.IgnoreResponseErrors) throw;
             }
-            #endregion
+
+            #endregion Response
         }
 
         #region Custom Cookies, Headers and Multipart Contents
+
         /// <summary>
         /// Builds a string containing custom cookies.
         /// </summary>
@@ -685,7 +706,7 @@ namespace RuriLib
             }
         }
 
-        #endregion
+        #endregion Custom Cookies, Headers and Multipart Contents
 
         /// <summary>
         /// Generates a random string to be used for boundary.

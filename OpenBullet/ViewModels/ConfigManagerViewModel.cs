@@ -10,7 +10,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading;
 using System.Windows;
 
 namespace OpenBullet.ViewModels
@@ -142,7 +141,6 @@ namespace OpenBullet.ViewModels
                         break;
                 }
 
-                
                 byte[] file = new byte[] { };
                 try
                 {

@@ -27,7 +27,7 @@ namespace RuriLib.Models
             /// <summary>Sets a CUSTOM status in the bot.</summary>
             Custom,
 
-                /// <summary>Sets a CUSTOM status in the bot.</summary>
+            /// <summary>Sets a CUSTOM status in the bot.</summary>
             Created
         }
 

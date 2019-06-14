@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using RuriLib.CaptchaServices;
-using RuriLib.LS;
 using System.Windows.Media;
 
 namespace RuriLib

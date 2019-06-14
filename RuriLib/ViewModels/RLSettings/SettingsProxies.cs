@@ -14,8 +14,10 @@ namespace RuriLib.ViewModels
     {
         /// <summary>The ProxyManager.</summary>
         Manager,
+
         /// <summary>A file on the disk.</summary>
         File,
+
         /// <summary>A remote API or website.</summary>
         Remote
     }
@@ -26,49 +28,66 @@ namespace RuriLib.ViewModels
     public class SettingsProxies : ViewModelBase
     {
         #region General
+
         private bool concurrentUse = false;
+
         /// <summary>Whether to allow two Bots to use the same proxy.</summary>
         public bool ConcurrentUse { get { return concurrentUse; } set { concurrentUse = value; OnPropertyChanged(); } }
 
         private bool neverBan = false;
+
         /// <summary>Whether to never ban the proxies.</summary>
         public bool NeverBan { get { return neverBan; } set { neverBan = value; OnPropertyChanged(); } }
 
         private bool banAfterGoodStatus = false;
+
         /// <summary>Whether to never ban the proxy after a SUCCESS, CUSTOM or NONE status (not FAIL or RETRY).</summary>
         public bool BanAfterGoodStatus { get { return banAfterGoodStatus; } set { banAfterGoodStatus = value; OnPropertyChanged(); } }
 
         private bool shuffleOnStart = false;
+
         /// <summary>Whether proxy lists should be shuffled before being assigned to the Runner.</summary>
         public bool ShuffleOnStart { get { return shuffleOnStart; } set { shuffleOnStart = value; OnPropertyChanged(); } }
-        #endregion
+
+        #endregion General
 
         #region Reload
+
         private bool reload = true;
+
         /// <summary>Whether to reload the proxies from the proxy source after they are all banned.</summary>
         public bool Reload { get { return reload; } set { reload = value; OnPropertyChanged(); } }
 
         private ProxyReloadSource reloadSource = ProxyReloadSource.Manager;
+
         /// <summary>The source to reload the proxies from.</summary>
         public ProxyReloadSource ReloadSource { get { return reloadSource; } set { reloadSource = value; OnPropertyChanged(); } }
 
         private string reloadPath = "";
+
         /// <summary>The file path on disk.</summary>
         public string ReloadPath { get { return reloadPath; } set { reloadPath = value; OnPropertyChanged(); } }
 
         private ProxyType reloadType = ProxyType.Http;
+
         /// <summary>The Type of the proxies to load.</summary>
         public ProxyType ReloadType { get { return reloadType; } set { reloadType = value; OnPropertyChanged(); } }
-        #endregion
+
+        #endregion Reload
 
         #region Cloudflare
+
         private bool alwaysGetClearance = false;
+
         /// <summary>Whether to avoid storing the clearance cookie for future use when querying the site from the same IP (proxy).</summary>
         public bool AlwaysGetClearance { get { return alwaysGetClearance; } set { alwaysGetClearance = value; OnPropertyChanged(); } }
-        #endregion
+
+        #endregion Cloudflare
 
         #region Global Keys
+
         private string[] globalBanKeys = new string[] { };
+
         /// <summary>
         /// <para>The array of possible bad replies from a proxy server.</para>
         /// <para>The proxy will be banned when one of the keys is found.</para>
@@ -77,15 +96,18 @@ namespace RuriLib.ViewModels
         public string[] GlobalBanKeys { get { return globalBanKeys; } set { globalBanKeys = value; OnPropertyChanged(); } }
 
         private string[] globalRetryKeys = new string[] { };
+
         /// <summary>
         /// <para>The array of possible temporary bad replies from a proxy server.</para>
         /// <para>The proxy will be retried on the next check.</para>
         /// <para>These are useful when the proxy is temporarily too busy because of high traffic.</para>
         /// </summary>
         public string[] GlobalRetryKeys { get { return globalRetryKeys; } set { globalRetryKeys = value; OnPropertyChanged(); } }
-        #endregion
+
+        #endregion Global Keys
 
         #region Remote Proxy Sources
+
         /// <summary>The sources where proxies are downloaded and parsed from.</summary>
         public ObservableCollection<RemoteProxySource> RemoteProxySources { get; set; } = new ObservableCollection<RemoteProxySource>();
 
@@ -107,7 +129,8 @@ namespace RuriLib.ViewModels
         {
             return RemoteProxySources.FirstOrDefault(s => s.Id == id);
         }
-        #endregion
+
+        #endregion Remote Proxy Sources
 
         /// <summary>
         /// Resets the properties to their default value.

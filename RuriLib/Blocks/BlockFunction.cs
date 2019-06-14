@@ -159,40 +159,51 @@ namespace RuriLib
         }
 
         #region General Properties
+
         private string variableName = "";
+
         /// <summary>The name of the output variable.</summary>
         public string VariableName { get { return variableName; } set { variableName = value; OnPropertyChanged(); } }
 
         private bool isCapture = false;
+
         /// <summary>Whether the output variable should be marked for Capture.</summary>
         public bool IsCapture { get { return isCapture; } set { isCapture = value; OnPropertyChanged(); } }
 
         private string inputString = "";
+
         /// <summary>The input string on which the function will be executed (not always needed).</summary>
         public string InputString { get { return inputString; } set { inputString = value; OnPropertyChanged(); } }
 
         private Function functionType = Function.Constant;
+
         /// <summary>The function to execute.</summary>
         public Function FunctionType { get { return functionType; } set { functionType = value; OnPropertyChanged(); } }
-        #endregion
+
+        #endregion General Properties
 
         #region Function Specific Properties
+
         // -- Hash & Hmac
         private Hash hashType = Hash.SHA512;
+
         /// <summary>The hashing function to use.</summary>
         public Hash HashType { get { return hashType; } set { hashType = value; OnPropertyChanged(); } }
 
         // -- Hmac
         private string hmacKey = "";
+
         /// <summary>The key used to authenticate the message.</summary>
         public string HmacKey { get { return hmacKey; } set { hmacKey = value; OnPropertyChanged(); } }
 
         private bool hmacBase64 = false;
+
         /// <summary>Whether to output the message as a base64-encoded string instead of a hex-encoded string.</summary>
         public bool HmacBase64 { get { return hmacBase64; } set { hmacBase64 = value; OnPropertyChanged(); } }
 
         // -- Translate
         private bool stopAfterFirstMatch = true;
+
         /// <summary>Whether to stop translating after the first match.</summary>
         public bool StopAfterFirstMatch { get { return stopAfterFirstMatch; } set { stopAfterFirstMatch = value; OnPropertyChanged(); } }
 
@@ -201,69 +212,84 @@ namespace RuriLib
 
         // -- Date to unix
         private string dateFormat = "yyyy-MM-dd:HH-mm-ss";
+
         /// <summary>The format of the date (y = year, M = month, d = day, H = hour, m = minute, s = second).</summary>
         public string DateFormat { get { return dateFormat; } set { dateFormat = value; OnPropertyChanged(); } }
 
         // -- string replace
         private string replaceWhat = "";
+
         /// <summary>The text to replace.</summary>
         public string ReplaceWhat { get { return replaceWhat; } set { replaceWhat = value; OnPropertyChanged(); } }
 
         private string replaceWith = "";
+
         /// <summary>The replacement text.</summary>
         public string ReplaceWith { get { return replaceWith; } set { replaceWith = value; OnPropertyChanged(); } }
 
         private bool useRegex = false;
+
         /// <summary>Whether to use regex for replacing.</summary>
         public bool UseRegex { get { return useRegex; } set { useRegex = value; OnPropertyChanged(); } }
 
         // -- Regex Match
         private string regexMatch = "";
+
         /// <summary>The regex pattern to match.</summary>
         public string RegexMatch { get { return regexMatch; } set { regexMatch = value; OnPropertyChanged(); } }
 
         // -- Random Number
         private int randomMin = 0;
+
         /// <summary>The minimum random number that can be generated.</summary>
         public int RandomMin { get { return randomMin; } set { randomMin = value; OnPropertyChanged(); } }
 
         private int randomMax = 0;
+
         /// <summary>The maximum random number that can be generated.</summary>
         public int RandomMax { get { return randomMax; } set { randomMax = value; OnPropertyChanged(); } }
 
         // -- CountOccurrences
         private string stringToFind = "";
+
         /// <summary>The string to count the occurrences of.</summary>
         public string StringToFind { get { return stringToFind; } set { stringToFind = value; OnPropertyChanged(); } }
 
         // -- RSA
         private string rsaMod = "";
+
         /// <summary>The modulus of the RSA key.</summary>
         public string RSAMod { get { return rsaMod; } set { rsaMod = value; OnPropertyChanged(); } }
 
         private string rsaExp = "";
+
         /// <summary>The exponent of the RSA key.</summary>
         public string RSAExp { get { return rsaExp; } set { rsaExp = value; OnPropertyChanged(); } }
 
         // --- CharAt
         private string charIndex = "0";
+
         /// <summary>The index of the wanted character.</summary>
         public string CharIndex { get { return charIndex; } set { charIndex = value; OnPropertyChanged(); } }
 
         // -- Substring
         private string substringIndex = "0";
+
         /// <summary>The starting index for the substring.</summary>
         public string SubstringIndex { get { return substringIndex; } set { substringIndex = value; OnPropertyChanged(); } }
 
         private string substringLength = "1";
+
         /// <summary>The length of the wanted substring.</summary>
         public string SubstringLength { get { return substringLength; } set { substringLength = value; OnPropertyChanged(); } }
 
         // -- AES
         private string aesKey = "";
+
         /// <summary>The keys used for AES encryption and decryption.</summary>
         public string AesKey { get { return aesKey; } set { aesKey = value; OnPropertyChanged(); } }
-        #endregion
+
+        #endregion Function Specific Properties
 
         /// <summary>
         /// Creates a Function block.
@@ -399,7 +425,6 @@ namespace RuriLib
 
             switch (FunctionType)
             {
-
                 case Function.Hash:
                     writer
                         .Token(HashType);
@@ -513,7 +538,6 @@ namespace RuriLib
                     case Function.HTMLEntityDecode:
                         outputString = WebUtility.HtmlDecode(localInputString);
                         break;
-
 
                     case Function.Base64Encode:
                         outputString = Base64Encode(localInputString);
@@ -722,6 +746,7 @@ namespace RuriLib
         }
 
         #region Base64
+
         /// <summary>
         /// Encodes a string to base64.
         /// </summary>
@@ -746,9 +771,11 @@ namespace RuriLib
             var base64EncodedBytes = System.Convert.FromBase64String(toDecode);
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
-        #endregion
+
+        #endregion Base64
 
         #region Hash and Hmac
+
         /// <summary>
         /// Hashes a string using the specified hashing function.
         /// </summary>
@@ -918,9 +945,10 @@ namespace RuriLib
             return sb.ToString();
         }
 
-        #endregion
+        #endregion Hash and Hmac
 
         #region RSA
+
         private string RSAEncrypt(string input, int size)
         {
             var data = Encoding.UTF8.GetBytes(input);
@@ -966,7 +994,6 @@ namespace RuriLib
             }
         }
 
-
         private string SteamRSAEncrypt(RsaParameters rsaParam)
         {
             // Convert the public keys to BigIntegers
@@ -990,7 +1017,6 @@ namespace RuriLib
         {
             return System.Numerics.BigInteger.Parse("00" + hex, NumberStyles.AllowHexSpecifier);
         }
-
 
         private static System.Numerics.BigInteger Pkcs1Pad2(string data, int keySize)
         {
@@ -1022,7 +1048,7 @@ namespace RuriLib
             return new System.Numerics.BigInteger(buffer);
         }
 
-        #endregion
+        #endregion RSA
 
         #region Translation
 
@@ -1059,9 +1085,11 @@ namespace RuriLib
                 }
             }
         }
-        #endregion
+
+        #endregion Translation
 
         #region Count Occurrences
+
         /// <summary>
         /// Counts how many times a string occurs inside another string.
         /// </summary>
@@ -1080,9 +1108,11 @@ namespace RuriLib
             }
             return count;
         }
-        #endregion
+
+        #endregion Count Occurrences
 
         #region RandomString
+
         private string ReplaceFirst(string text, string search, string replace)
         {
             int pos = text.IndexOf(search);
@@ -1092,9 +1122,11 @@ namespace RuriLib
             }
             return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
         }
-        #endregion
+
+        #endregion RandomString
 
         #region AES
+
         /// <summary>
         /// Encrypts a string with AES.
         /// </summary>
@@ -1226,7 +1258,8 @@ namespace RuriLib
             }
             return plaintext;
         }
-        #endregion
+
+        #endregion AES
 
         #region RandomUA
 
@@ -1261,13 +1294,14 @@ namespace RuriLib
             // Opera mini = 4%
             return Http.OperaMiniUserAgent();
         }
-        #endregion
+
+        #endregion RandomUA
     }
 
     /// <summary>
     /// The RSA parameters.
     /// </summary>
-    struct RsaParameters
+    internal struct RsaParameters
     {
         /// <summary>The key exponent.</summary>
         public string Exponent;

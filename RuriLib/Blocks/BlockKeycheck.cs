@@ -187,7 +187,7 @@ namespace RuriLib
                         case KeyChain.KeychainType.Custom:
                             data.Status = BotStatus.CUSTOM;
                             data.CustomStatus = keychain.CustomType;
-                            break;              
+                            break;
                     }
                 }
             }

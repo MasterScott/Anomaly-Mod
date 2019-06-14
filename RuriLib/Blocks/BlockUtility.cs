@@ -1,12 +1,10 @@
 ﻿using RuriLib.LS;
 using RuriLib.Models;
-using RuriLib.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Numerics;
 using System.Text;
 using System.Windows.Media;
 
@@ -124,86 +122,109 @@ namespace RuriLib
     {
         // General
         private UtilityGroup group = UtilityGroup.List;
+
         /// <summary>The utility group.</summary>
         public UtilityGroup Group { get { return group; } set { group = value; OnPropertyChanged(); } }
 
         private string variableName = "";
+
         /// <summary>The name of the output variable.</summary>
         public string VariableName { get { return variableName; } set { variableName = value; OnPropertyChanged(); } }
 
         private bool isCapture = false;
+
         /// <summary>Whether the output variable should be marked for Capture.</summary>
         public bool IsCapture { get { return isCapture; } set { isCapture = value; OnPropertyChanged(); } }
 
         private string inputString = "";
+
         /// <summary>The input to process.</summary>
         public string InputString { get { return inputString; } set { inputString = value; OnPropertyChanged(); } }
 
         // Lists
         private ListAction listAction = ListAction.Join;
+
         /// <summary>The action to be performed on a list variable.</summary>
         public ListAction ListAction { get { return listAction; } set { listAction = value; OnPropertyChanged(); } }
 
         private string listName = "";
+
         /// <summary>The name of the target list variable.</summary>
         public string ListName { get { return listName; } set { listName = value; OnPropertyChanged(); } }
 
         #region ListUtility Specific Variables
+
         private string separator = ","; // Join
+
         /// <summary>The separator for joining a list.</summary>
         public string Separator { get { return separator; } set { separator = value; OnPropertyChanged(); } }
 
         private bool ascending = true;
+
         /// <summary>Whether the sort should happen in ascending order.</summary>
         public bool Ascending { get { return ascending; } set { ascending = value; OnPropertyChanged(); } }
 
         private bool numeric = false;
+
         /// <summary>Whether a list is made of numeric values.</summary>
         public bool Numeric { get { return numeric; } set { numeric = value; OnPropertyChanged(); } }
 
         private string secondListName = ""; // Zip
+
         /// <summary>The name of the second list variable.</summary>
         public string SecondListName { get { return secondListName; } set { secondListName = value; OnPropertyChanged(); } }
 
         private string listItem = ""; // Add
+
         /// <summary>The list item to add.</summary>
         public string ListItem { get { return listItem; } set { listItem = value; OnPropertyChanged(); } }
 
         private string listIndex = "-1"; // Add (-1 = end, 0 = start)
+
         /// <summary>The list index where an item can be added/removed. -1 = end, 0 = start.</summary>
         public string ListIndex { get { return listIndex; } set { listIndex = value; OnPropertyChanged(); } }
-        #endregion
+
+        #endregion ListUtility Specific Variables
 
         // Variables
         private VarAction varAction = VarAction.Split;
+
         /// <summary>The action to be performed on a single variable.</summary>
         public VarAction VarAction { get { return varAction; } set { varAction = value; OnPropertyChanged(); } }
 
         private string varName = "";
+
         /// <summary>The name of the single variable.</summary>
         public string VarName { get { return varName; } set { varName = value; OnPropertyChanged(); } }
 
         #region Variables Specific
+
         private string splitSeparator = "";
+
         /// <summary>The separator to split a string into a list.</summary>
         public string SplitSeparator { get { return splitSeparator; } set { splitSeparator = value; OnPropertyChanged(); } }
-        #endregion
+
+        #endregion Variables Specific
 
         // Conversion
         private Conversion conversionFrom = Conversion.HEX;
+
         /// <summary>The encoding to convert from.</summary>
         public Conversion ConversionFrom { get { return conversionFrom; } set { conversionFrom = value; OnPropertyChanged(); } }
 
         private Conversion conversionTo = Conversion.BASE64;
+
         /// <summary>The encoding to convert to.</summary>
         public Conversion ConversionTo { get { return conversionTo; } set { conversionTo = value; OnPropertyChanged(); } }
 
         // Files
         private string filePath = "test.txt";
+
         /// <summary>The path to the file to read/write.</summary>
         public string FilePath { get { return filePath; } set { filePath = value; OnPropertyChanged(); } }
 
         private FileAction fileAction = FileAction.Read;
+
         /// <summary>The action to be performed on the file.</summary>
         public FileAction FileAction { get { return fileAction; } set { fileAction = value; OnPropertyChanged(); } }
 

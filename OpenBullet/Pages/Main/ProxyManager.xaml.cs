@@ -23,7 +23,6 @@ namespace OpenBullet
     /// </summary>
     public partial class ProxyManager : Page
     {
-
         public ProxyManagerViewModel vm = new ProxyManagerViewModel();
         private GridViewColumnHeader listViewSortCol = null;
         private SortAdorner listViewSortAdorner = null;
@@ -40,6 +39,7 @@ namespace OpenBullet
         }
 
         #region Start Button
+
         private void checkButton_Click(object sender, RoutedEventArgs e)
         {
             switch (Status)
@@ -69,9 +69,11 @@ namespace OpenBullet
                     break;
             }
         }
-        #endregion
+
+        #endregion Start Button
 
         #region Check
+
         public async Task CheckProxiesAsync(IEnumerable<CProxy> proxies, int threads, int step)
         {
             var proxiesToCheck = vm.OnlyUntested ? proxies.ToList() : proxies.Where(p => p.Working == ProxyWorking.UNTESTED).ToList();
@@ -169,7 +171,6 @@ namespace OpenBullet
 
                     Globals.LogInfo(Components.ProxyManager, "Checked country for proxy '" + proxy.Proxy + "' with result '" + proxy.Country + "'");
                 }
-
             }
             catch (Exception ex)
             {
@@ -211,7 +212,8 @@ namespace OpenBullet
                 db.GetCollection<CProxy>("proxies").Update(proxy);
             }
         }
-        #endregion
+
+        #endregion Check
 
         public void AddProxies(string fileName, ProxyType type, List<string> lines)
         {
@@ -273,6 +275,7 @@ namespace OpenBullet
         }
 
         #region GUI Controls
+
         private void botsSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             vm.BotsNumber = (int)e.NewValue;
@@ -420,9 +423,11 @@ namespace OpenBullet
 
             vm.UpdateProperties();
         }
-        #endregion
+
+        #endregion GUI Controls
 
         #region ListView
+
         private void listViewColumnHeader_Click(object sender, RoutedEventArgs e)
         {
             GridViewColumnHeader column = (sender as GridViewColumnHeader);
@@ -445,8 +450,8 @@ namespace OpenBullet
 
         private void ListViewItem_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-
         }
-        #endregion
+
+        #endregion ListView
     }
 }

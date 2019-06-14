@@ -5,9 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 using System.Windows.Media;
 
 namespace RuriLib
@@ -96,7 +94,6 @@ namespace RuriLib
             }
         }
 
-
         public static string SerializeConfig(Config config)
         {
             //bool logger = false;
@@ -110,23 +107,23 @@ namespace RuriLib
             writer.WriteLine("[SCRIPT]");
             writer.Write(config.Script);
 
-           // foreach (string line in configString)
-          //  {
-              //  if (line.Contains("REQUEST"))
-               // {
-                  //  requests.Add(new Regex("\"([^,}\"]*)\"").Match(line).Groups[1].Value);
-             //   }
-           // }
+            // foreach (string line in configString)
+            //  {
+            //  if (line.Contains("REQUEST"))
+            // {
+            //  requests.Add(new Regex("\"([^,}\"]*)\"").Match(line).Groups[1].Value);
+            //   }
+            // }
             ///string control = new Regex("([^,}\"]*)/").Match(requests[0]).Groups[1].Value;
-          //  foreach (string check in requests)
-           // {
-                ///if (new Regex("([^,}\"]*)/").Match(check).Groups[1].Value != control)
-              //  {
-                    //MessageBox.Show(control + "\n" + new Regex("([^,}\"]*)/").Match(check).Groups[1].Value, "Control Check");
-                //    logger = true;
-                 //   logReq.Add(check);
-             //   }
-           // }
+            //  foreach (string check in requests)
+            // {
+            ///if (new Regex("([^,}\"]*)/").Match(check).Groups[1].Value != control)
+            //  {
+            //MessageBox.Show(control + "\n" + new Regex("([^,}\"]*)/").Match(check).Groups[1].Value, "Control Check");
+            //    logger = true;
+            //   logReq.Add(check);
+            //   }
+            // }
             //if(logger == true)
             //    MessageBox.Show("Control URL: " + control + "\n\n" + string.Join("\n", logReq.ToArray()), "Potential logger found!");
 

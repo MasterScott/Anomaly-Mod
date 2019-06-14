@@ -55,7 +55,6 @@ namespace OpenBullet
         public static string ProxySettings2 = @"Settings/ProxyKey.txt";
         public static string Blank = "";
 
-
         // Settings
         public static OBSettingsViewModel obSettings;
 

@@ -140,7 +140,6 @@
       SET NEWGVAR "sharedcookie" "abc=123"
       SET GVAR "sharedcookie" "def=456"
       SET GCOOKIES
-
     </item>
     <item name="DELETE">
       This command allows you to delete elements from current collections.

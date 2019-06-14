@@ -97,8 +97,6 @@ namespace OpenBullet.Pages.StackerBlocks
                 case BlockFunction.Function.AESDecrypt:
                     functionTabControl.SelectedIndex = 12;
                     break;
-
-                
             }
         }
 

@@ -23,7 +23,6 @@ namespace RuriLib.Runner
     /// </summary>
     public class AbortableBackgroundWorker : BackgroundWorker
     {
-
         private Thread workerThread;
 
         /// <summary>The Status of the Worker.</summary>

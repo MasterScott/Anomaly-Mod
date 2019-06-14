@@ -2,12 +2,9 @@
 using RuriLib.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Security;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace RuriLib
@@ -33,38 +30,47 @@ namespace RuriLib
     public class BlockTCP : BlockBase
     {
         private TCPCommand tcpCommand = TCPCommand.Connect;
+
         /// <summary>The command for the TCP client.</summary>
         public TCPCommand TCPCommand { get { return tcpCommand; } set { tcpCommand = value; OnPropertyChanged(); } }
 
         private string host = "";
+
         /// <summary>The host to connect to.</summary>
         public string Host { get { return host; } set { host = value; OnPropertyChanged(); } }
 
         private string port = "";
+
         /// <summary>The port to connect to.</summary>
         public string Port { get { return port; } set { port = value; OnPropertyChanged(); } }
 
         private bool useSSL = true;
+
         /// <summary>Whether the client will communicate over the Secure Sockets Layer.</summary>
         public bool UseSSL { get { return useSSL; } set { useSSL = value; OnPropertyChanged(); } }
 
         private bool webSocket = false;
+
         /// <summary>Whether to treat the message as a WebSocket payload (adds the frame overhead bytes).</summary>
         public bool WebSocket { get { return webSocket; } set { webSocket = value; OnPropertyChanged(); } }
 
         private bool waitForHello = true;
+
         /// <summary>Whether to wait for the server hello message once connected.</summary>
         public bool WaitForHello { get { return waitForHello; } set { waitForHello = value; OnPropertyChanged(); } }
 
         private string message = "";
+
         /// <summary>The message sent to the host.</summary>
         public string Message { get { return message; } set { message = value; OnPropertyChanged(); } }
 
         private string variableName = "";
+
         /// <summary>The name of the output variable where the TCP response will be stored.</summary>
         public string VariableName { get { return variableName; } set { variableName = value; OnPropertyChanged(); } }
 
         private bool isCapture = false;
+
         /// <summary>Whether the output variable should be marked for Capture.</summary>
         public bool IsCapture { get { return isCapture; } set { isCapture = value; OnPropertyChanged(); } }
 
@@ -189,7 +195,6 @@ namespace RuriLib
                     tcp = new TcpClient();
                     tcp.Connect(h, p);
 
-
                     if (tcp.Connected)
                     {
                         net = tcp.GetStream();
@@ -254,6 +259,7 @@ namespace RuriLib
                     if (WebSocket)
                     {
                         #region WebSocket
+
                         List<byte> bl = new List<byte>();
 
                         // (FIN=1) (RSV1=0) (RSV2=0) (RSV3=0) (OPCODE=0001) = 128 + 1 = 129
@@ -296,7 +302,8 @@ namespace RuriLib
                         }
 
                         b = bl.ToArray();
-                        #endregion
+
+                        #endregion WebSocket
                     }
                     else
                     {

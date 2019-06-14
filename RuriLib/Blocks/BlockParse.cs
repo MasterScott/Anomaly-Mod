@@ -1,11 +1,9 @@
 ﻿using AngleSharp.Parser.Html;
-using Extreme.Net;
 using Newtonsoft.Json.Linq;
 using RuriLib.LS;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Windows.Media;
 
 namespace RuriLib
 {
@@ -36,88 +34,115 @@ namespace RuriLib
     public class BlockParse : BlockBase
     {
         private string parseTarget = "<SOURCE>";
+
         /// <summary>The string to parse data from.</summary>
         public string ParseTarget { get { return parseTarget; } set { parseTarget = value; OnPropertyChanged(); } }
 
         private string variableName = "";
+
         /// <summary>The name of the output variable where the parsed text will be stored.</summary>
         public string VariableName { get { return variableName; } set { variableName = value; OnPropertyChanged(); } }
 
         private bool isCapture = false;
+
         /// <summary>Whether the output variable should be marked as Capture.</summary>
         public bool IsCapture { get { return isCapture; } set { isCapture = value; OnPropertyChanged(); } }
 
         private string prefix = "";
+
         /// <summary>The string to add to the beginning of the parsed data.</summary>
         public string Prefix { get { return prefix; } set { prefix = value; OnPropertyChanged(); } }
 
         private string suffix = "";
+
         /// <summary>The string to add to the end of the parsed data.</summary>
         public string Suffix { get { return suffix; } set { suffix = value; OnPropertyChanged(); } }
 
         private bool recursive = false;
+
         /// <summary>Whether to parse multiple values that match the criteria or just the first one.</summary>
         public bool Recursive { get { return recursive; } set { recursive = value; OnPropertyChanged(); } }
 
         private bool encodeOutput = false;
+
         /// <summary>Whether to URL encode the parsed text.</summary>
         public bool EncodeOutput { get { return encodeOutput; } set { encodeOutput = value; OnPropertyChanged(); } }
 
         private bool createEmpty = true;
+
         /// <summary>Whether to create the variable with an empty value if the parsing was not successful.</summary>
         public bool CreateEmpty { get { return createEmpty; } set { createEmpty = value; OnPropertyChanged(); } }
 
         private ParseType type = ParseType.LR;
+
         /// <summary>The parsing algorithm being used.</summary>
         public ParseType Type { get { return type; } set { type = value; OnPropertyChanged(); } }
 
         #region LR
+
         private string leftString = "";
+
         /// <summary>The string to the immediate left of the text to parse. An empty string means the start of the input.</summary>
         public string LeftString { get { return leftString; } set { leftString = value; OnPropertyChanged(); } }
 
         private string rightString = "";
+
         /// <summary>The string to the immediate right of the text to parse. An empty string means the end of the input.</summary>
         public string RightString { get { return rightString; } set { rightString = value; OnPropertyChanged(); } }
 
         private bool useRegexLR = false;
+
         /// <summary>Whether to use a regex pattern to match a text between two strings instead of the standard algorithm.</summary>
         public bool UseRegexLR { get { return useRegexLR; } set { useRegexLR = value; OnPropertyChanged(); } }
-        #endregion
+
+        #endregion LR
 
         #region CSS
+
         private string cssSelector = "";
+
         /// <summary>The CSS selector that addresses the desired element in the HTML page.</summary>
         public string CssSelector { get { return cssSelector; } set { cssSelector = value; OnPropertyChanged(); } }
 
         private string attributeName = "";
+
         /// <summary>The name of the attribute from which to parse the value.</summary>
         public string AttributeName { get { return attributeName; } set { attributeName = value; OnPropertyChanged(); } }
 
         private int cssElementIndex = 0;
+
         /// <summary>The index of the desired element when the selector matches multiple elements.</summary>
         public int CssElementIndex { get { return cssElementIndex; } set { cssElementIndex = value; OnPropertyChanged(); } }
-        #endregion
+
+        #endregion CSS
 
         #region JSON
+
         private string jsonField = "";
+
         /// <summary>The name of the json field for which we want to retrieve the value.</summary>
         public string JsonField { get { return jsonField; } set { jsonField = value; OnPropertyChanged(); } }
 
         private bool jTokenParsing = false;
+
         /// <summary>Whether to parse the json object using jtoken paths.</summary>
         public bool JTokenParsing { get { return jTokenParsing; } set { jTokenParsing = value; OnPropertyChanged(); } }
-        #endregion
+
+        #endregion JSON
 
         #region REGEX
+
         private string regexString = "";
+
         /// <summary>The regex pattern that matches parts of the text inside groups.</summary>
         public string RegexString { get { return regexString; } set { regexString = value; OnPropertyChanged(); } }
 
         private string regexOutput = "";
+
         /// <summary>The way the content of the matched groups should be formatted. [0] will be replaced with the full match, [1] with the first group etc.</summary>
         public string RegexOutput { get { return regexOutput; } set { regexOutput = value; OnPropertyChanged(); } }
-        #endregion
+
+        #endregion REGEX
 
         /// <summary>
         /// Creates a Parse block.
@@ -171,7 +196,7 @@ namespace RuriLib
                     break;
 
                 case ParseType.REGEX:
-                    // PARSE "<SOURCE>" REGEX "Pattern" "Output" RECURSIVE? -> 
+                    // PARSE "<SOURCE>" REGEX "Pattern" "Output" RECURSIVE? ->
                     RegexString = LineParser.ParseLiteral(ref input, "PATTERN");
                     RegexOutput = LineParser.ParseLiteral(ref input, "OUTPUT");
                     while (LineParser.Lookahead(ref input) == TokenType.Boolean)
@@ -387,9 +412,11 @@ namespace RuriLib
                                     case "innerHTML":
                                         list.Add(element.InnerHtml);
                                         break;
+
                                     case "outerHTML":
                                         list.Add(element.OuterHtml);
                                         break;
+
                                     default:
                                         foreach (var attr in element.Attributes)
                                         {

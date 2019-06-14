@@ -5,16 +5,12 @@ using RuriLib.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Linq;
 using System.IO;
-using OpenBullet;
+using System.Linq;
 using System.Windows;
-
-
 
 namespace OpenBullet.ViewModels
 {
-
     public class ProxyManagerViewModel : ViewModelBase
     {
         private ObservableCollection<CProxy> proxyList;
@@ -31,7 +27,7 @@ namespace OpenBullet.ViewModels
 
         private int botsNumber = 1;
         public int BotsNumber { get { return botsNumber; } set { botsNumber = value; OnPropertyChanged("BotsNumber"); } }
-  
+
         public static string testURL = GetProxySettings("1");
         public string TestURL { get { return testURL; } set { testURL = value; OnPropertyChanged("TestURL"); } }
 
@@ -58,20 +54,22 @@ namespace OpenBullet.ViewModels
                     type = File.ReadAllText(Globals.ProxySettings2).Trim();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 FileStream myFile;
-                if (ex.ToString().Contains("ProxySite")) {
+                if (ex.ToString().Contains("ProxySite"))
+                {
                     MessageBox.Show("ProxySite Settings file not found, generating a default one");
                     myFile = File.Create(@"Settings/ProxySite.txt");
                     myFile.Close();
                 }
-                if(ex.ToString().Contains("ProxyKey")) {
+                if (ex.ToString().Contains("ProxyKey"))
+                {
                     MessageBox.Show("ProxyKey Settings file not found, generating a default one");
                     myFile = File.Create(@"Settings/ProxyKey.txt");
                     myFile.Close();
                 }
-            goto Retry;
+                goto Retry;
             }
 
             return type;

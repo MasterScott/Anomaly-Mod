@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Web;
-using Microsoft.Scripting.Ast;
-using System.Text.RegularExpressions;
-using System.Linq;
 
 namespace OpenBullet.Pages.Main.Tools
 {
@@ -22,12 +18,13 @@ namespace OpenBullet.Pages.Main.Tools
             InitializeComponent();
             FileName = "";
         }
+
         public static string FileName;
+
         private void LoadFromManagerButton_Click(object sender, RoutedEventArgs e)
         {
             new OpenFileDialog();
         }
-
 
         private void LoadFromFileButton_Click(object sender, RoutedEventArgs e)
         {
@@ -35,12 +32,12 @@ namespace OpenBullet.Pages.Main.Tools
             OpenFileDialog Wordlist = new OpenFileDialog();
             if (Wordlist.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-
                 string strfilename = Wordlist.FileName;
                 FileName = Wordlist.FileName;
                 PathName.Text = FileName;
             }
         }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // Checks the List for Duplicates.
@@ -59,7 +56,6 @@ namespace OpenBullet.Pages.Main.Tools
                 total = total + 1;
                 lines.Add(hc);
                 sw.WriteLine(line);
-
             }
             sw.Flush();
             sw.Close();
@@ -73,7 +69,7 @@ namespace OpenBullet.Pages.Main.Tools
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             var reader = File.OpenText(FileName);
-            string outFileName = FileName+"{0}.txt";
+            string outFileName = FileName + "{0}.txt";
             int outFileNumber = 1;
             int MAX_LINES = Convert.ToInt16(SplitCount.Text.Trim());
             while (!reader.EndOfStream)
@@ -87,7 +83,7 @@ namespace OpenBullet.Pages.Main.Tools
                 writer.Close();
             }
             reader.Close();
-            System.Windows.MessageBox.Show("Saved Splits By Original File!","OpenBullet Splitter");
+            System.Windows.MessageBox.Show("Saved Splits By Original File!", "OpenBullet Splitter");
         }
 
         //Code that reads and changes the Seprator for a list
@@ -97,12 +93,12 @@ namespace OpenBullet.Pages.Main.Tools
             string content = reader.ReadToEnd();
             reader.Close();
 
-            content = Regex.Replace(content, OriginalSep.Text.Trim(),NewSep.Text.Trim());
+            content = Regex.Replace(content, OriginalSep.Text.Trim(), NewSep.Text.Trim());
 
-            StreamWriter writer = new StreamWriter(Globals.Blank +FileName+"SepChange.txt");
+            StreamWriter writer = new StreamWriter(Globals.Blank + FileName + "SepChange.txt");
             writer.Write(content);
             writer.Close();
-           try {System.Windows.MessageBox.Show("Saved File by Original File!", "OpenBullet Sep Changer");}
+            try { System.Windows.MessageBox.Show("Saved File by Original File!", "OpenBullet Sep Changer"); }
             catch { };
         }
     }

@@ -17,8 +17,8 @@ namespace OpenBullet
     /// </summary>
     public partial class RLSettingsProxies : Page
     {
-        SettingsProxies vm;
-        Random rand = new Random();
+        private SettingsProxies vm;
+        private Random rand = new Random();
 
         public RLSettingsProxies()
         {

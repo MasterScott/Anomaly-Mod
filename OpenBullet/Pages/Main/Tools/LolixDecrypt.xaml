@@ -58,14 +58,14 @@
 				Name="loadFromFileButton"
 				Content="Load from File" Click="LoadFromFileButton_Click" />
             <TextBox x:Name="PathName" Text=""
-				IsReadOnly="True"/>
+				IsReadOnly="True" />
         </DockPanel>
         <DockPanel
 			Grid.Row="2"
 			Margin="0 0 0 0">
-            <Button Name="saveButton" Content="Save Config" Click="SaveConfig_Click" Margin="10,10,5,10" Grid.Row="3" Grid.RowSpan="2"/>
+            <Button Name="saveButton" Content="Save Config" Click="SaveConfig_Click" Margin="10,10,5,10" Grid.Row="3" Grid.RowSpan="2" />
         </DockPanel>
-        <TextBox Name="textBox1" Margin="10,17,5,10" Grid.Row="3" Grid.RowSpan="2"/>
-        <Canvas Margin="137,1,493,280" Grid.Row="3"/>
+        <TextBox Name="textBox1" Margin="10,17,5,10" Grid.Row="3" Grid.RowSpan="2" />
+        <Canvas Margin="137,1,493,280" Grid.Row="3" />
     </Grid>
 </Page>

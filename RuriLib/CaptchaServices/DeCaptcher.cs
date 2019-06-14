@@ -1,11 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Globalization;
 using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace RuriLib.CaptchaServices
 {

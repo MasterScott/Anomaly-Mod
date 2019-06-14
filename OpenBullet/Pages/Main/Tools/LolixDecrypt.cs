@@ -1,36 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Web;
-using Microsoft.Scripting.Ast;
-using System.Text.RegularExpressions;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Reflection;
 
 namespace OpenBullet.Pages.Main.Tools
 {
-// This was made by LethalLuck, uses the keys from Forlax's Modded OpenBullet.
+    // This was made by LethalLuck, uses the keys from Forlax's Modded OpenBullet.
     public partial class LolixDecrypt : Page
     {
         private static Random randomY = new Random();
-        string save;
+        private string save;
 
         public LolixDecrypt()
         {
             InitializeComponent();
             FileName = "";
         }
+
         public static string FileName;
+
         private void LoadFromManagerButton_Click(object sender, RoutedEventArgs e)
         {
             new OpenFileDialog();
         }
-
 
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         private void LoadFromFileButton_Click(object sender, RoutedEventArgs e)
@@ -38,7 +36,6 @@ namespace OpenBullet.Pages.Main.Tools
             OpenFileDialog lolixConfig = new OpenFileDialog();
             if (lolixConfig.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-
                 string strfilename = lolixConfig.FileName;
                 FileName = lolixConfig.FileName;
                 PathName.Text = FileName;
@@ -61,7 +58,7 @@ namespace OpenBullet.Pages.Main.Tools
                     save = s;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.ToString());
             }

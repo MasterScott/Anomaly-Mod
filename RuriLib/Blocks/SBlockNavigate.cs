@@ -10,14 +10,17 @@ namespace RuriLib
     public class SBlockNavigate : BlockBase
     {
         private string url = "https://example.com";
+
         /// <summary>The destination URL.</summary>
         public string Url { get { return url; } set { url = value; OnPropertyChanged(); } }
 
         private int timeout = 60;
+
         /// <summary>The maximum time to wait for the page to load.</summary>
         public int Timeout { get { return timeout; } set { timeout = value; OnPropertyChanged(); } }
 
         private bool banOnTimeout = true;
+
         /// <summary>Whether to set the status to BAN after a timeout.</summary>
         public bool BanOnTimeout { get { return banOnTimeout; } set { banOnTimeout = value; OnPropertyChanged(); } }
 

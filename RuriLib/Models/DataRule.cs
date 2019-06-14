@@ -1,10 +1,5 @@
 ﻿using Newtonsoft.Json;
 using RuriLib.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RuriLib.Models
 {
@@ -35,14 +30,17 @@ namespace RuriLib.Models
     public class DataRule : ViewModelBase
     {
         private string sliceName = "";
+
         /// <summary>The name of the specific slice (defined in the WordlistType) this rule refers to.</summary>
         public string SliceName { get { return sliceName; } set { sliceName = value; OnPropertyChanged(); } }
 
         private RuleType ruleType = RuleType.MustContain;
+
         /// <summary>The type of the rule.</summary>
         public RuleType RuleType { get { return ruleType; } set { ruleType = value; OnPropertyChanged(); } }
 
         private string ruleString = "Lowercase";
+
         /// <summary>The characters to search in the sliced value. Defaults are Lowercase, Uppercase, Digit, Symbol. Custom character sets can be created by concatenating the characters in a single string (e.g. ABCDEF).</summary>
         public string RuleString { get { return ruleString; } set { ruleString = value; OnPropertyChanged(); } }
 

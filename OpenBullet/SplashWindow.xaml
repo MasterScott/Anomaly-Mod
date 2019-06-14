@@ -71,7 +71,6 @@
                     x:Name="loginButton_Copy"
                     Content="LAUNCH"
                     Click="login" Width="111" />
-
             </DockPanel>
             <Label
                 x:Name="resultLabel"
@@ -82,7 +81,7 @@
                     Content="Check For Update"
                     Click="Update" />
             </Label>
-            <TextBox x:Name="ChangeLogBox" Height="106" TextWrapping="Wrap" Text="ChangeLog:" Margin="20,0,19,0" TextChanged="TextBox_TextChanged" VerticalAlignment="Top" TextAlignment="Left"/>
+            <TextBox x:Name="ChangeLogBox" Height="106" TextWrapping="Wrap" Text="ChangeLog:" Margin="20,0,19,0" TextChanged="TextBox_TextChanged" VerticalAlignment="Top" TextAlignment="Left" />
         </StackPanel>
         <Label Content="V: 1.2.8 BETA" VerticalAlignment="Stretch" Margin="0,-5,282,299"
                Grid.ColumnSpan="2" />

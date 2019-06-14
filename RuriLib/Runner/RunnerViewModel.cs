@@ -23,8 +23,10 @@ namespace RuriLib.Runner
     {
         /// <summary>Use the default setting in the config.</summary>
         Default,
+
         /// <summary>Always use proxies.</summary>
         On,
+
         /// <summary>Never use proxies.</summary>
         Off
     }
@@ -35,6 +37,7 @@ namespace RuriLib.Runner
     public class RunnerViewModel : ViewModelBase, IRunnerMessaging
     {
         #region Constructor
+
         /// <summary>
         /// Constructs the RunnerViewModel instance.
         /// </summary>
@@ -47,23 +50,31 @@ namespace RuriLib.Runner
             OnPropertyChanged("Busy");
             OnPropertyChanged("ControlsEnabled");
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Settings
+
         private RLSettingsViewModel Settings { get; set; }
         private EnvironmentSettings Env { get; set; }
-        #endregion
+
+        #endregion Settings
 
         #region Workers
+
         /// <summary>The Master Worker that manages all the other Workers and updates the observable properties.</summary>
         public AbortableBackgroundWorker Master { get; set; } = new AbortableBackgroundWorker();
+
         /// <summary>The status of the Master Worker.</summary>
         public WorkerStatus WorkerStatus { get { return Master.Status; } }
+
         /// <summary>The managed workers that run single data checks.</summary>
         public ObservableCollection<RunnerBotViewModel> Bots { get; } = new ObservableCollection<RunnerBotViewModel>();
-        #endregion
+
+        #endregion Workers
 
         #region Visible Properties and Components
+
         /// <summary>Whether the Master Worker is busy or idle.</summary>
         public bool Busy { get { return Master.Status != WorkerStatus.Idle; } }
 
@@ -71,10 +82,12 @@ namespace RuriLib.Runner
         public bool ControlsEnabled { get { return !Busy; } }
 
         private int botsNumber = 1;
+
         /// <summary>The amount of bots to run simultaneously for multi-threaded checking.</summary>
         public int BotsNumber { get { return botsNumber; } set { botsNumber = value; OnPropertyChanged(); } }
 
         private int startingPoint = 1;
+
         /// <summary>How many data lines to skip before starting the checking process.</summary>
         public int StartingPoint { get { return startingPoint; } set { startingPoint = value; OnPropertyChanged(); OnPropertyChanged("Progress"); } }
 
@@ -103,6 +116,7 @@ namespace RuriLib.Runner
         }
 
         private int cpm = 0;
+
         /// <summary>The checks per minute.</summary>
         public int CPM
         {
@@ -138,6 +152,7 @@ namespace RuriLib.Runner
         }
 
         private double _balance = 0;
+
         /// <summary>The remaining balance in the captcha solver account.</summary>
         public double Balance { get { return _balance; } set { _balance = value; OnPropertyChanged("BalanceString"); } }
 
@@ -145,6 +160,7 @@ namespace RuriLib.Runner
         public string BalanceString { get { return $"${_balance}"; } }
 
         private ProxyMode proxyMode = ProxyMode.Default;
+
         /// <summary>The Proxy Mode.</summary>
         public ProxyMode ProxyMode { get { return proxyMode; } set { proxyMode = value; OnPropertyChanged(); } }
 
@@ -189,9 +205,11 @@ namespace RuriLib.Runner
 
         /// <summary>The size of the DataPool.</summary>
         public int DataSize { get { return DataPool.Size; } }
-        #endregion
+
+        #endregion Visible Properties and Components
 
         #region Bot-Shared Fields
+
         /// <summary>The pairs of (variable name, value) set by the user.</summary>
         public List<KeyValuePair<string, string>> CustomInputs { get; set; } = new List<KeyValuePair<string, string>>();
 
@@ -200,9 +218,11 @@ namespace RuriLib.Runner
 
         /// <summary>The Global Cookies list that are set in all bots when they start.</summary>
         public CookieDictionary GlobalCookies { get; set; } = new CookieDictionary();
-        #endregion
+
+        #endregion Bot-Shared Fields
 
         #region Results
+
         /// <summary>The list of data lines checked with a FAIL outcome.</summary>
         public List<ValidData> FailedList { get; set; } = new List<ValidData>();
 
@@ -234,14 +254,17 @@ namespace RuriLib.Runner
         public int ToCheckCount { get { return ToCheckList.Count; } }
 
         private int retryCount = 0;
+
         /// <summary>Amount of data lines retried due to a BAN, RETRY or ERROR outcome.</summary>
         public int RetryCount { get { return retryCount; } set { retryCount = value; OnPropertyChanged(); } }
 
         /// <summary>Total amount of successfully tested data lines.</summary>
         public int TestedCount { get { return FailCount + HitCount + CustomCount + ToCheckCount; } }
-        #endregion
+
+        #endregion Results
 
         #region Locks
+
         /// <summary>Whether the workers are waiting for proxies to be reloaded.</summary>
         private bool IsReloadingProxies { get; set; } = false;
 
@@ -253,9 +276,11 @@ namespace RuriLib.Runner
 
         /// <summary>Whether the Custom Inputs have already been initialized.</summary>
         public bool CustomInputsInitialized { get; set; } = false;
-        #endregion
+
+        #endregion Locks
 
         #region Timing
+
         private Stopwatch Timer { get; set; } = new Stopwatch();
 
         /// <summary>Days elapsed since the runner was started.</summary>
@@ -287,9 +312,11 @@ namespace RuriLib.Runner
                 return $"{amountLeft} {unitOfTime} left";
             }
         }
-        #endregion
+
+        #endregion Timing
 
         #region Setters
+
         /// <summary>
         /// Sets a Config in the Runner instance.
         /// </summary>
@@ -312,9 +339,11 @@ namespace RuriLib.Runner
             OnPropertyChanged("WordlistName");
             OnPropertyChanged("WordlistSize");
         }
-        #endregion
+
+        #endregion Setters
 
         #region Worker Control Methods
+
         /// <summary>
         /// Starts the Master Worker.
         /// </summary>
@@ -369,7 +398,8 @@ namespace RuriLib.Runner
             RaiseWorkerStatusChanged();
             StartingPoint += TestedCount;
         }
-        #endregion
+
+        #endregion Worker Control Methods
 
         #region Master Run Logic
 
@@ -583,7 +613,8 @@ namespace RuriLib.Runner
             AbortAllBots();
             StartingPoint += TestedCount;
         }
-        #endregion
+
+        #endregion Master Run Logic
 
         #region Bot Run Logic
 
@@ -875,7 +906,8 @@ namespace RuriLib.Runner
         {
             return Master.CancellationPending || Master.Status != WorkerStatus.Running;
         }
-        #endregion
+
+        #endregion Bot Run Logic
 
         #region Update Methods
 
@@ -922,9 +954,11 @@ namespace RuriLib.Runner
         {
             OnPropertyChanged("CPM");
         }
-        #endregion
+
+        #endregion Update Methods
 
         #region Interface Calls
+
         /// <summary>
         /// Fired when a new message needs to be logged.
         /// </summary>
@@ -995,7 +1029,8 @@ namespace RuriLib.Runner
         {
             AskCustomInputs?.Invoke(this);
         }
-        #endregion
+
+        #endregion Interface Calls
 
         #region Proxy Management Methods
 
@@ -1133,7 +1168,8 @@ namespace RuriLib.Runner
 
             return proxies;
         }
-        #endregion
+
+        #endregion Proxy Management Methods
 
         #region Bot Management Methods
 
@@ -1167,7 +1203,8 @@ namespace RuriLib.Runner
                 catch (Exception ex) { RaiseMessageArrived(LogLevel.Error, $"Error while quitting driver {bot.Id}: " + ex.Message, false); }
             }
         }
-        #endregion
+
+        #endregion Bot Management Methods
 
         #region Utility Methods
 
@@ -1184,6 +1221,7 @@ namespace RuriLib.Runner
             else if (a > max) return max;
             else return a;
         }
-        #endregion
+
+        #endregion Utility Methods
     }
 }

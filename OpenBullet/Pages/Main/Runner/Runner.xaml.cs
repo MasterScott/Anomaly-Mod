@@ -258,7 +258,7 @@ namespace OpenBullet
         {
             vm.BotsNumber = (int)e.NewValue;
             if (botsSlider.Value == 300)
-                {
+            {
                 MessageBox.Show("Bots Over 300 and Higher can cause System / OpenBullet Instabillity", "OpenBullet Warning");
             }
         }

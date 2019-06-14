@@ -50,7 +50,7 @@
             </DockPanel>
             <DockPanel Grid.Column="2" Grid.Row="1">
                 <Label Content="Success Key:" VerticalAlignment="Center" />
-                <TextBox Name="SuccessKey"  Margin="5" Text="{Binding SuccessKey}" VerticalContentAlignment="Center" TextWrapping="Wrap"/>
+                <TextBox Name="SuccessKey"  Margin="5" Text="{Binding SuccessKey}" VerticalContentAlignment="Center" TextWrapping="Wrap" />
             </DockPanel>
         </Grid>
 
