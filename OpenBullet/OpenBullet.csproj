@@ -844,6 +844,7 @@
     <Resource Include="Images\Icons\git.png" />
     <Resource Include="Images\Icons\retry.png" />
     <Resource Include="Images\OBSplash.png" />
+    <Resource Include="Images\Logo.png" />
     <Content Include="Sounds\rifle_hit.wav" />
     <Content Include="Sounds\rifle_reload.wav" />
   </ItemGroup>

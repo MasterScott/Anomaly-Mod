@@ -86,8 +86,8 @@
         <Label Content="V: 1.2.9 BETA" VerticalAlignment="Stretch" Margin="0,-5,282,299"
                Grid.ColumnSpan="2" />
         <Image
-                Source="Images/OBIcon.png"
-                Margin="20,10,36,227" Grid.Column="1" />
-        <Button Content="Join Anomaly Discord" Margin="20,318,36,170" Grid.Column="1" Click="Button_Click" />
+                Source="Images/logo.png"
+                Margin="106,35,108,490" Grid.Column="1" />
+        <Button Content="Join Anomaly Discord" Margin="64,325,64,419" Grid.Column="1" Click="Button_Click" />
     </Grid>
 </Window>
