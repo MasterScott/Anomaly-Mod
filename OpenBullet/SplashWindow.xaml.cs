@@ -18,7 +18,7 @@ namespace OpenBullet
         // Local Version Number
         public string CurrentVersion = "1.2.8".Trim();
         // URL for the Changelog
-        public static string ChangelogURL = "https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod/master/Changelog?token=AKIMR62T4O6BCMH3CSOZVMS5AMQX6";
+        public static string ChangelogURL = "https://raw.githubusercontent.com/PurityWasHere/UnSubRepo/master/Changelog";
         private readonly WebClient ChangelogGet = new WebClient();
 
         public SplashWindow()
@@ -65,7 +65,7 @@ namespace OpenBullet
         {
             //Update Check. Checks the Version Number from a URL and compares it to the Local Version
             var wc = new WebClient();
-            string NewestVersion = wc.DownloadString("https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod/master/NewestVersion?token=AKIMR64WYEVUMIFO2X4YCE25AMQU2");
+            string NewestVersion = wc.DownloadString("https://raw.githubusercontent.com/PurityWasHere/UnSubRepo/master/CurrentVersion");
             string NewVersionTrimmed = NewestVersion.Trim();
             if (CurrentVersion.Equals(NewVersionTrimmed))
             {
