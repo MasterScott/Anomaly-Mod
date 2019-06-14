@@ -11,21 +11,20 @@ namespace OpenBullet
     /// <summary>
     ///     Logica di interazione per SplashWindow.xaml
     /// </summary>
-    ///
+    /// 
     [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
     public partial class SplashWindow : Window
     {
         // Local Version Number
         public string CurrentVersion = "1.2.8".Trim();
-
         // URL for the Changelog
-        public static string ChangelogURL = "https://raw.githubusercontent.com/PurityWasHere/Anomally-Mod-Hosting/master/Changelog";
-
+        public static string ChangelogURL = "https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/Changelog";
         private readonly WebClient ChangelogGet = new WebClient();
 
         public SplashWindow()
         {
             InitializeComponent();
+         
         }
 
         private void agreeButton_Click(object sender, RoutedEventArgs e)
@@ -33,6 +32,7 @@ namespace OpenBullet
             Close();
         }
 
+        
         public void login(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -65,7 +65,7 @@ namespace OpenBullet
         {
             //Update Check. Checks the Version Number from a URL and compares it to the Local Version
             var wc = new WebClient();
-            string NewestVersion = wc.DownloadString("https://raw.githubusercontent.com/PurityWasHere/Anomally-Mod-Hosting/master/VersionNumber");
+            string NewestVersion = wc.DownloadString("https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/VersionNumber");
             string NewVersionTrimmed = NewestVersion.Trim();
             if (CurrentVersion.Equals(NewVersionTrimmed))
             {
