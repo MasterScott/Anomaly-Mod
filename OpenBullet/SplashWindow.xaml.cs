@@ -76,7 +76,7 @@ namespace OpenBullet
                 if (dialogResult == MessageBoxResult.Yes)
                 {
                     System.Windows.MessageBox.Show("The Launcher will now close and Updater will open.", "OpenBullet Updater");
-                    Process.Start("OB_Updater");
+                    Process.Start("Anomaly Updater");
                     Environment.Exit(0);
                 }
             }
@@ -86,6 +86,11 @@ namespace OpenBullet
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeLogBox.Text = ChangelogGet.DownloadString(ChangelogURL);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://discord.gg/h4Ug5Uk");
         }
     }
 }

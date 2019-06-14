@@ -87,6 +87,7 @@
                Grid.ColumnSpan="2" />
         <Image
                 Source="Images/OBIcon.png"
-                Margin="18,40,36,197" Grid.Column="1" />
+                Margin="20,10,36,227" Grid.Column="1" />
+        <Button Content="Join Anomaly Discord" Margin="20,318,36,170" Grid.Column="1" Click="Button_Click" />
     </Grid>
 </Window>
