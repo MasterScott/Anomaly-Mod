@@ -1,0 +1,93 @@
+﻿<Window x:Class="OpenBullet.SplashWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OpenBullet"
+        mc:Ignorable="d"
+        Title="SplashWindow" Height="380"
+        Width="750"
+        WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip"
+        Background="{DynamicResource BackgroundMain}" MouseDown="WindowMouseDown">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="37.321" />
+            <ColumnDefinition Width="358.679" />
+            <ColumnDefinition
+                Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="auto" />
+            <RowDefinition
+                Height="auto" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            Grid.Row="1"
+            TextAlignment="Center"
+            Margin="0,38,0,-28" Grid.ColumnSpan="2">
+            <Span
+                Foreground="{DynamicResource ForegroundBad}">
+                <Bold>ATTENTION!</Bold>
+            </Span>
+            <Span
+                Foreground="#FFFD7300">
+                Respects to Forlax and Ruri for first developing BB and OB<LineBreak />
+            </Span>
+        </TextBlock>
+        <StackPanel
+            Grid.Column="2"
+            Margin="5,5,5,0" Height="365" VerticalAlignment="Top" Grid.RowSpan="2">
+            <Image x:Name="quitImage" Source="/Images/Icons/quit.png" Width="15" Height="15"
+                   HorizontalAlignment="Right" Margin="3" MouseDown="quitImage_MouseDown" />
+            <Image
+                Source="/Images/OBIcon.png"
+                Margin="20,-10,19,20" Height="83" />
+            <Label
+                Content="FOR EDUCATIONAL USE ONLY"
+                HorizontalAlignment="Center"
+                FontWeight="Bold"
+                Margin="0 -10 0 0" />
+            <Label
+                Content="The developer will not be held responsible"
+                HorizontalAlignment="Center"
+                FontSize="11"
+                Margin="0 -5 0 0" />
+            <Label
+                Content="for any improper use of the program."
+                HorizontalAlignment="Center"
+                FontSize="11"
+                Margin="0 -10 0 0" />
+            <Grid
+                Margin="0 10 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <DockPanel>
+                <Button
+                    x:Name="loginButton_Copy"
+                    Content="LAUNCH"
+                    Click="login" Width="111" />
+
+            </DockPanel>
+            <Label
+                x:Name="resultLabel"
+                HorizontalAlignment="Center"
+                Margin="0 3 0 0" Foreground="#FF3AFF00">
+                <Button
+                    x:Name="UpdateButton"
+                    Content="Check For Update"
+                    Click="Update" />
+            </Label>
+            <TextBox x:Name="ChangeLogBox" Height="106" TextWrapping="Wrap" Text="ChangeLog:" Margin="20,0,19,0" TextChanged="TextBox_TextChanged" VerticalAlignment="Top" TextAlignment="Left"/>
+        </StackPanel>
+        <Label Content="V: 1.2.8 BETA" VerticalAlignment="Stretch" Margin="0,-5,282,299"
+               Grid.ColumnSpan="2" />
+        <Image
+                Source="Images/OBIcon.png"
+                Margin="18,40,36,197" Grid.Column="1" />
+    </Grid>
+</Window>
