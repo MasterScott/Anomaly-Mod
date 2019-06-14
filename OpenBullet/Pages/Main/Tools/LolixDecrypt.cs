@@ -168,8 +168,8 @@ namespace OpenBullet.Pages.Main.Tools
 
         private void SaveConfig_Click(object sender, RoutedEventArgs e)
         {
-            File.WriteAllText(PathName.Text + "_Decrypted.loli", save);
-            System.Windows.Forms.MessageBox.Show("Saved to: " + PathName.Text + "_Decrypted.loli");
+            File.WriteAllText(PathName.Text + "_Decrypted.anom", save);
+            System.Windows.Forms.MessageBox.Show("Saved to: " + PathName.Text + "_Decrypted.anom");
         }
     }
 }

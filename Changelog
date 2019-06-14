@@ -1,4 +1,8 @@
-Changelog: Version 1.2.7
-Added ability to disable the discord popup
-Added loliX decryption tab to tools
-Added search ability to runner dialog
+Changelog: Version 1.2.9
+Changed name from Modded to Anomaly
+Added acceptance of .anom configs (.loli still supported)
+Added creation of .anom configs
+Changed Decrypter to save as .anom instead of .loli
+Fixed crashing issue when Proxy setting files are missing
+New updater released
+Removed unfinished variables

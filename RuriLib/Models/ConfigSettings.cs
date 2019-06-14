@@ -48,6 +48,11 @@ namespace RuriLib
         /// <summary>The version of RuriLib the Config was made with.</summary>
         public string Version { get { return version; } set { version = value; OnPropertyChanged(); } }
 
+        private bool loliSave = false;
+
+        /// <summary>Whether to save as .anom or .loli.</summary>
+        public bool LoliSave { get { return loliSave; } set { loliSave = value; OnPropertyChanged(); } }
+
         #endregion General
 
         #region Requests

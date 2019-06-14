@@ -199,10 +199,15 @@ namespace OpenBullet
             (new MainDialog(new DialogNewConfig(this), "New Config")).ShowDialog();
         }
 
+        //ConfigSettings configSettings = new ConfigSettings();
+
         public void CreateConfig(string name, string category, string author)
         {
+            //var path = "";
             // Build the filename
-            var path = Globals.configFolder + "\\" + (category == "Default" ? "" : (category + "\\")) + name + ".loli";
+            //if(configSettings.LoliSave)
+            var path = Globals.configFolder + "\\" + (category == "Default" ? "" : (category + "\\")) + name + ".anom";//".loli";
+            //else { path = Globals.configFolder + "\\" + (category == "Default" ? "" : (category + "\\")) + name + ".anom"; }
 
             // Create the Category folder if it doesn't exist
             if (category != "Default")
