@@ -139,6 +139,8 @@ namespace OpenBullet.ViewModels
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public List<ConfigViewModel> GetConfigsFromSources()
         {
+            Source gitHub = new Source(6698);
+
             var list = new List<ConfigViewModel>();
             cachedConfigs = new List<ConfigViewModel>();
 
@@ -146,7 +148,6 @@ namespace OpenBullet.ViewModels
             {
                 try
                 {
-                    Source gitHub = new Source(6698);
                     gitHub.ApiUrl = "https://github.com/PurityWasHere/Anomaly-Mod-Hosting/blob/master/Configs.zip?raw=true";
 
                     counter++;
@@ -188,7 +189,8 @@ namespace OpenBullet.ViewModels
                 status = wc.ResponseHeaders["Result"];
                 if (status != null && status == "Error")
                 {
-                    MessageBox.Show($"Error from API {source.ApiUrl}\r\nThe server says: {Encoding.ASCII.GetString(file)}");
+                    if (!source.ApiUrl.Contains("Anomaly-Mod-Hosting"))
+                        MessageBox.Show($"Error from API {source.ApiUrl}\r\nThe server says: {Encoding.ASCII.GetString(file)}");
                     continue;
                 }
 

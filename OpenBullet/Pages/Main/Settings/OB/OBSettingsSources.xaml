@@ -47,7 +47,7 @@
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0" Content="API Url:" />
-                            <TextBox Grid.Column="1" Text="{Binding ApiUrl}" Margin="5 0" />
+                            <TextBox Grid.Column="1" Text="{Binding ApiUrl}" Visibility="{Binding ApiUrlVisible}" Margin="5 0" />
                             <ComboBox Tag="{Binding Id}" Grid.Column="2" x:Name="authTypeCombobox" Margin="5 0" SelectionChanged="authTypeCombobox_SelectionChanged" Loaded="authTypeCombobox_Loaded" />
 
                             <Label Grid.Column="3" Content="API Key:" Visibility="{Binding ApiKeyVisible}" />

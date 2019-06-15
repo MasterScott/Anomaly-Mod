@@ -33,10 +33,13 @@ namespace OpenBullet.Models
         public bool AuthInitialized { get; set; } = false;
 
         [JsonIgnore]
-        public Visibility ApiKeyVisible { get { return Auth == AuthMode.ApiKey ? Visibility.Visible : Visibility.Collapsed; } }
+        public Visibility ApiUrlVisible { get { return Id == 6698 ? Visibility.Collapsed : Visibility.Visible; } }
 
         [JsonIgnore]
-        public Visibility UserPassVisible { get { return Auth == AuthMode.UserPass ? Visibility.Visible : Visibility.Collapsed; } }
+        public Visibility ApiKeyVisible { get { return Auth == AuthMode.ApiKey && Id != 6698 ? Visibility.Visible : Visibility.Collapsed; } }
+
+        [JsonIgnore]
+        public Visibility UserPassVisible { get { return Auth == AuthMode.UserPass && Id != 6698 ? Visibility.Visible : Visibility.Collapsed; } }
 
         public Source(int id)
         {
