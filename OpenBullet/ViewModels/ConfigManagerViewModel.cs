@@ -144,12 +144,15 @@ namespace OpenBullet.ViewModels
 
             if (counter == 0)
             {
-                Source gitHub = new Source(6698);
-                gitHub.ApiUrl = "https://github.com/PurityWasHere/Anomaly-Mod-Hosting/blob/master/Configs.zip?raw=true";
-                gitHub.ApiKey = "";
+                try
+                {
+                    Source gitHub = new Source(6698);
+                    gitHub.ApiUrl = "https://github.com/PurityWasHere/Anomaly-Mod-Hosting/blob/master/Configs.zip?raw=true";
 
-                counter++;
-                Globals.obSettings.Sources.Sources.Add(gitHub);
+                    counter++;
+                    Globals.obSettings.Sources.Sources.Add(gitHub);
+                }
+                catch { }
             }
 
             foreach (var source in Globals.obSettings.Sources.Sources)
@@ -177,7 +180,8 @@ namespace OpenBullet.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Could not contact API {source.ApiUrl}\r\nReason: {ex.Message}");
+                    if(!source.ApiUrl.Contains("Anomaly-Mod-Hosting"))
+                        MessageBox.Show($"Could not contact API {source.ApiUrl}\r\nReason: {ex.Message}");
                     continue;
                 }
 

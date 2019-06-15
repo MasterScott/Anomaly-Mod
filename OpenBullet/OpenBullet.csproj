@@ -94,7 +94,7 @@
       <HintPath>..\packages\DiscordRichPresence.1.0.105\lib\net35\DiscordRPC.dll</HintPath>
     </Reference>
     <Reference Include="DotNetZip">
-      <HintPath>..\..\Test\DotNetZip.dll</HintPath>
+      <HintPath>..\packages\DotNetZip.dll</HintPath>
     </Reference>
     <Reference Include="Extreme.Net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
