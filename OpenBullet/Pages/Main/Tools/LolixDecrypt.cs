@@ -40,27 +40,30 @@ namespace OpenBullet.Pages.Main.Tools
                 FileName = lolixConfig.FileName;
                 PathName.Text = FileName;
             }
-            string s = File.ReadAllText(PathName.Text);
-            try
+            if (FileName != "")
             {
-                if (!s.Contains("Body") || !s.Contains("ID"))
+                string s = File.ReadAllText(PathName.Text);
+                try
                 {
-                    byte[] bytes = Convert.FromBase64String(s);
-                    s = DecryptX(Regex.Match(Encoding.UTF8.GetString(bytes), "x0;(.*?)0;x").Groups[1].Value, "0THISISOBmodedByForlaxNIGGAs");
-                    textBox1.Text = s;
-                    save = s;
+                    if (!s.Contains("Body") || !s.Contains("ID"))
+                    {
+                        byte[] bytes = Convert.FromBase64String(s);
+                        s = DecryptX(Regex.Match(Encoding.UTF8.GetString(bytes), "x0;(.*?)0;x").Groups[1].Value, "0THISISOBmodedByForlaxNIGGAs");
+                        textBox1.Text = s;
+                        save = s;
+                    }
+                    else
+                    {
+                        byte[] bytes = Convert.FromBase64String(BellaCiao(Regex.Match(s, "\"Body\": \"(.*?)\"").Groups[1].Value, 2));
+                        s = DecryptX(Regex.Match(Encoding.UTF8.GetString(bytes), "x0;(.*?)0;x").Groups[1].Value, "0THISISOBmodedByForlaxNIGGAs");
+                        textBox1.Text = s;
+                        save = s;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    byte[] bytes = Convert.FromBase64String(BellaCiao(Regex.Match(s, "\"Body\": \"(.*?)\"").Groups[1].Value, 2));
-                    s = DecryptX(Regex.Match(Encoding.UTF8.GetString(bytes), "x0;(.*?)0;x").Groups[1].Value, "0THISISOBmodedByForlaxNIGGAs");
-                    textBox1.Text = s;
-                    save = s;
+                    System.Windows.Forms.MessageBox.Show(ex.ToString());
                 }
-            }
-            catch (Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.ToString());
             }
         }
 
