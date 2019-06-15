@@ -10,6 +10,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Timers;
 using System.Windows;
 
 namespace OpenBullet.ViewModels
@@ -78,6 +79,17 @@ namespace OpenBullet.ViewModels
                 );
             }
 
+            System.Timers.Timer myTimer = new Timer(30001);
+            myTimer.Start();
+            myTimer.Elapsed += new ElapsedEventHandler(myTimer_Elapsed);
+
+
+            void myTimer_Elapsed(object sender, ElapsedEventArgs e)
+            {
+                GetConfigsFromSources();
+            }
+
+
             OnPropertyChanged("Total");
         }
 
@@ -117,6 +129,7 @@ namespace OpenBullet.ViewModels
             if (sort) { models.Sort((m1, m2) => m1.Config.Settings.LastModified.CompareTo(m2.Config.Settings.LastModified)); }
             return models;
         }
+
 
         public List<ConfigViewModel> GetConfigsFromSources()
         {
@@ -185,3 +198,4 @@ namespace OpenBullet.ViewModels
         }
     }
 }
+      
