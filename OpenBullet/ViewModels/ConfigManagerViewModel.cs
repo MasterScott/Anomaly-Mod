@@ -9,6 +9,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Timers;
 using System.Windows;
@@ -20,6 +21,9 @@ namespace OpenBullet.ViewModels
         private List<ConfigViewModel> cachedConfigs = new List<ConfigViewModel>();
 
         private ObservableCollection<ConfigViewModel> configsList;
+
+        string status = null;
+        public int counter = 0;
 
         public ObservableCollection<ConfigViewModel> ConfigsList
         {
@@ -79,15 +83,17 @@ namespace OpenBullet.ViewModels
                 );
             }
 
-            System.Timers.Timer myTimer = new Timer(30001);
-            myTimer.Start();
-            myTimer.Elapsed += new ElapsedEventHandler(myTimer_Elapsed);
+            //System.Timers.Timer myTimer = new Timer(600000);
+            //myTimer.Start();
+            //myTimer.Elapsed += new ElapsedEventHandler(myTimer_Elapsed);
 
 
-            void myTimer_Elapsed(object sender, ElapsedEventArgs e)
-            {
-                GetConfigsFromSources();
-            }
+            //void myTimer_Elapsed(object sender, ElapsedEventArgs e)
+            //{
+            //    GetConfigsFromSources();
+            //    if (status == "Error") { }
+            //        //foreach (RunnerManagerViewModel runner in )
+            //}
 
 
             OnPropertyChanged("Total");
@@ -130,11 +136,21 @@ namespace OpenBullet.ViewModels
             return models;
         }
 
-
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public List<ConfigViewModel> GetConfigsFromSources()
         {
             var list = new List<ConfigViewModel>();
             cachedConfigs = new List<ConfigViewModel>();
+
+            if (counter == 0)
+            {
+                Source gitHub = new Source(6698);
+                gitHub.ApiUrl = "https://github.com/PurityWasHere/Anomaly-Mod-Hosting/blob/master/Configs.zip?raw=true";
+                gitHub.ApiKey = "";
+
+                counter++;
+                Globals.obSettings.Sources.Sources.Add(gitHub);
+            }
 
             foreach (var source in Globals.obSettings.Sources.Sources)
             {
@@ -165,7 +181,7 @@ namespace OpenBullet.ViewModels
                     continue;
                 }
 
-                var status = wc.ResponseHeaders["Result"];
+                status = wc.ResponseHeaders["Result"];
                 if (status != null && status == "Error")
                 {
                     MessageBox.Show($"Error from API {source.ApiUrl}\r\nThe server says: {Encoding.ASCII.GetString(file)}");
