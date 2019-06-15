@@ -12,6 +12,7 @@ using System.Net;
 using System.Text;
 using System.Timers;
 using System.Windows;
+using Ionic.Zip;
 
 namespace OpenBullet.ViewModels
 {
@@ -79,15 +80,16 @@ namespace OpenBullet.ViewModels
                 );
             }
 
-            System.Timers.Timer myTimer = new Timer(30001);
-            myTimer.Start();
-            myTimer.Elapsed += new ElapsedEventHandler(myTimer_Elapsed);
+           /// System.Timers.Timer myTimer = new Timer(30000);
+            ///myTimer.Start();
+           /// myTimer.Elapsed += new ElapsedEventHandler(myTimer_Elapsed);
 
 
-            void myTimer_Elapsed(object sender, ElapsedEventArgs e)
-            {
-                GetConfigsFromSources();
-            }
+           /// void myTimer_Elapsed(object sender, ElapsedEventArgs e)
+           /// {
+             ///   GetConfigsFromSources();
+
+           /// }
 
 
             OnPropertyChanged("Total");
