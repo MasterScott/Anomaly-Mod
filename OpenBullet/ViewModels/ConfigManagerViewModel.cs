@@ -65,6 +65,7 @@ namespace OpenBullet.ViewModels
             OnPropertyChanged("CurrentConfigName");
         }
 
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public void RefreshList(bool pullSources)
         {
             // Scan the directory and the sources for configs
@@ -99,6 +100,7 @@ namespace OpenBullet.ViewModels
             OnPropertyChanged("Total");
         }
 
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public List<ConfigViewModel> GetConfigsFromDisk(bool sort = false)
         {
             List<ConfigViewModel> models = new List<ConfigViewModel>();
