@@ -62,12 +62,14 @@ namespace OpenBullet.ViewModels
                     MessageBox.Show("ProxySite Settings file not found, generating a default one");
                     myFile = File.Create(@"Settings/ProxySite.txt");
                     myFile.Close();
+                    File.WriteAllText(@"Settings/ProxySite.txt", "Https://Google.com");
                 }
                 if (ex.ToString().Contains("ProxyKey"))
                 {
                     MessageBox.Show("ProxyKey Settings file not found, generating a default one");
                     myFile = File.Create(@"Settings/ProxyKey.txt");
                     myFile.Close();
+                    File.WriteAllText(@"Settings/ProxyKey.txt", "</title>");
                 }
                 goto Retry;
             }

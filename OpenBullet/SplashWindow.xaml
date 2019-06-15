@@ -24,9 +24,8 @@
                 Height="auto" />
         </Grid.RowDefinitions>
         <TextBlock
-            Grid.Row="1"
             TextAlignment="Center"
-            Margin="0,38,0,-28" Grid.ColumnSpan="2">
+            Margin="5,367,349,390" Grid.ColumnSpan="3">
             <Span
                 Foreground="{DynamicResource ForegroundBad}">
                 <Bold>ATTENTION!</Bold>
@@ -88,6 +87,6 @@
         <Image
                 Source="Images/logo.png"
                 Margin="106,35,108,490" Grid.Column="1" />
-        <Button Content="Join Anomaly Discord" Margin="64,325,64,419" Grid.Column="1" Click="Button_Click" />
+        <Button Content="Join Anomaly Discord" Margin="64,317,64,427" Grid.Column="1" Click="Button_Click" />
     </Grid>
 </Window>
