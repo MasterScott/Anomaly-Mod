@@ -76,7 +76,6 @@
         <TextBox Name ="NewSep" HorizontalAlignment="Left" Height="23" Margin="165,104,0,0" Grid.Row="3" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="23" />
         <Label Content=": Current / New Seperator" HorizontalAlignment="Left" Margin="188,105,0,0" Grid.Row="3" VerticalAlignment="Top" Height="30" />
         <Label Content=": Amount of Lines till Split " HorizontalAlignment="Left" Margin="176,52,0,0" Grid.Row="3" VerticalAlignment="Top" Height="30" />
-        <TextBlock HorizontalAlignment="Stretch" Margin="160,0,131,0" Grid.Row="4" TextWrapping="Wrap" Text="WARNING: If you dont select a File it WILL Crash" VerticalAlignment="Top" Width="509" FontSize="20" Foreground="Red" />
         <Label Content="Ex: 20,000 Line file with 10000 Split will result in 2 10,000 line files" HorizontalAlignment="Left" Margin="181,73,0,0" Grid.Row="3" VerticalAlignment="Top" />
     </Grid>
 </Page>
