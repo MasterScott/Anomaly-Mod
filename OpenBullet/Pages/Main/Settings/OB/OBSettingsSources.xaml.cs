@@ -13,8 +13,11 @@ namespace OpenBullet
     {
         private ViewModels.OBSettingsSources vm;
         private Random rand = new Random();
+
+
+
         //Gets Update URL
-        private string UpdateDateURL = "https://github.com/PurityWasHere/Anomaly-Mod-Hosting/blob/master/Update.zip";
+        private string UpdateDateURL = "https://github.com/PurityWasHere/Anomaly-Mod-Hosting/blob/master/Configs.zip";
 
 
         public OBSettingsSources()
