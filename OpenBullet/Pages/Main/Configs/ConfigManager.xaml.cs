@@ -298,5 +298,10 @@ namespace OpenBullet
         {
             loadConfigButton_Click(this, new RoutedEventArgs());
         }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+                Globals.obSettings.General.DisableRepo = !Globals.obSettings.General.DisableRepo;
+        }
     }
 }

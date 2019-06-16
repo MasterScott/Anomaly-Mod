@@ -22,6 +22,8 @@ namespace OpenBullet.ViewModels
 
         private ObservableCollection<ConfigViewModel> configsList;
 
+        private ConfigManager configManager;// = new ConfigManager();
+
         string status = null;
         //public int counter = 0;
 
@@ -208,12 +210,12 @@ namespace OpenBullet.ViewModels
                                 {
                                     var text = tr.ReadToEnd();
                                     var cfg = IOManager.DeserializeConfig(text);
-                                    if (entry.FullName.Contains("REPO.anom"))
+                                    if (entry.FullName.Contains("REPO.anom") && Globals.obSettings.General.DisableRepo == false)
                                     {
                                         list.Add(new ConfigViewModel("", "Repository", cfg, true));
                                         cachedConfigs.Add(new ConfigViewModel("", "Repository", cfg, true));
                                     }
-                                    else
+                                    else if(!entry.FullName.Contains("REPO.anom"))
                                     {
                                         list.Add(new ConfigViewModel("", "Remote", cfg, true));
                                         cachedConfigs.Add(new ConfigViewModel("", "Remote", cfg, true));
