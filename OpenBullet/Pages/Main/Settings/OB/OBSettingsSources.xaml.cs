@@ -14,8 +14,8 @@ namespace OpenBullet
         private ViewModels.OBSettingsSources vm;
         private Random rand = new Random();
         //Gets Update URL
-        private string UpdateDateURL = "https://github.com/PurityWasHere/Anomaly-Mod-Hosting/blob/master/Configs.zip";
 
+        private string UpdateDateURL = "https://github.com/PurityWasHere/Anomaly-Mod-Hosting/blob/master/Configs.zip";
         public OBSettingsSources()
         {
             InitializeComponent();
@@ -24,9 +24,13 @@ namespace OpenBullet
             DataContext = vm;
             //Collects Page, Turns to Document, Then Grabs XPATH.
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(UpdateDateURL);
-            string LastUpdate = doc.DocumentNode.SelectNodes("/html/body/div[4]/div/main/div[2]/div[1]/div[3]/div[1]/span[2]/relative-time")[0].InnerText;
-            UpdateDate.Content = "Last Repo Update: " + LastUpdate;
+            try
+            {
+                HtmlDocument doc = web.Load(UpdateDateURL);
+                string LastUpdate = doc.DocumentNode.SelectNodes("/html/body/div[4]/div/main/div[2]/div[1]/div[3]/div[1]/span[2]/relative-time")[0].InnerText;
+                UpdateDate.Content = "Last Repo Update: " + LastUpdate;
+            }
+            catch { }
         }
 
         private void authTypeCombobox_Loaded(object sender, RoutedEventArgs e)
