@@ -6,6 +6,9 @@ namespace OpenBullet.ViewModels
 {
     public class OBSettingsGeneral : ViewModelBase
     {
+        private bool disableRepo = false;
+        public bool DisableRepo { get { return disableRepo; } set { disableRepo = value; OnPropertyChanged(); } }
+
         private bool displayLoliScriptOnLoad = false;
         public bool DisplayLoliScriptOnLoad { get { return displayLoliScriptOnLoad; } set { displayLoliScriptOnLoad = value; OnPropertyChanged(); } }
         private bool recommendedBots = true;

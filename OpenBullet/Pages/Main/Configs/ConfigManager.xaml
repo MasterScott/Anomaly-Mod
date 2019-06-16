@@ -18,8 +18,9 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="13*" />
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="5*" />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" Grid.Column="0">
                 <Label Content="Current Config:" FontWeight="Bold" />
@@ -28,6 +29,9 @@
             <StackPanel Orientation="Horizontal" Grid.Column="1">
                 <Label Content="Total Configs:" FontWeight="Bold" VerticalAlignment="Center" />
                 <Label Content="{Binding Total}" VerticalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="2">
+                <CheckBox Content="Disable Repository" VerticalContentAlignment="Center" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked" />
             </StackPanel>
         </Grid>
 
