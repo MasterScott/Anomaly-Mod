@@ -17,5 +17,10 @@ namespace OpenBullet
         {
             Process.Start("https://github.com/openbullet/openbullet");
         }
+
+        private void KoFiButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }

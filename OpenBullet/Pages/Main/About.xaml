@@ -29,8 +29,14 @@
                     <TextBlock VerticalAlignment="Center" Margin="5 0">Repository</TextBlock>
                 </StackPanel>
             </Button>
+            <Button x:Name="KoFiButton" Click="KoFiButton_Click" Margin="0 5">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/OpenBullet;component/Images/Icons/KoFi.png" Width="32" Height="32" />
+                    <TextBlock VerticalAlignment="Center" Margin="5 0"><Run Text="Ko-Fi"/></TextBlock>
+                </StackPanel>
+            </Button>
         </StackPanel>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="526,10,0,0" Grid.Row="2" TextWrapping="Wrap" Text="13Kx8pJdezkiRWVtnX8VzwFx6474W2B328" VerticalAlignment="Top" Width="244" IsReadOnly="True" />
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="526,10,0,0" Grid.Row="2" TextWrapping="Wrap" Text="1F5vXpatdNqSMeMMt7CJUML1mRD1YiDdHJ" VerticalAlignment="Top" Width="244" IsReadOnly="True" />
         <Label Content="If you enjoy please consider Donating some BTC:" HorizontalAlignment="Left" Margin="259,11,0,0" Grid.Row="2" VerticalAlignment="Top" Width="300" Height="30" />
     </Grid>
 </Page>
