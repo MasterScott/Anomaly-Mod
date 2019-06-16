@@ -20,7 +20,7 @@ namespace OpenBullet
 
         private void KoFiButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
+            Process.Start("https://ko-fi.com/openbulletanomaly");
         }
     }
 }
