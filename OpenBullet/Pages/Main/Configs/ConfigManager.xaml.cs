@@ -4,6 +4,7 @@ using RuriLib.ViewModels;
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -299,6 +300,7 @@ namespace OpenBullet
             loadConfigButton_Click(this, new RoutedEventArgs());
         }
 
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
                 Globals.obSettings.General.DisableRepo = !Globals.obSettings.General.DisableRepo;

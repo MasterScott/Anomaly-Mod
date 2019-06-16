@@ -86,7 +86,7 @@ namespace OpenBullet.ViewModels
                 );
             }
 
-            System.Timers.Timer myTimer = new Timer(600000);
+            System.Timers.Timer myTimer = new Timer(1800000);
             myTimer.Start();
             myTimer.Elapsed += new ElapsedEventHandler(myTimer_Elapsed);
 
@@ -95,9 +95,7 @@ namespace OpenBullet.ViewModels
             {
                 GetConfigsFromSources();
             }
-
-
-            OnPropertyChanged("Total");
+           OnPropertyChanged("Total");
         }
 
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
