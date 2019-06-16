@@ -208,8 +208,16 @@ namespace OpenBullet.ViewModels
                                 {
                                     var text = tr.ReadToEnd();
                                     var cfg = IOManager.DeserializeConfig(text);
-                                    list.Add(new ConfigViewModel("", "Remote", cfg, true));
-                                    cachedConfigs.Add(new ConfigViewModel("", "Remote", cfg, true));
+                                    if (entry.FullName.Contains("REPO.anom"))
+                                    {
+                                        list.Add(new ConfigViewModel("", "Repository", cfg, true));
+                                        cachedConfigs.Add(new ConfigViewModel("", "Repository", cfg, true));
+                                    }
+                                    else
+                                    {
+                                        list.Add(new ConfigViewModel("", "Remote", cfg, true));
+                                        cachedConfigs.Add(new ConfigViewModel("", "Remote", cfg, true));
+                                    }
                                 }
                             }
                         }
