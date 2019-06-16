@@ -1,4 +1,5 @@
-﻿using OpenBullet.Models;
+﻿using HtmlAgilityPack;
+using OpenBullet.Models;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,9 @@ namespace OpenBullet
     {
         private ViewModels.OBSettingsSources vm;
         private Random rand = new Random();
+        //Gets Update URL
+        private string UpdateDateURL = "https://github.com/PurityWasHere/Anomaly-Mod-Hosting/blob/master/Update.zip";
+
 
         public OBSettingsSources()
         {
@@ -19,6 +23,11 @@ namespace OpenBullet
 
             vm = Globals.obSettings.Sources;
             DataContext = vm;
+            //Collects Page, Turns to Document, Then Grabs XPATH.
+            HtmlWeb web = new HtmlWeb();
+            HtmlDocument doc = web.Load(UpdateDateURL);
+            string LastUpdate = doc.DocumentNode.SelectNodes("/html/body/div[4]/div/main/div[2]/div[1]/div[3]/div[1]/span[2]/relative-time")[0].InnerText;
+            UpdateDate.Content = "Last Repo Update: " + LastUpdate;
         }
 
         private void authTypeCombobox_Loaded(object sender, RoutedEventArgs e)
