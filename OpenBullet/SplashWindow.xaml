@@ -8,7 +8,7 @@
         Title="SplashWindow" Height="380"
         Width="750"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip"
+        WindowStyle="None" AllowsTransparency="True"
         Background="{DynamicResource BackgroundMain}" MouseDown="WindowMouseDown">
     <Grid>
         <Grid.ColumnDefinitions>
