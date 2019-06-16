@@ -23,7 +23,7 @@ namespace OpenBullet.ViewModels
         private ObservableCollection<ConfigViewModel> configsList;
 
         string status = null;
-        public int counter = 0;
+        //public int counter = 0;
 
         public ObservableCollection<ConfigViewModel> ConfigsList
         {
@@ -146,13 +146,13 @@ namespace OpenBullet.ViewModels
             var list = new List<ConfigViewModel>();
             cachedConfigs = new List<ConfigViewModel>();
 
-            if (counter == 0)
+            if (Globals.obSettings.Sources.Sources.Count == 0)
             {
                 try
                 {
                     gitHub.ApiUrl = "https://github.com/PurityWasHere/Anomaly-Mod-Hosting/blob/master/Configs.zip?raw=true";
 
-                    counter++;
+                    //counter++;
                     Globals.obSettings.Sources.Sources.Add(gitHub);
                 }
                 catch { }
