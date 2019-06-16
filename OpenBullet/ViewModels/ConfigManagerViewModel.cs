@@ -84,17 +84,15 @@ namespace OpenBullet.ViewModels
                 );
             }
 
-            //System.Timers.Timer myTimer = new Timer(600000);
-            //myTimer.Start();
-            //myTimer.Elapsed += new ElapsedEventHandler(myTimer_Elapsed);
+            System.Timers.Timer myTimer = new Timer(600000);
+            myTimer.Start();
+            myTimer.Elapsed += new ElapsedEventHandler(myTimer_Elapsed);
 
 
-            //void myTimer_Elapsed(object sender, ElapsedEventArgs e)
-            //{
-            //    GetConfigsFromSources();
-            //    if (status == "Error") { }
-            //        //foreach (RunnerManagerViewModel runner in )
-            //}
+            void myTimer_Elapsed(object sender, ElapsedEventArgs e)
+            {
+                GetConfigsFromSources();
+            }
 
 
             OnPropertyChanged("Total");
