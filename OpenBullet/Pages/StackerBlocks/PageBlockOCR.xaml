@@ -21,8 +21,9 @@
             </DockPanel>
             <DockPanel Margin="0 0 0 5">
                 <Label Content="Image URL:"/>
-                <TextBox x:Name="OCRImageURLTextbox"/>
+                <TextBox Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
+            <Image Height="200" Margin="25,25,25,25" Source="{Binding Url, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
     </Grid>
 </Page>

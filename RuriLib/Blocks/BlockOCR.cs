@@ -14,6 +14,16 @@ namespace RuriLib
     /// </summary>
     public class BlockOCR : BlockBase
     {
+        private string variableName = "";
+
+        /// <summary>The name of the output variable where the OCR response will be stored.</summary>
+        public string VariableName { get { return variableName; } set { variableName = value; OnPropertyChanged(); } }
+
+        private bool isCapture = false;
+
+        /// <summary>Whether the output variable should be marked for Capture.</summary>
+        public bool IsCapture { get { return isCapture; } set { isCapture = value; OnPropertyChanged(); } }
+
         private string url = "";
 
         /// <summary>The URL of the image.</summary>
@@ -39,8 +49,15 @@ namespace RuriLib
             writer
                 .Label(Label)
                 .Token("OCR")
-                .Token(Url);
+                .Literal(Url);
             //.Literal(UserAgent, "UserAgent");
+
+            if (!writer.CheckDefault(VariableName, "VariableName"))
+                writer
+                    .Arrow()
+                    .Token(IsCapture ? "CAP" : "VAR")
+                    .Literal(VariableName);
+
             return writer.ToString();
         }
 
@@ -53,6 +70,24 @@ namespace RuriLib
             // Parse the label
             if (input.StartsWith("#"))
                 Label = LineParser.ParseLabel(ref input);
+
+            Url = LineParser.ParseLiteral(ref input, "Url");
+
+            if (LineParser.ParseToken(ref input, TokenType.Arrow, false) == "")
+                return this;
+
+            //Parse the VAR / CAP
+            try
+            {
+                var varType = LineParser.ParseToken(ref input, TokenType.Parameter, true);
+                if (varType.ToUpper() == "VAR" || varType.ToUpper() == "CAP")
+                    IsCapture = varType.ToUpper() == "CAP";
+            }
+            catch { throw new ArgumentException("Invalid or missing variable type"); }
+
+            // Parse the variable/capture name
+            try { VariableName = LineParser.ParseToken(ref input, TokenType.Literal, true); }
+            catch { throw new ArgumentException("Variable name not specified"); }
 
             return this;
         }
