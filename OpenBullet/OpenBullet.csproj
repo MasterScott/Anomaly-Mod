@@ -352,6 +352,9 @@
     <Compile Include="Pages\StackerBlocks\PageBlockLSCode.xaml.cs">
       <DependentUpon>PageBlockLSCode.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\StackerBlocks\PageBlockOCR.xaml.cs">
+      <DependentUpon>PageBlockOCR.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\StackerBlocks\PageBlockParse.xaml.cs">
       <DependentUpon>PageBlockParse.xaml</DependentUpon>
     </Compile>
@@ -620,6 +623,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\StackerBlocks\PageBlockLSCode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\StackerBlocks\PageBlockOCR.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

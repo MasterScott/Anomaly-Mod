@@ -82,6 +82,10 @@
       <Word>TCP</Word>
     </Keywords>
 
+    <Keywords fontWeight="bold" foreground="Azure">
+      <Word>OCR</Word>
+    </Keywords>
+
     <Keywords fontWeight="bold" foreground="Wheat">
       <Word>UTILITY</Word>
     </Keywords>

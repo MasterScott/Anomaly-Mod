@@ -62,6 +62,11 @@ namespace OpenBullet
             SendBack(new BlockTCP());
         }
 
+        private void blockOCRButton_Click(object sender, RoutedEventArgs e)
+        {
+            SendBack(new BlockOCR());
+        }
+
         private void blockNavigateButton_Click(object sender, RoutedEventArgs e)
         {
             SendBack(new SBlockNavigate());

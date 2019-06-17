@@ -154,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Blocks\BlockLSCode.cs" />
+    <Compile Include="Blocks\BlockOCR.cs" />
     <Compile Include="Blocks\BlockTCP.cs" />
     <Compile Include="CaptchaServices\CaptchasIO.cs" />
     <Compile Include="CaptchaServices\RuCaptcha.cs" />
