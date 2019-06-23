@@ -26,13 +26,14 @@ namespace OpenBullet
         ListGenerator,
         SeleniumTools,
         ComboSuite,
-        About
+        About,
+        OCRSettings
     }
 
     public static class Globals
     {
         // Version
-        public static string obVersion = "1.3.1 [Anomaly]";
+        public static string obVersion = "1.3.2 [Anomaly]";
 
         // Main Window
         public static MainWindow mainWindow;

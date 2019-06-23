@@ -122,6 +122,15 @@ namespace RuriLib
 
         #endregion Inputs
 
+        #region OCR
+
+        private string captchaUrl = "";
+
+        /// <summary>The URL used for OCR image identification.</summary>
+        public string CaptchaUrl { get { return captchaUrl; } set { captchaUrl = value; OnPropertyChanged(); } }
+
+        #endregion OCR
+
         #region Selenium
 
         private bool forceHeadless = false;

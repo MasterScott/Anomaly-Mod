@@ -17,6 +17,7 @@
         /// <summary>The Selenium Settings of RuriLib.</summary>
         public SettingsSelenium Selenium { get; set; } = new SettingsSelenium();
 
+
         /// <summary>
         /// Resets the properties to their default value.
         /// </summary>

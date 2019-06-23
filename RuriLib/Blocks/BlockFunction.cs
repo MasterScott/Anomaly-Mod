@@ -67,6 +67,9 @@ namespace RuriLib
             /// <summary>Decodes a URL-encoded input.</summary>
             URLDecode,
 
+            /// <summary>Decodes a unicode input.</summary>
+            Unescape,
+
             /// <summary>Encodes the input to be displayed in HTML or XML.</summary>
             HTMLEntityEncode,
 
@@ -603,6 +606,10 @@ namespace RuriLib
 
                     case Function.URLEncode:
                         outputString = System.Uri.EscapeDataString(localInputString);
+                        break;
+
+                    case Function.Unescape:
+                        outputString = System.Text.RegularExpressions.Regex.Unescape(@localInputString);
                         break;
 
                     case Function.URLDecode:

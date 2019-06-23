@@ -1,4 +1,5 @@
 ﻿using RuriLib.ViewModels;
+using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -12,6 +13,7 @@ namespace OpenBullet
         public ConfigManager ConfigManagerPage;
         public Stacker StackerPage;
         public ConfigOtherOptions OtherOptionsPage;
+        public ConfigOCRSettings OCRSettingsPage;
         public ConfigViewModel CurrentConfig { get; set; }
 
         public Configs()
@@ -54,6 +56,22 @@ namespace OpenBullet
 
                 Main.Content = OtherOptionsPage;
                 menuOptionSelected(menuOptionOtherOptions);
+            }
+            else
+            {
+                Globals.LogError(Components.ConfigManager, "Cannot switch to other options since no config is loaded");
+            }
+        }
+
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+        private void menuOptionOCRSettings_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (CurrentConfig != null)
+            {
+            OCRSettingsPage = new ConfigOCRSettings();
+
+                Main.Content = OCRSettingsPage;
+                menuOptionSelected(menuOptionOCRSettings);
             }
             else
             {

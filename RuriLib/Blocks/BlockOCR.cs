@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Windows.Media;
+using System.Globalization;
+using Tesseract;
+using System.Drawing;
+using System.Reflection;
 
 namespace RuriLib
 {
@@ -34,6 +38,11 @@ namespace RuriLib
         /// <summary>The User-Agent header to use when grabbing the image.</summary>
         public string UserAgent { get { return userAgent; } set { userAgent = value; OnPropertyChanged(); } }
 
+        private string ocrString = "";
+
+        /// <summary>The URL of the image.</summary>
+        public string OCRString { get { return ocrString; } set { ocrString = value; OnPropertyChanged(); } }
+
         /// <summary>
         /// Creates a OCR block.
         /// </summary>
@@ -42,7 +51,42 @@ namespace RuriLib
             Label = "OCR";
         }
 
-        /// <inheritdoc />
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+        public override void Process(BotData data)
+        {
+            base.Process(data);
+
+            InsertVariables(data, IsCapture, false, GetOCR(data), VariableName, "", "", false, true);
+        }
+
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+        public List<string> GetOCR(BotData data)
+        {
+            var output = new List<string>();
+            var OCRTess = new TesseractEngine(@".\tessdata", "eng", EngineMode.Default);
+
+            output.Add(OCRTess.Process(GetOCRImage()).GetText());
+
+            return output;
+        }
+
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+        public Pix GetOCRImage()
+        {
+            Pix OCR;
+            var request = WebRequest.Create(Url);
+
+            using (var response = request.GetResponse())
+            using (var stream = response.GetResponseStream())
+            {
+                Bitmap captcha = (Bitmap)Bitmap.FromStream(stream);
+                OCR = PixConverter.ToPix(captcha);
+            }
+
+            return OCR;
+        }
+
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public override string ToLS(bool indent = true)
         {
             var writer = new BlockWriter(GetType(), indent, Disabled);
@@ -50,7 +94,6 @@ namespace RuriLib
                 .Label(Label)
                 .Token("OCR")
                 .Literal(Url);
-            //.Literal(UserAgent, "UserAgent");
 
             if (!writer.CheckDefault(VariableName, "VariableName"))
                 writer
@@ -61,7 +104,7 @@ namespace RuriLib
             return writer.ToString();
         }
 
-        /// <inheritdoc />
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public override BlockBase FromLS(string line)
         {
             // Trim the line

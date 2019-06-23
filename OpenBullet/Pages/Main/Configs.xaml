@@ -28,6 +28,7 @@
             <Label x:Name="menuOptionManager" Content="Manager" MouseDown="menuOptionManager_MouseDown" />
             <Label x:Name="menuOptionStacker" Content="Stacker" MouseDown="menuOptionStacker_MouseDown" />
             <Label x:Name="menuOptionOtherOptions" Content="Other Options" MouseDown="menuOptionOtherOptions_MouseDown" />
+            <Label x:Name="menuOptionOCRSettings" Content="OCR Settings" MouseDown="menuOptionOCRSettings_MouseDown" IsEnabled="False"  />
         </StackPanel>
 
         <Frame Grid.Row="1" x:Name="Main" NavigationUIVisibility="Hidden" />

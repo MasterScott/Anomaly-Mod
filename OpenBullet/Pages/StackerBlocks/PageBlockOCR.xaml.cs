@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace OpenBullet.Pages.StackerBlocks
 {
     /// <summary>
-    /// Logica di interazione per PageBlockOCR.xaml
+    /// Interaction logic for PageBlockOCR.xaml
     /// </summary>
     public partial class PageBlockOCR : Page
     {

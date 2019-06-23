@@ -22,8 +22,6 @@ namespace OpenBullet.ViewModels
 
         private ObservableCollection<ConfigViewModel> configsList;
 
-        private ConfigManager configManager;// = new ConfigManager();
-
         string status = null;
         //public int counter = 0;
 
