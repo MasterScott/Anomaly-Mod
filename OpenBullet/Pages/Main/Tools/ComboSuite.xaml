@@ -67,7 +67,7 @@
         <Button Content="Delete Duplicates" HorizontalAlignment="Left" Margin="5,0,0,0" Grid.Row="3" VerticalAlignment="Top" Width="127" Click="Button_Click" />
         <Button Content="Split" HorizontalAlignment="Left" Margin="5,52,0,0" Grid.Row="3" VerticalAlignment="Top" Width="127" Click="Button_Click_1" />
         <Canvas Margin="137,1,493,285" Grid.Row="3">
-            <TextBox x:Name="DupesRemoved" Text="New Total Lines: "
+            <TextBox x:Name="DupesRemoved" Text="Duplicates Removed:  "
 				IsReadOnly="True" Width="167" Height="19" />
         </Canvas>
         <Button Content="Change Seperator" HorizontalAlignment="Left" Margin="5,104,0,0" Grid.Row="3" VerticalAlignment="Top" Width="127" Click="Button_Click_2" />

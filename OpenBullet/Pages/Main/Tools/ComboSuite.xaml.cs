@@ -35,6 +35,8 @@ namespace OpenBullet.Pages.Main.Tools
                 string strfilename = Wordlist.FileName;
                 FileName = Wordlist.FileName;
                 PathName.Text = FileName;
+                int LineCount = File.ReadAllLines(FileName).Length;
+                int NewLine = (0);
             }
         }
 
@@ -66,7 +68,9 @@ namespace OpenBullet.Pages.Main.Tools
                 sw.Flush();
                 sw.Close();
                 sr.Close();
-                DupesRemoved.Text = "New Total Lines: " + total.ToString();
+                int LineCount = File.ReadAllLines(FileName).Length;
+                LineCount = LineCount - total;
+                DupesRemoved.Text = ("Duplicates Removed: " + LineCount.ToString());
                 try { System.Windows.MessageBox.Show("Saved File DeDuped.txt to OpenBullet Root Folder!", "OpenBullet Duplicate Remover"); }
                 catch { };
             }
@@ -88,9 +92,11 @@ namespace OpenBullet.Pages.Main.Tools
             else
             {
                 var reader = File.OpenText(FileName);
-                string outFileName = FileName + "{0}.txt";
+                string outFileName =  FileName + "{0}.txt";
+                //var SaveFolder = Directory.CreateDirectory(outFileName + "Splits");
                 int outFileNumber = 1;
                 int MAX_LINES = Convert.ToInt16(SplitCount.Text.Trim());
+                //var SplitFolder = SaveFolder.FullName;
                 while (!reader.EndOfStream)
                 {
                     var writer = File.CreateText(string.Format(outFileName, outFileNumber++));
@@ -102,7 +108,7 @@ namespace OpenBullet.Pages.Main.Tools
                     writer.Close();
                 }
                 reader.Close();
-                System.Windows.MessageBox.Show("Saved Splits By Original File!", "OpenBullet Splitter");
+                System.Windows.MessageBox.Show("Save Files Next to original Folder", "OpenBullet Splitter");
             }
         }
 
@@ -127,6 +133,11 @@ namespace OpenBullet.Pages.Main.Tools
                 try { System.Windows.MessageBox.Show("Saved File by Original File!", "OpenBullet Sep Changer"); }
                 catch { };
             }
+        }
+
+        private void Merge_Lists_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
