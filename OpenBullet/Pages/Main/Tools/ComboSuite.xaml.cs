@@ -36,7 +36,6 @@ namespace OpenBullet.Pages.Main.Tools
                 FileName = Wordlist.FileName;
                 PathName.Text = FileName;
                 int LineCount = File.ReadAllLines(FileName).Length;
-                int NewLine = (0);
             }
         }
 
