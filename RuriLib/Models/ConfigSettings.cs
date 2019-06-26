@@ -129,6 +129,31 @@ namespace RuriLib
         /// <summary>The URL used for OCR image identification.</summary>
         public string CaptchaUrl { get { return captchaUrl; } set { captchaUrl = value; OnPropertyChanged(); } }
 
+        private bool grayscale = false;
+
+        /// <summary>The Grayscale of Image.</summary>
+        public bool Grayscale { get { return grayscale; } set { grayscale = value; OnPropertyChanged(); } }
+
+        private bool removeLines = false;
+
+        /// <summary>Removing random line in Image.</summary>
+        public bool RemoveLines { get { return removeLines; } set { removeLines = value; OnPropertyChanged(); } }
+
+        private bool removeNoise = false;
+
+        /// <summary>Removing background noise of an Image.</summary>
+        public bool RemoveNoise { get { return removeNoise; } set { removeNoise = value; OnPropertyChanged(); } }
+
+        private bool transparent = false;
+
+        /// <summary>Setting transparnet colors in Image.</summary>
+        public bool Transparent { get { return transparent; } set { transparent = value; OnPropertyChanged(); } }
+
+        private bool contrastGamma = false;
+
+        /// <summary>Setting the contrast and gamma of an Image.</summary>
+        public bool ContrastGamma { get { return contrastGamma; } set { contrastGamma = value; OnPropertyChanged(); } }
+
         #endregion OCR
 
         #region Selenium

@@ -15,21 +15,46 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="75" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
             <Label Content="Captcha URL:" VerticalAlignment="Top" Margin="0,2.5,0,0"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
-            <TextBox Name="OCRUrl" Text="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" Width="320" Margin="5,0,0,70"/>
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+            <TextBox Name="OCRUrl" Text="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" Width="320" Margin="80,0,0,70"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0">
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
+            <CheckBox Content="Grayscale" IsChecked="{Binding Grayscale, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="0,25,0,0">
+            <CheckBox Content="Remove Lines" IsChecked="{Binding RemoveLines, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0"/>
+            <Label Content="Pixels Min:" VerticalAlignment="Top" Margin="25,0,0,0" />
+            <TextBox Name="PixelAmtMin" Text="0" Width="40" Margin="0,0,0,315" Height="25" />
+            <Label Content="Pixels Max:" VerticalAlignment="Top" Margin="25,0,0,0" />
+            <TextBox Name="PixelAmtMax" Text="0" Width="40" Margin="0,0,0,315" Height="25" />
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="0,60,0,0">
+            <CheckBox Content="Remove Noise" IsChecked="{Binding RemoveNoise, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Content="Set Colors Transparent" IsChecked="{Binding Transparent, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="0,115,0,0">
+            <CheckBox Content="Set Contrast, Gamma, Brightness" IsChecked="{Binding ContrastGamma, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" />
+            <Label Content="C:" VerticalAlignment="Top" Margin="25,0,0,0" />
+            <TextBox Name="ContrastAmt" Text="1" Width="40" Margin="0,0,0,225" Height="25" />
+            <Label Content="G:" VerticalAlignment="Top" Margin="25,0,0,0" />
+            <TextBox Name="GammaAmt" Text="1" Width="40" Margin="0,0,0,225" Height="25" />
+            <Label Content="B:" VerticalAlignment="Top" Margin="25,0,0,0" />
+            <TextBox Name="BrightnessAmt" Text="1" Width="40" Margin="0,0,0,225" Height="25" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
             <Image Name="OcrImage" Source="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" Width="300" Height="100" />
         </StackPanel>
-        <Label Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Content="OCR Regonigition :" FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Height="35" Margin="0,0,140,0" />
-        <Label Name="OCRResult" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="35" Margin="160,0,0,0" />
-        <Button Content="Test OCR" Grid.Column="2" Grid.Row="2" Click="Button_Click"/>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+            <Image Name="AppliedImage" Source="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Margin="0,5,0,0"  Width="300" Height="100" />
+        </StackPanel>
+        <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Content="OCR Regonigition :" FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Height="35" Margin="0,265,140,0" />
+        <Label Name="OCRResult" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="35" Margin="160,265,0,0" />
+        <Button Content="Test OCR" Grid.Column="1" Grid.Row="2" Click="Button_Click"/>
     </Grid>
 </Page>

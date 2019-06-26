@@ -68,7 +68,7 @@ namespace OpenBullet
         {
             if (CurrentConfig != null)
             {
-            OCRSettingsPage = new ConfigOCRSettings();
+                OCRSettingsPage = new ConfigOCRSettings();
 
                 Main.Content = OCRSettingsPage;
                 menuOptionSelected(menuOptionOCRSettings);
