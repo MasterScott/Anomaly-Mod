@@ -129,6 +129,11 @@ namespace RuriLib
         /// <summary>The URL used for OCR image identification.</summary>
         public string CaptchaUrl { get { return captchaUrl; } set { captchaUrl = value; OnPropertyChanged(); } }
 
+        private string base64 = "";
+
+        /// <summary>The URL used for OCR image identification.</summary>
+        public string Base64 { get { return base64; } set { base64 = value; OnPropertyChanged(); } }
+
         private bool grayscale = false;
 
         /// <summary>The Grayscale of Image.</summary>

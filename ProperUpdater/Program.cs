@@ -10,14 +10,14 @@ namespace ProperUpdater
     {
         private static void Main(string[] args)
         {
+            bool updates = File.Exists("Update.zip");
             //Starts the program
             Stopwatch Count = new Stopwatch();
             Console.Title = "Anomaly Updater";
             Console.SetWindowSize(70, 20);
             Console.WriteLine("");
             System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("Connecting to Github..");
-            Console.WriteLine("");
+            Console.WriteLine("Connecting to Github.." + Environment.NewLine);
             Count.Start();
 
             //Sets the proper connection so people in other countries can connect. MUST BE CALLED BEFORE CONNECTIONS ARE MADE
@@ -33,49 +33,43 @@ namespace ProperUpdater
             catch (Exception)
             {
                 //Checks Git Connection
-                Console.WriteLine("");
-                Console.WriteLine("ERROR, Could not Connect to GitHub!");
+                Console.WriteLine("ERROR, Could not Connect to GitHub!" + Environment.NewLine);
             }
 
             try
             {
-                Console.WriteLine("SUCCESS, Connected to GitHub");
-                Console.WriteLine("");
+                Console.WriteLine("SUCCESS, Connected to GitHub" + Environment.NewLine);
                 //Unzips the Update
                 string UpdateURL = "https://github.com/PurityWasHere/Anomaly-Mod-Hosting/raw/master/Update.zip";
                 string SavePath = (AppDomain.CurrentDomain.BaseDirectory);
                 WebClient WC = new WebClient();
                 //Checks if there is a folder names Update.zip
-                if (!File.Exists("Update.zip"))
+                if (!updates)
                 {
-                    Console.WriteLine("Downloading Update...");
+                    Console.WriteLine("Downloading Update..." + Environment.NewLine);
                     WC.DownloadFile(UpdateURL, SavePath + "Update.zip");
-                    Console.WriteLine("");
                 }
                 else
                 {
                     File.Delete("Update.zip");
-                    Console.WriteLine("Previous Update Files Deleted.");
-                    Console.WriteLine("");
+                    Console.WriteLine("Previous Update Files Deleted." + Environment.NewLine);
                     WC.DownloadFile(UpdateURL, SavePath + "Update.zip");
-                    Console.WriteLine("Downloading Update...");
-                    Console.WriteLine("");
+                    Console.WriteLine("Downloading Update..." + Environment.NewLine);
                 }
+                updates = File.Exists("Update.zip");
                 //Makes sure that the Web Client Downloaded the update
-                bool updates = File.Exists("Update.zip");
-                if (updates == true)
+                if (updates)
                 {
                     ZipFile zip = ZipFile.Read("Update.zip");
                     {
-                        Console.WriteLine("UnZipping Archive...");
+                        Console.WriteLine("UnZipping Archive..." + Environment.NewLine);
                         zip.ExtractAll(SavePath, ExtractExistingFileAction.OverwriteSilently);
                         zip.Dispose();
                     }
                     //Success Messages, Also Deletes files
-                    Console.WriteLine("");
                     Count.Stop();
                     string Time = Count.Elapsed.TotalSeconds.ToString();
-                    Console.WriteLine("SUCCESS, Update Completed Succesfully in: " + Time + " Seconds");
+                    Console.WriteLine("SUCCESS, Update Completed Succesfully in: " + Time + " Seconds" + Environment.NewLine);
                     File.Delete("Update.zip");
                 }
                 else
@@ -91,7 +85,6 @@ namespace ProperUpdater
                 Console.WriteLine("Error Extracting Archive");
             }
             //ends the application
-            Console.WriteLine("");
             Console.WriteLine("Press Any key to Close.");
             Console.ReadKey();
         }
