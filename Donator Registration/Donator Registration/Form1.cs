@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Http;
 using System.IO;
+using System.Management;
 
 namespace Donator_Registration
 {
@@ -64,6 +65,19 @@ namespace Donator_Registration
             var btc = false;
             var PPal = false;
             string method = String.Empty;
+
+            //Gets HWID for CPU
+            var mbs = new ManagementObjectSearcher("Select ProcessorId From Win32_processor");
+            ManagementObjectCollection mbsList = mbs.Get();
+            string id = "";
+            foreach (ManagementObject mo in mbsList)
+            {
+                id = mo["ProcessorId"].ToString();
+                break;
+            }
+
+
+
             if (check == false)
             {
                 if (radioButton1.Checked)
@@ -84,7 +98,7 @@ namespace Donator_Registration
                 {
                     MessageBox.Show("Error Connecting to Servers. Please try again or contact Developers.");
                 }
-                string data = "{\"content\":\"Payment Method: " + method + " Transaction ID: " + textBox1.Text + " Discord Name(With #): " + textBox3.Text + "\"}";
+                string data = "{\"content\":\"Payment Method: " + method + " Transaction ID: " + textBox1.Text + " Discord Name(With #): " + textBox3.Text + "CPU HWID: " + id +"\"}";
 
                 byte[] byteArray = Encoding.UTF8.GetBytes(data);
 
@@ -117,7 +131,8 @@ namespace Donator_Registration
                 }
 
 
-            MessageBox.Show("btc = " + btc.ToString() + " paypal = " + PPal.ToString());
+                MessageBox.Show("Your Registration has been sent. Please wait to be notified.", "Proccess Completed.");
+                Environment.Exit(0);
             }
             else
             {
