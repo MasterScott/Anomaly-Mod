@@ -7,7 +7,7 @@
       xmlns:local="clr-namespace:OpenBullet"
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="780"
-      Title="ConfigOCRSettings">
+      Title="ConfigOCRSettings" >
 
     <Grid>
         <Grid.RowDefinitions>
@@ -33,9 +33,9 @@
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="0,25,0,0">
             <CheckBox Content="Remove Lines" IsChecked="{Binding RemoveLines, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0"/>
             <Label Content="Pixels Min:" VerticalAlignment="Top" Margin="25,0,0,0" />
-            <TextBox Name="PixelAmtMin" Text="0" Width="40" Margin="0,0,0,315" Height="25" />
+            <TextBox Name="PixelAmtMin" Text="{Binding RemoveLinesMin, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="0,0,0,315" Height="25" />
             <Label Content="Pixels Max:" VerticalAlignment="Top" Margin="25,0,0,0" />
-            <TextBox Name="PixelAmtMax" Text="0" Width="40" Margin="0,0,0,315" Height="25" />
+            <TextBox Name="PixelAmtMax" Text="{Binding RemoveLinesMax, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="0,0,0,315" Height="25" />
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="0,60,0,0">
             <CheckBox Content="Remove Noise" IsChecked="{Binding RemoveNoise, UpdateSourceTrigger=PropertyChanged}" />
@@ -48,11 +48,11 @@
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="0,125,0,0">
             <CheckBox Content="Set Contrast, Gamma, Brightness" IsChecked="{Binding ContrastGamma, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" />
             <Label Content="C:" VerticalAlignment="Top" Margin="25,0,0,0" />
-            <TextBox Name="ContrastAmt" Text="1" Width="40" Margin="0,0,0,215" Height="25" />
+            <TextBox Name="ContrastAmt" Text="{Binding Contrast, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="0,0,0,215" Height="25" />
             <Label Content="G:" VerticalAlignment="Top" Margin="25,0,0,0" />
-            <TextBox Name="GammaAmt" Text="1" Width="40" Margin="0,0,0,215" Height="25" />
+            <TextBox Name="GammaAmt" Text="{Binding Gamma, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="0,0,0,215" Height="25" />
             <Label Content="B:" VerticalAlignment="Top" Margin="25,0,0,0" />
-            <TextBox Name="BrightnessAmt" Text="1" Width="40" Margin="0,0,0,215" Height="25" />
+            <TextBox Name="BrightnessAmt" Text="{Binding Brightness, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="0,0,0,215" Height="25" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
             <Image Name="OcrImage" Source="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" Width="290" Height="100" />
@@ -61,8 +61,8 @@
             <Image Name="AppliedImage" Source="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Margin="5,5,0,0"  Width="290" Height="100" MouseMove="AppliedImage_MouseMove" MouseDown="AppliedImage_MouseDown" />
         </StackPanel>
         <TextBlock Name="ColorText" Grid.Row="2" Grid.Column="0" />
-        <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Content="OCR Regonigition :" FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Height="35" Margin="0,265,140,0" />
-        <Label Name="OCRResult" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="35" Margin="160,265,0,0" />
+        <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Content="OCR Regonigition :" FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Height="35" Margin="0,265,204,0" />
+        <TextBox Name="OCRResult" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="35" Margin="101,265,0,0" />
         <Button Content="Test OCR" Grid.Column="1" Grid.Row="2" Click="Button_Click"/>
     </Grid>
 </Page>

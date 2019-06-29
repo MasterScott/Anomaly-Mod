@@ -159,6 +159,31 @@ namespace RuriLib
         /// <summary>Setting the contrast and gamma of an Image.</summary>
         public bool ContrastGamma { get { return contrastGamma; } set { contrastGamma = value; OnPropertyChanged(); } }
 
+        private float contrast = 1;
+
+        /// <summary>The amount of contrast to apply.</summary>
+        public float Contrast { get { return contrast; } set { contrast = value; OnPropertyChanged(); } }
+
+        private float gamma = 1;
+
+        /// <summary>The amount of gamma to apply.</summary>
+        public float Gamma { get { return gamma; } set { gamma = value; OnPropertyChanged(); } }
+
+        private float brightness = 1;
+
+        /// <summary>The amount of brightness to apply.</summary>
+        public float Brightness { get { return brightness; } set { brightness = value; OnPropertyChanged(); } }
+
+        private int removeLinesMin = 0;
+
+        /// <summary>The amount of lines to remove by.</summary>
+        public int RemoveLinesMin { get { return removeLinesMin; } set { removeLinesMin = value; OnPropertyChanged(); } }
+
+        private int removeLinesMax = 0;
+
+        /// <summary>The amount of lines to remove by.</summary>
+        public int RemoveLinesMax { get { return removeLinesMax; } set { removeLinesMax = value; OnPropertyChanged(); } }
+
         #endregion OCR
 
         #region Selenium

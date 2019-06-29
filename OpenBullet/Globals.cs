@@ -26,8 +26,7 @@ namespace OpenBullet
         ListGenerator,
         SeleniumTools,
         ComboSuite,
-        About,
-        OCRSettings
+        About
     }
 
     public static class Globals

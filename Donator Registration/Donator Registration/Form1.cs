@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Http;
+using System.IO;
 
 namespace Donator_Registration
 {
@@ -19,9 +20,11 @@ namespace Donator_Registration
             InitializeComponent();
         }
 
+        private const string Format = "{\"content\":\"Donation method: {0}\nTransaction ID: {1}\nDiscord Name: {2}\"}";
+        public static Dictionary<string, string> values;
         bool check = false;
 
-        string Hooker = "https://discordapp.com/api/webhooks/593565031963164763/A6Xp8nClhjtU8ZCCk-R5I_il1nVr9xs4rHtPSKuFlPwdAaMohdQoKOI9MY2t8k7MUnYa";
+        public static string Hooker = "https://discordapp.com/api/webhooks/593565031963164763/A6Xp8nClhjtU8ZCCk-R5I_il1nVr9xs4rHtPSKuFlPwdAaMohdQoKOI9MY2t8k7MUnYa";
 
         WebClient wc = new WebClient();
         HttpClient Client = new HttpClient();
@@ -60,17 +63,20 @@ namespace Donator_Registration
         {
             var btc = false;
             var PPal = false;
+            string method = String.Empty;
             if (check == false)
             {
                 if (radioButton1.Checked)
                 {
                     btc = false;
                     PPal = true;
+                    method = "PAYPAL";
                 }
                 else
                 {
                     btc = true;
                     PPal = false;
+                    method = "BTC";
                 }
                 try { wc.DownloadData(Hooker); }
 
@@ -78,18 +84,40 @@ namespace Donator_Registration
                 {
                     MessageBox.Show("Error Connecting to Servers. Please try again or contact Developers.");
                 }
-                var values = new Dictionary<string, string>
+                string data = "{\"content\":\"Payment Method: " + method + " Transaction ID: " + textBox1.Text + " Discord Name(With #): " + textBox3.Text + "\"}";
 
+                byte[] byteArray = Encoding.UTF8.GetBytes(data);
+
+                try
                 {
-                {"Donation Method",btc.ToString() + "" + PPal.ToString()},
-                {"Transaction ID",textBox1.Text},
-                {"Discord Name",textBox3.Text}
-                };
+                    HttpWebRequest hook = (HttpWebRequest)WebRequest.Create(Hooker);
+                    //WebProxy proxyPOST = new WebProxy(Files.proxy[x], int.Parse(Files.port[x]));
+                    hook.ContentType = "application/json";
+                    hook.ContentLength = byteArray.Length;
+                    hook.Method = "POST";
+                    hook.Timeout = 20000;
 
-                
+                    using (Stream webpageStream = hook.GetRequestStream())
+                    {
+                        webpageStream.Write(byteArray, 0, byteArray.Length);
+                    }
+
+                    using (HttpWebResponse webResponse = (HttpWebResponse)hook.GetResponse())
+                    {
+                        using (StreamReader reader = new StreamReader(webResponse.GetResponseStream()))
+                        {
+                            string response = reader.ReadToEnd();
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
 
 
-                MessageBox.Show("btc = " + btc.ToString() + " paypal = " + PPal.ToString());
+            MessageBox.Show("btc = " + btc.ToString() + " paypal = " + PPal.ToString());
             }
             else
             {

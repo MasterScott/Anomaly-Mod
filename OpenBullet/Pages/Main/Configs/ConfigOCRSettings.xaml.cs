@@ -54,12 +54,12 @@ namespace OpenBullet
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public void DoOCR()
         {
-            var OCRTess = new TesseractEngine(@".\tessdata", "eng", EngineMode.Default);
+            var OCRTess = new TesseractEngine(@".\tessdata", "rus", EngineMode.Default);
 
             var result = OCRTess.Process(GetOCRImage()).GetText();
             //if (result.ToLower().Contains("c") && result.ToLower().Contains("h") && result.ToLower().Contains("3") && result.ToLower().Contains("n"))
                 //correct++;
-            OCRResult.Content = result;
+            OCRResult.Text = result;
         }
 
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
@@ -74,13 +74,17 @@ namespace OpenBullet
                 {
                     captcha = (Bitmap)Bitmap.FromStream(stream);
                     appliedCaptcha = captcha;
-                    stream.Close();
                 }
                 //System.Windows.Forms.MessageBox.Show(appliedCaptcha.Width + " < W | H > " + appliedCaptcha.Height);
                 OcrImage.Source = ImageSourceFromBitmap(captcha);
 
                 if (vm.ContrastGamma)
+                {
+                    vm.Contrast = float.Parse(ContrastAmt.Text);
+                    vm.Gamma = float.Parse(GammaAmt.Text);
+                    vm.Brightness = float.Parse(BrightnessAmt.Text);
                     appliedCaptcha = SetContrastGamma(appliedCaptcha);
+                }
 
                 if (vm.Transparent)
                     appliedCaptcha = SetTransparent(appliedCaptcha);
@@ -111,13 +115,22 @@ namespace OpenBullet
                     OcrImage.Source = ImageSourceFromBitmap(captcha);
 
                     if (vm.ContrastGamma)
+                    {
+                        vm.Contrast = float.Parse(ContrastAmt.Text);
+                        vm.Gamma = float.Parse(GammaAmt.Text);
+                        vm.Brightness = float.Parse(BrightnessAmt.Text);
                         appliedCaptcha = SetContrastGamma(appliedCaptcha);
+                    }
 
                     if (vm.Transparent)
                         appliedCaptcha = SetTransparent(appliedCaptcha);
 
                     if (vm.RemoveLines)
+                    {
+                        vm.RemoveLinesMin = Int32.Parse(PixelAmtMin.Text);
+                        vm.RemoveLinesMax = Int32.Parse(PixelAmtMax.Text);
                         appliedCaptcha = RemoveImageLines(appliedCaptcha);
+                    }
 
                     if (vm.RemoveNoise)
                         appliedCaptcha = RemoveNoise(appliedCaptcha);
