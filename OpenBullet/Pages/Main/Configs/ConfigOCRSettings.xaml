@@ -1,5 +1,6 @@
 ﻿<Page x:Class="OpenBullet.ConfigOCRSettings"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -20,9 +21,11 @@
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
             <Label Content="Captcha URL:" VerticalAlignment="Top" Margin="0,2.5,0,0"/>
+            <TextBox Name="OCRUrl" Text="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" Width="320" Margin="0,0,0,70"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
-            <TextBox Name="OCRUrl" Text="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" Width="320" Margin="80,0,0,70"/>
+            <Label Content="Base64:" VerticalAlignment="Top" Margin="0,52.5,0,0"/>
+            <TextBox x:Name="OCRB64" Text="{Binding Base64, UpdateSourceTrigger=PropertyChanged}" Width="320" Margin="30,50,0,20"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
             <CheckBox Content="Grayscale" IsChecked="{Binding Grayscale, UpdateSourceTrigger=PropertyChanged}" />
@@ -36,23 +39,28 @@
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="0,60,0,0">
             <CheckBox Content="Remove Noise" IsChecked="{Binding RemoveNoise, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox Content="Set Colors Transparent" IsChecked="{Binding Transparent, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="0,115,0,0">
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="0,85,0,0">
+            <CheckBox Content="Set Colors Transparent" IsChecked="{Binding Transparent, UpdateSourceTrigger=PropertyChanged}" Margin="0,7.5,0,0" />
+            <ListBox  Name="ColorsList" Height="30" Width="250" Margin="20,0,0,255" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Button Content="X" Height="30" Width="25" Margin="20,0,0,255" Click="Button_Click_1" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="0,125,0,0">
             <CheckBox Content="Set Contrast, Gamma, Brightness" IsChecked="{Binding ContrastGamma, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" />
             <Label Content="C:" VerticalAlignment="Top" Margin="25,0,0,0" />
-            <TextBox Name="ContrastAmt" Text="1" Width="40" Margin="0,0,0,225" Height="25" />
+            <TextBox Name="ContrastAmt" Text="1" Width="40" Margin="0,0,0,215" Height="25" />
             <Label Content="G:" VerticalAlignment="Top" Margin="25,0,0,0" />
-            <TextBox Name="GammaAmt" Text="1" Width="40" Margin="0,0,0,225" Height="25" />
+            <TextBox Name="GammaAmt" Text="1" Width="40" Margin="0,0,0,215" Height="25" />
             <Label Content="B:" VerticalAlignment="Top" Margin="25,0,0,0" />
-            <TextBox Name="BrightnessAmt" Text="1" Width="40" Margin="0,0,0,225" Height="25" />
+            <TextBox Name="BrightnessAmt" Text="1" Width="40" Margin="0,0,0,215" Height="25" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
-            <Image Name="OcrImage" Source="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" Width="300" Height="100" />
+            <Image Name="OcrImage" Source="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" Width="290" Height="100" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
-            <Image Name="AppliedImage" Source="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Margin="0,5,0,0"  Width="300" Height="100" />
+            <Image Name="AppliedImage" Source="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Margin="5,5,0,0"  Width="290" Height="100" MouseMove="AppliedImage_MouseMove" MouseDown="AppliedImage_MouseDown" />
         </StackPanel>
+        <TextBlock Name="ColorText" Grid.Row="2" Grid.Column="0" />
         <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Content="OCR Regonigition :" FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Height="35" Margin="0,265,140,0" />
         <Label Name="OCRResult" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="35" Margin="160,265,0,0" />
         <Button Content="Test OCR" Grid.Column="1" Grid.Row="2" Click="Button_Click"/>
