@@ -22,6 +22,9 @@ namespace OpenBullet
 
         // URL for the Changelog
         public static string ChangelogURL = "https://raw.githubusercontent.com/PurityWasHere/Anomally-Mod-Hosting/master/Changelog";
+        //Donator Check
+        private bool KEYCHECK = false;
+        //WebClient for Changelog
         private readonly WebClient ChangelogGet = new WebClient();
         public SplashWindow()
         {
@@ -70,11 +73,15 @@ namespace OpenBullet
                 {
                     if (HDDID == i)
                     {
+                        KEYCHECK = true;
+                        MessageBox.Show(HDDID, i);
                         MessageBox.Show("Donator Found! Thank you for your Support =D", "NOTICE");
                         this.Close();
+                        break;
                     }
-                    else if (HDDID != i)
+                    else if (KEYCHECK == false)
                     {
+                        MessageBox.Show(HDDID, i);
                         MessageBox.Show("This Version is for Donators Only! If you are a donator Please Register!", "NOTICE");
                         Environment.Exit(0);
                     }
