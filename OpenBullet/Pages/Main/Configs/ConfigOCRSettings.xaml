@@ -27,42 +27,49 @@
             <Label Content="Base64:" VerticalAlignment="Top" Margin="0,52.5,0,0"/>
             <TextBox x:Name="OCRB64" Text="{Binding Base64, UpdateSourceTrigger=PropertyChanged}" Width="320" Margin="30,50,0,20"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
-            <CheckBox Content="Grayscale" IsChecked="{Binding Grayscale, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="0,25,0,0">
-            <CheckBox Content="Remove Lines" IsChecked="{Binding RemoveLines, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0"/>
-            <Label Content="Pixels Min:" VerticalAlignment="Top" Margin="25,0,0,0" />
-            <TextBox Name="PixelAmtMin" Text="{Binding RemoveLinesMin, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="0,0,0,315" Height="25" />
-            <Label Content="Pixels Max:" VerticalAlignment="Top" Margin="25,0,0,0" />
-            <TextBox Name="PixelAmtMax" Text="{Binding RemoveLinesMax, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="0,0,0,315" Height="25" />
-        </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="0,60,0,0">
-            <CheckBox Content="Remove Noise" IsChecked="{Binding RemoveNoise, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="0,85,0,0">
-            <CheckBox Content="Set Colors Transparent" IsChecked="{Binding Transparent, UpdateSourceTrigger=PropertyChanged}" Margin="0,7.5,0,0" />
-            <ListBox  Name="ColorsList" Height="30" Width="250" Margin="20,0,0,255" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-            <Button Content="X" Height="30" Width="25" Margin="20,0,0,255" Click="Button_Click_1" />
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="0,125,0,0">
-            <CheckBox Content="Set Contrast, Gamma, Brightness" IsChecked="{Binding ContrastGamma, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" />
-            <Label Content="C:" VerticalAlignment="Top" Margin="25,0,0,0" />
-            <TextBox Name="ContrastAmt" Text="{Binding Contrast, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="0,0,0,215" Height="25" />
-            <Label Content="G:" VerticalAlignment="Top" Margin="25,0,0,0" />
-            <TextBox Name="GammaAmt" Text="{Binding Gamma, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="0,0,0,215" Height="25" />
-            <Label Content="B:" VerticalAlignment="Top" Margin="25,0,0,0" />
-            <TextBox Name="BrightnessAmt" Text="{Binding Brightness, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="0,0,0,215" Height="25" />
-        </StackPanel>
+
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
             <Image Name="OcrImage" Source="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" Width="290" Height="100" />
         </StackPanel>
+
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
             <Image Name="AppliedImage" Source="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Margin="5,5,0,0"  Width="290" Height="100" MouseMove="AppliedImage_MouseMove" MouseDown="AppliedImage_MouseDown" />
         </StackPanel>
-        <TextBlock Name="ColorText" Grid.Row="2" Grid.Column="0" />
+
         <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Content="OCR Regonigition :" FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Height="35" Margin="0,265,204,0" />
         <TextBox Name="OCRResult" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="35" Margin="101,265,0,0" />
         <Button Content="Test OCR" Grid.Column="1" Grid.Row="2" Click="Button_Click"/>
+        <TextBlock Name="ColorText" Grid.Row="2" Grid.Column="0" />
+
+
+        <Grid Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="11*" />
+                <ColumnDefinition Width="9*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <CheckBox Grid.Row="0" Content="Set Contrast, Gamma, Brightness" IsChecked="{Binding ContrastGamma, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Grid.Row="1" Content="Set Colors Transparent" IsChecked="{Binding Transparent, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Grid.Row="2" Content="GrayScale" IsChecked="{Binding Grayscale, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Grid.Row="3" Content="Remove Lines" IsChecked="{Binding RemoveLines, UpdateSourceTrigger=PropertyChanged}" ToolTip="This is still in beta!"/>
+            <CheckBox Grid.Row="4" Content="Remove Noise" IsChecked="{Binding RemoveNoise, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBox Name="ContrastAmt" Grid.Column="1" Text="{Binding Contrast, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="10,0,120,0" />
+            <TextBox Name="GammaAmt" Grid.Column="1" Text="{Binding Gamma, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="65,0" />
+            <TextBox Name="BrightnessAmt" Grid.Column="1" Text="{Binding Brightness, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="120,0,10,0" />
+            <ListBox Name="ColorsList" Grid.Column="1" Grid.Row="1" Width="186" Margin="0,0,30,0"/>
+            <Button Grid.Column="1" Grid.Row="1" Content="X" Width="30" Click="Button_Click_1" Margin="186,0,0,0"/>
+            <TextBox Name="PixelAmtMin" Grid.Column="1" Grid.Row="3" Text="{Binding LinesMin, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="10,0,120,0" />
+            <TextBox Name="PixelAmtMax" Grid.Column="1" Grid.Row="3" Text="{Binding LinesMax, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="120,0,10,0" />
+        </Grid>
+
     </Grid>
 </Page>

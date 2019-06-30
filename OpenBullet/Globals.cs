@@ -32,7 +32,7 @@ namespace OpenBullet
     public static class Globals
     {
         // Version
-        public static string obVersion = "1.3.2 [Anomaly]";
+        public static string obVersion = "1.3.3 [Anomaly] (STAGING BRANCH)";
 
         // Main Window
         public static MainWindow mainWindow;
@@ -50,6 +50,7 @@ namespace OpenBullet
         public static string licenseFile = @"Settings/License.txt";
         public static string logFile = @"Log.txt";
         public static string configFolder = @"Configs";
+        public static string tessdata = @"tessdata";
         public static string ProxySettings = @"Settings/ProxySite.txt";
         public static string ProxySettings2 = @"Settings/ProxyKey.txt";
         public static string Blank = "";

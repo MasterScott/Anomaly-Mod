@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:OpenBullet.Pages.StackerBlocks"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="400"
-      Title="PageBlockOCR">
+      Title="PageBlockOCR" Initialized="Page_Initialized">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -24,39 +24,44 @@
                 <TextBox Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
             <DockPanel>
-                <CheckBox Content="Base64" IsChecked="{Binding Base64 }" />
+                <CheckBox Content="Base64" IsChecked="{Binding IsBase64, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
             </DockPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Language:" VerticalContentAlignment="Center"/>
+                <ListBox ToolTip="Only sets language when clicked!" Name="LanguageList" Width="175" Height="60" MaxHeight="60" SelectionChanged="LanguageList_SelectionChanged" />
+                <Label FontSize="8.5" Content="YOU HAVE TO CLICK TO SET LANGUAGE" />
+            </StackPanel>
+            <Label FontSize="8.5" HorizontalContentAlignment="Center" Content="I'm aware the set language in the list looks like it's reset when switching to/from loliscipt, IT DOES NOT." />
+            <Label FontSize="8.5" HorizontalContentAlignment="Center" Content="Use the buttons to scroll through languages, using your mouse scroll wheel will skip alot." />
             <Image Height="200" Margin="25,25,25,25" Source="{Binding Url, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1"
+              VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="11*" />
                 <ColumnDefinition Width="9*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0">
-                <CheckBox Content="Set Contrast, Gamma, Brightness" IsChecked="{Binding ConGamBri, UpdateSourceTrigger=PropertyChanged}" />
-                <CheckBox Content="Set Colors Transparent" IsChecked="{Binding Transparent, UpdateSourceTrigger=PropertyChanged}" />
-                <CheckBox Content="Grayscale" IsChecked="{Binding Grayscale, UpdateSourceTrigger=PropertyChanged}" />
-                <CheckBox Content="Remove Lines" IsChecked="{Binding RemoveLines, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-            <Grid Grid.Row="1" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+            <CheckBox Grid.Row="0" Content="Set Contrast, Gamma, Brightness" IsChecked="{Binding ConGamBri, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Grid.Row="1" Content="Set Colors Transparent" IsChecked="{Binding Transparent, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
+            <CheckBox Grid.Row="2" Content="Grayscale" IsChecked="{Binding GrayScale, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Grid.Row="3" Content="Remove Lines" IsChecked="{Binding RemoveLines, UpdateSourceTrigger=PropertyChanged}" ToolTip="This is still in beta!"/>
+            <CheckBox Grid.Row="4" Content="Remove Noise" IsChecked="{Binding RemoveNoise, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
 
-                <StackPanel Grid.Column="1">
-                    <TextBox Grid.Row="0" Text="1" Width="50" />
-                    <TextBox Grid.Row="1" Text="1" Width="50" />
-                    <TextBox Grid.Row="2" Text="1" Width="50" />
-                </StackPanel>
-
-            </Grid>
+            <TextBox Grid.Column="1" Text="{Binding Contrast, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="10,0,120,0" />
+            <TextBox Grid.Column="1" Text="{Binding Gamma, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="65,0" />
+            <TextBox Grid.Column="1" Text="{Binding Brightness, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="120,0,10,0" />
+            <ListBox Grid.Column="1" Grid.Row="1" IsEnabled="False"/>
+            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding LinesMin, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="10,0,120,0" />
+            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding LinesMax, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="120,0,10,0" />
         </Grid>
     </Grid>
 </Page>

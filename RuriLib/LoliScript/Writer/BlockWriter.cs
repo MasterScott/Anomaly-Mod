@@ -55,6 +55,19 @@ namespace RuriLib.LS
         }
 
         /// <summary>
+        /// Writes a float value and a space.
+        /// </summary>
+        /// <param name="integer">The integer value to write</param>
+        /// <param name="property">The name of the property of the block. If the value is the default one, it will not be written. Do not set this parameter to always write the variable.</param>
+        /// <returns>The BlockWriter itself</returns>
+        public BlockWriter Float(float floatVar, string property = "")
+        {
+            if (property != "" && CheckDefault(floatVar, property)) return this;
+            Write($"{floatVar} ");
+            return this;
+        }
+
+        /// <summary>
         /// Writes a literal value (with escaped double-quotes) wrapped by double-quotes and a space.
         /// </summary>
         /// <param name="literal">The literal value to write</param>

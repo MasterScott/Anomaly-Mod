@@ -43,7 +43,7 @@
             <Button Grid.Column="0" Grid.Row="2" x:Name="blockCaptchaButton" Background="DarkOrange" Content="CAPTCHA" Click="blockCaptchaButton_Click" />
             <Button Grid.Column="1" Grid.Row="2" x:Name="blockBypassCFButton" Background="DarkSalmon" Content="BYPASS CF" Click="blockBypassCFButton_Click" />
             <Button Grid.Column="2" Grid.Row="2" x:Name="blockTCPButton" Background="MediumPurple" Content="TCP" Click="blockTCPButton_Click" />
-            <Button Grid.Column="0" Grid.Row="3" x:Name="blockOCRButton" Background="Azure" Content="OCR" Click="blockOCRButton_Click" IsEnabled="False" />
+            <Button Grid.Column="0" Grid.Row="3" x:Name="blockOCRButton" Background="Azure" Content="OCR" Click="blockOCRButton_Click" />
 
             <Button Grid.Column="0" Grid.Row="5" x:Name="blockNavigateButton" Background="RoyalBlue" Foreground="Gainsboro" Content="NAVIGATE" Click="blockNavigateButton_Click" />
             <Button Grid.Column="1" Grid.Row="5" x:Name="blockBrowserActionButton" Background="Green" Foreground="Gainsboro" Content="BROWSER ACTION" Click="blockBrowserActionButton_Click" />
