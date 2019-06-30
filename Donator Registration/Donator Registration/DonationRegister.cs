@@ -11,9 +11,11 @@ using System.Net;
 using System.Net.Http;
 using System.IO;
 using System.Management;
+using System.Reflection;
 
 namespace Donator_Registration
 {
+    [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
     public partial class DonationRegister : Form
     {
         public DonationRegister()
@@ -60,6 +62,7 @@ namespace Donator_Registration
 
         }
 
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         private void Button1_Click(object sender, EventArgs e)
         {
             var btc = false;
@@ -88,7 +91,7 @@ namespace Donator_Registration
                     sb.Append(hashBytes[i].ToString("X2"));
                 }
                 HDDID = sb.ToString();
-
+                // Extra string so i can push
 
 
                 if (check == false)
