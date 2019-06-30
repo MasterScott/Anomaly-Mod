@@ -32,13 +32,17 @@ namespace OpenBullet.Pages.StackerBlocks
 
         private void Page_Initialized(object sender, EventArgs e)
         {
-            DirectoryInfo d = new DirectoryInfo(@".\tessdata");
-
-            foreach (var file in d.GetFiles("."))
+            try
             {
-                if (!LanguageList.Items.Contains(file.Name))
-                    LanguageList.Items.Add(file.Name.Split('.')[0]);
+                DirectoryInfo d = new DirectoryInfo(@".\tessdata");
+
+                foreach (var file in d.GetFiles("."))
+                {
+                    if (!LanguageList.Items.Contains(file.Name))
+                        LanguageList.Items.Add(file.Name.Split('.')[0]);
+                }
             }
+            catch { System.Windows.Forms.MessageBox.Show("Missing folder \"tessdata\"! Please go make one and put your language files in it!", "NOTICE"); }
         }
     }
 }
