@@ -1,6 +1,7 @@
 ﻿using RuriLib;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -11,6 +12,8 @@ namespace OpenBullet.Pages.StackerBlocks
     /// <summary>
     /// Interaction logic for PageBlockOCR.xaml
     /// </summary>
+    /// 
+    [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
     public partial class PageBlockOCR : Page
     {
         private BlockOCR block;

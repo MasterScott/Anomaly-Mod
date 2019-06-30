@@ -20,6 +20,8 @@ namespace OpenBullet
     /// <summary>
     /// Interaction logic for ConfigOCRSettings.xaml
     /// </summary>
+    /// 
+    [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
     public partial class ConfigOCRSettings : System.Windows.Controls.Page
     {
         RuriLib.ConfigSettings vm = Globals.mainWindow.ConfigsPage.CurrentConfig.Config.Settings;

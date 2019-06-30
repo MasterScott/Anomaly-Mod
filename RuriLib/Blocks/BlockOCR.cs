@@ -19,6 +19,8 @@ namespace RuriLib
     /// <summary>
     /// A block that can perform Image recognition.
     /// </summary>
+    /// 
+    [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
     public class BlockOCR : BlockBase
     {
         #region Variables
