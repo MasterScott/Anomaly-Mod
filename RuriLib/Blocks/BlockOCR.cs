@@ -104,7 +104,6 @@ namespace RuriLib
             Label = "OCR";
         }
 
-        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public override void Process(BotData data)
         {
             base.Process(data);

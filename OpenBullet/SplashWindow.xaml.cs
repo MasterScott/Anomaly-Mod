@@ -74,7 +74,6 @@ namespace OpenBullet
                     if (HDDID == i)
                     {
                         KEYCHECK = true;
-                        MessageBox.Show(HDDID, i);
                         MessageBox.Show("Donator Found! Thank you for your Support =D", "NOTICE");
                         this.Close();
                         break;
@@ -82,7 +81,8 @@ namespace OpenBullet
                 }
                 if(KEYCHECK == false)
                 {
-                    //do your thingy here
+                    MessageBox.Show("You're not a donator, you shouldn't have this build. I will find out who leaked.", "NOTICE");
+                    Environment.Exit(0);
                 }
             }
         }
