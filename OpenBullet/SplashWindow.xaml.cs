@@ -79,12 +79,10 @@ namespace OpenBullet
                         this.Close();
                         break;
                     }
-                    else if (KEYCHECK == false)
-                    {
-                        MessageBox.Show(HDDID, i);
-                        MessageBox.Show("This Version is for Donators Only! If you are a donator Please Register!", "NOTICE");
-                        Environment.Exit(0);
-                    }
+                }
+                if(KEYCHECK == false)
+                {
+                    //do your thingy here
                 }
             }
         }
