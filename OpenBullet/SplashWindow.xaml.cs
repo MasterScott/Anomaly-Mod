@@ -64,16 +64,15 @@ namespace OpenBullet
                 //Downloads and checks Keys
                 WebClient KEYS = new WebClient();
 
-                string Donators = KEYS.DownloadString("https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/Donators");
+                string[] Donators = KEYS.DownloadString("https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/Donators").Split('\n');
 
-               /// foreach (string i in Donators)
-               /// {
-
-               ///     if (HDDID == i)
-               ///     {
-                       /// MessageBox.Show("You are a Donator!");
-              ///      }
-             ///   }
+                foreach(string i in Donators)
+                {
+                    if (HDDID == i)
+                    {
+                        MessageBox.Show("You are a Donator!");
+                    }
+                }
 
 
 
