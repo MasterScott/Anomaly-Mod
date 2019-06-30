@@ -66,33 +66,21 @@ namespace OpenBullet
 
                 string[] Donators = KEYS.DownloadString("https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/Donators").Split('\n');
 
-                foreach(string i in Donators)
+                foreach (string i in Donators)
                 {
                     if (HDDID == i)
                     {
-                        MessageBox.Show("You are a Donator!");
+                        MessageBox.Show("Donator Found! Thank you for your Support =D", "NOTICE");
+                        this.Close();
+                    }
+                    else if (HDDID != i)
+                    {
+                        MessageBox.Show("This Version is for Donators Only! If you are a donator Please Register!", "NOTICE");
+                        Environment.Exit(0);
                     }
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                this.Close();
-                }
             }
+        }
 
         private void HandleInput(object sender, TextCompositionEventArgs e)
         {
