@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Management;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -35,8 +37,63 @@ namespace OpenBullet
 
         public void login(object sender, RoutedEventArgs e)
         {
-            this.Close();
-        }
+            //Gets HWID for HDD
+            ManagementClass mangnmt = new ManagementClass("Win32_LogicalDisk");
+            ManagementObjectCollection mcol = mangnmt.GetInstances();
+            string HDDID = "";
+            foreach (ManagementObject strt in mcol)
+            {
+                HDDID += Convert.ToString(strt["VolumeSerialNumber"]);
+            }
+
+            // Use input string to calculate MD5 hash
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(HDDID);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                HDDID = sb.ToString();
+
+
+                //Downloads and checks Keys
+                WebClient KEYS = new WebClient();
+
+                string Donators = KEYS.DownloadString("https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/Donators");
+
+               /// foreach (string i in Donators)
+               /// {
+
+               ///     if (HDDID == i)
+               ///     {
+                       /// MessageBox.Show("You are a Donator!");
+              ///      }
+             ///   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.Close();
+                }
+            }
 
         private void HandleInput(object sender, TextCompositionEventArgs e)
         {
