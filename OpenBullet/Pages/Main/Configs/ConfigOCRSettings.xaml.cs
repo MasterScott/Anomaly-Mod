@@ -54,7 +54,7 @@ namespace OpenBullet
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public void DoOCR()
         {
-            var OCRTess = new TesseractEngine(@".\tessdata", "rus", EngineMode.Default);
+            var OCRTess = new TesseractEngine(@".\tessdata", "eng", EngineMode.Default);
 
             var result = OCRTess.Process(GetOCRImage()).GetText();
             //if (result.ToLower().Contains("c") && result.ToLower().Contains("h") && result.ToLower().Contains("3") && result.ToLower().Contains("n"))

@@ -25,7 +25,10 @@ namespace RuriLib.LS
         Boolean,
 
         /// <summary>An integer value.</summary>
-        Integer
+        Integer,
+
+        /// <summary>A float value</summary>
+        Float
     }
 
     /// <summary>
@@ -149,6 +152,18 @@ namespace RuriLib.LS
         }
 
         /// <summary>
+        /// Parses a float value from a line.
+        /// </summary>
+        /// <param name="input">The reference to the line of code</param>
+        /// <param name="label">Debug information about the expected integer</param>
+        /// <returns>The flaot value</returns>
+        public static float ParseFloat(ref string input, string label)
+        {
+            try { return float.Parse(LineParser.ParseToken(ref input, TokenType.Parameter, true)); }
+            catch { throw new ArgumentException($"Expected Integer value for '{label}'"); }
+        }
+
+        /// <summary>
         /// Parses a block label from a line.
         /// </summary>
         /// <param name="input">The reference to the line of code</param>
@@ -178,12 +193,14 @@ namespace RuriLib.LS
         public static TokenType Lookahead(ref string input)
         {
             var i = 0;
+            float f = 0f;
             var token = ParseToken(ref input, TokenType.Parameter, true, false);
             if (token.Contains("\"")) return TokenType.Literal;
             else if (token == "->") return TokenType.Arrow;
             else if (token.StartsWith("#")) return TokenType.Label;
             else if (token.ToUpper().Contains("=TRUE") || token.ToUpper().Contains("=FALSE")) return TokenType.Boolean;
             else if (int.TryParse(token, out i)) return TokenType.Integer;
+            else if (float.TryParse(token, out f)) return TokenType.Float;
             else return TokenType.Parameter;
         }
 
