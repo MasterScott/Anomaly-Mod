@@ -25,65 +25,71 @@ namespace RuriLib
         /// </summary>
         public enum Function
         {
-            /// <summary>Simply replaced the variables of the input.</summary>
-            Constant,
+            /// <summary>Decrypts an AES-encrypted string.</summary>
+            AESDecrypt,
 
-            /// <summary>Encodes an input as a base64 string.</summary>
-            Base64Encode,
+            /// <summary>Encrypts a string with AES.</summary>
+            AESEncrypt,
 
             /// <summary>Decodes the string from a base64-encoded input.</summary>
             Base64Decode,
 
-            /// <summary>Hashes an input string.</summary>
-            Hash,
+            /// <summary>Encodes an input as a base64 string.</summary>
+            Base64Encode,
 
-            /// <summary>Generates a HMAC for a given string.</summary>
-            HMAC,
+            /// <summary>Rounds a decimal input to the upper integer.</summary>
+            Ceil,
 
-            /// <summary>Translates words in a given string.</summary>
-            Translate,
+            /// <summary>Retrieves the character at a given index in the input string.</summary>
+            CharAt,
 
-            /// <summary>Converts a formatted date to a unix timestamp.</summary>
-            DateToUnixTime,
+            /// <summary>Clears the cookie jar used for HTTP requests.</summary>
+            ClearCookies,
 
-            /// <summary>Gets the length of a string.</summary>
-            Length,
+            /// <summary>Computes mathematical operations between decimal numbers.</summary>
+            Compute,
 
-            /// <summary>Converts all uppercase caracters in a string to lowercase.</summary>
-            ToLowercase,
+            /// <summary>Simply replaced the variables of the input.</summary>
+            Constant,
 
-            /// <summary>Converts all lowercase characters in a string to uppercase.</summary>
-            ToUppercase,
-
-            /// <summary>Replaces some text with something else, with or without using regex.</summary>
-            Replace,
-
-            /// <summary>Gets the first match for a specific regex pattern.</summary>
-            RegexMatch,
-
-            /// <summary>Encodes the input to be used in a URL.</summary>
-            URLEncode,
-
-            /// <summary>Decodes a URL-encoded input.</summary>
-            URLDecode,
-
-            /// <summary>Decodes a unicode input.</summary>
-            Unescape,
-
-            /// <summary>Encodes the input to be displayed in HTML or XML.</summary>
-            HTMLEntityEncode,
-
-            /// <summary>Decoded an input containing HTML or XML entities.</summary>
-            HTMLEntityDecode,
-
-            /// <summary>Converts a unix timestamp to a formatted date.</summary>
-            UnixTimeToDate,
+            /// <summary>Counts the occurrences of a string in another string.</summary>
+            CountOccurrences,
 
             /// <summary>Retrieves the current time as a unix timestamp.</summary>
             CurrentUnixTime,
 
-            /// <summary>Converts a unix timestamp to the ISO8601 format.</summary>
-            UnixTimeToISO8601,
+            /// <summary>Converts a formatted date to a unix timestamp.</summary>
+            DateToUnixTime,
+
+            /// <summary>Waits a given amount of milliseconds.</summary>
+            Delay,
+
+            /// <summary>Rounds a decimal input to the lower integer.</summary>
+            Floor,
+
+            /// <summary>Gets a valid random User-Agent header.</summary>
+            GetRandomUA,
+
+            /// <summary>Generates a HMAC for a given string.</summary>
+            HMAC,
+
+            /// <summary>Decoded an input containing HTML or XML entities.</summary>
+            HTMLEntityDecode,
+
+            /// <summary>Encodes the input to be displayed in HTML or XML.</summary>
+            HTMLEntityEncode,
+
+            /// <summary>Hashes an input string.</summary>
+            Hash,
+
+            /// <summary>Gets the length of a string.</summary>
+            Length,
+
+            /// <summary>Encrypts a string with RSA given a Key.</summary>
+            RSA,
+
+            /// <summary>Generates a Random GUID</summary>
+            RandomGUID,
 
             /// <summary>Generates a random integer.</summary>
             RandomNum,
@@ -91,53 +97,47 @@ namespace RuriLib
             /// <summary>Generates a random string based on a mask.</summary>
             RandomString,
 
-            /// <summary>Generates a Random GUID</summary>
-            RandomGUID,
+            /// <summary>Reverses the input string.</summary>
+            ReverseString,
 
-            /// <summary>Rounds a decimal input to the upper integer.</summary>
-            Ceil,
+            /// <summary>Replaces some text with something else, with or without using regex.</summary>
+            Replace,
 
-            /// <summary>Rounds a decimal input to the lower integer.</summary>
-            Floor,
+            /// <summary>Gets the first match for a specific regex pattern.</summary>
+            RegexMatch,
 
             /// <summary>Rounds a decimal input to the nearest integer.</summary>
             Round,
 
-            /// <summary>Computes mathematical operations between decimal numbers.</summary>
-            Compute,
-
-            /// <summary>Counts the occurrences of a string in another string.</summary>
-            CountOccurrences,
-
-            /// <summary>Clears the cookie jar used for HTTP requests.</summary>
-            ClearCookies,
-
-            /// <summary>Encrypts a string with RSA given a Key.</summary>
-            RSA,
-
-            /// <summary>Waits a given amount of milliseconds.</summary>
-            Delay,
-
-            /// <summary>Retrieves the character at a given index in the input string.</summary>
-            CharAt,
-
             /// <summary>Gets a substring of the input.</summary>
             Substring,
 
-            /// <summary>Reverses the input string.</summary>
-            ReverseString,
+            /// <summary>Converts all uppercase caracters in a string to lowercase.</summary>
+            ToLowercase,
+
+            /// <summary>Converts all lowercase characters in a string to uppercase.</summary>
+            ToUppercase,
+
+            /// <summary>Translates words in a given string.</summary>
+            Translate,
 
             /// <summary>Removes leading or trailing whitespaces from a string.</summary>
             Trim,
 
-            /// <summary>Gets a valid random User-Agent header.</summary>
-            GetRandomUA,
+            /// <summary>Decodes a URL-encoded input.</summary>
+            URLDecode,
 
-            /// <summary>Encrypts a string with AES.</summary>
-            AESEncrypt,
+            /// <summary>Encodes the input to be used in a URL.</summary>
+            URLEncode,
 
-            /// <summary>Decrypts an AES-encrypted string.</summary>
-            AESDecrypt
+            /// <summary>Decodes a unicode input.</summary>
+            Unescape,
+
+            /// <summary>Converts a unix timestamp to a formatted date.</summary>
+            UnixTimeToDate,
+
+            /// <summary>Converts a unix timestamp to the ISO8601 format.</summary>
+            UnixTimeToISO8601
         }
 
         /// <summary>
@@ -646,13 +646,15 @@ namespace RuriLib
                         break;
 
                     case Function.RandomString:
-                        var reserved = new string[] { "?l", "?u", "?d", "?s", "?h", "?a" };
+                        var reserved = new string[] { "?l", "?u", "?d", "?s", "?h", "?a", "?m", "?i" };
                         var lowercase = "abcdefghijklmnopqrstuvwxyz";
                         var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                         var digits = "0123456789";
                         var symbols = "\\!\"£$%&/()=?^'{}[]@#,;.:-_*+";
                         var hex = digits + "abcdef";
                         var allchars = lowercase + uppercase + digits + symbols;
+                        var udchars = uppercase + digits;
+                        var ludchars = lowercase + uppercase + digits;
 
                         outputString = localInputString;
                         while (reserved.Any(r => outputString.Contains(r)))
@@ -669,6 +671,11 @@ namespace RuriLib
                                 outputString = ReplaceFirst(outputString, "?h", hex[data.rand.Next(0, hex.Length)].ToString());
                             else if (outputString.Contains("?a"))
                                 outputString = ReplaceFirst(outputString, "?a", allchars[data.rand.Next(0, allchars.Length)].ToString());
+                            else if (outputString.Contains("?m"))
+                                outputString = ReplaceFirst(outputString, "?m", udchars[data.rand.Next(0, udchars.Length)].ToString());
+                            else if (outputString.Contains("?i"))
+                                outputString = ReplaceFirst(outputString, "?i", ludchars[data.rand.Next(0, ludchars.Length)].ToString());
+
                         }
                         break;
 
