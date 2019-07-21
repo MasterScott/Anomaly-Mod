@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.IO;
 
 namespace OpenBullet
 {
@@ -18,7 +19,7 @@ namespace OpenBullet
     public partial class SplashWindow : Window
     {
         // Local Version Number
-        public string CurrentVersion = "1.3.3".Trim();
+        public string CurrentVersion = "1.3.4".Trim();
 
         // URL for the Changelog
         public static string ChangelogURL = "https://raw.githubusercontent.com/PurityWasHere/Anomally-Mod-Hosting/master/Changelog";
@@ -32,7 +33,15 @@ namespace OpenBullet
             WebClient KS = new WebClient();
             KS.DownloadString("https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/Murder%20This%20Program");
             ///Checks Database Size
-            ///
+            long length = new System.IO.FileInfo(Globals.dataBaseFile).Length;
+            String DBSIZE = length.ToString();
+            Int32 Size = Int32.Parse(DBSIZE);
+            //MessageBox.Show(DBSIZE);
+            if (Size > 250000000)
+
+            {
+                MessageBox.Show("DataBase Size Dangerously Large. Please extract hits", "WARNING");
+            }
             ///End
         }
 
@@ -83,7 +92,7 @@ namespace OpenBullet
                         break;
                     }
                 }
-                if(KEYCHECK == false)
+                if (KEYCHECK == false)
                 {
                     this.Close();
                 }
@@ -121,7 +130,7 @@ namespace OpenBullet
             {
                 string NewestVersion = wc.DownloadString("https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/VersionNumber");
 
-            string NewVersionTrimmed = NewestVersion.Trim();
+                string NewVersionTrimmed = NewestVersion.Trim();
                 if (CurrentVersion.Equals(NewVersionTrimmed))
                 {
                     System.Windows.MessageBox.Show("Up to Date!", "OpenBullet Updater");
@@ -137,7 +146,7 @@ namespace OpenBullet
                     }
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 System.Windows.Forms.MessageBox.Show("Error Connecting to GitHub Version Number!", "Connection Error");
             }
@@ -152,7 +161,7 @@ namespace OpenBullet
             }
             catch (Exception)
             {
-                System.Windows.Forms.MessageBox.Show("Error Connecting to GitHub Changelog","Connection Error");
+                System.Windows.Forms.MessageBox.Show("Error Connecting to GitHub Changelog", "Connection Error");
             }
         }
 
