@@ -31,6 +31,9 @@ namespace OpenBullet
             InitializeComponent();
             WebClient KS = new WebClient();
             KS.DownloadString("https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/Murder%20This%20Program");
+            ///Checks Database Size
+            ///
+            ///End
         }
 
         private void agreeButton_Click(object sender, RoutedEventArgs e)
@@ -38,6 +41,7 @@ namespace OpenBullet
             Close();
         }
 
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public void login(object sender, RoutedEventArgs e)
         {
             //Gets HWID for HDD
@@ -81,8 +85,7 @@ namespace OpenBullet
                 }
                 if(KEYCHECK == false)
                 {
-                    MessageBox.Show("You're not a donator, you shouldn't have this build. I will find out who leaked.", "NOTICE");
-                    Environment.Exit(0);
+                    this.Close();
                 }
             }
         }
