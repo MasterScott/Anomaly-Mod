@@ -1,25 +1,19 @@
-﻿using Cloudflare;
-using Cloudflare.CaptchaProviders;
-using RuriLib.LS;
+﻿using RuriLib.LS;
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Windows.Media;
-using System.Globalization;
-using Tesseract;
 using System.Drawing;
-using System.Reflection;
 using System.Drawing.Imaging;
-using System.Windows.Forms;
 using System.IO;
+using System.Net;
+using System.Reflection;
+using Tesseract;
 
 namespace RuriLib
 {
     /// <summary>
     /// A block that can perform Image recognition.
     /// </summary>
-    /// 
+    ///
     [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
     public class BlockOCR : BlockBase
     {
@@ -56,22 +50,27 @@ namespace RuriLib
         public bool IsBase64 { get { return isBase64; } set { isBase64 = value; OnPropertyChanged(); } }
 
         private float contrast = 1;
+
         /// <summary>OCR contrast value.</summary>
         public float Contrast { get { return contrast; } set { contrast = value; OnPropertyChanged(); } }
 
         private float gamma = 1;
+
         /// <summary>OCR gamma value.</summary>
         public float Gamma { get { return gamma; } set { gamma = value; OnPropertyChanged(); } }
 
         private float brightness = 1;
+
         /// <summary>OCR brightness value.</summary>
         public float Brightness { get { return brightness; } set { brightness = value; OnPropertyChanged(); } }
 
         private int linesMin = 0;
+
         /// <summary>OCR minimum lines to remove value.</summary>
         public int LinesMin { get { return linesMin; } set { linesMin = value; OnPropertyChanged(); } }
 
         private int linesMax = 0;
+
         /// <summary>OCR maximum lines to remove value.</summary>
         public int LinesMax { get { return linesMax; } set { linesMax = value; OnPropertyChanged(); } }
 
@@ -91,6 +90,7 @@ namespace RuriLib
         public bool RemoveLines { get { return removeLines; } set { removeLines = value; OnPropertyChanged(); } }
 
         private string ocrLang = "eng";
+
         /// <summary>Language the Tesseract uses to read the Image.</summary>
         public string OcrLang { get { return ocrLang; } set { ocrLang = value; OnPropertyChanged(); } }
 
@@ -131,7 +131,7 @@ namespace RuriLib
             var inputs = ReplaceValues(Url, data);
 
             //if (inputs.Contains("."))
-            if(IsBase64)
+            if (IsBase64)
             {
                 byte[] imageBytes = Convert.FromBase64String(inputs);
                 using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
@@ -275,9 +275,6 @@ namespace RuriLib
             return this;
         }
 
-
-
-
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public Bitmap SetContrastGamma(Bitmap original)
         {
@@ -326,8 +323,6 @@ namespace RuriLib
             return Bmp;
         }
 
-
-
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public Bitmap RemoveImageLines(Bitmap Bmp)
         {
@@ -368,8 +363,6 @@ namespace RuriLib
                             }
                     }
 
-
-
                     //if (x - amtMax > 0 && y - amtMax > 0)
                     //{
                     //    compare1 = Bmp.GetPixel(x - amtMin, y - amtMin);
@@ -393,7 +386,6 @@ namespace RuriLib
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public Bitmap RemoveNoise(Bitmap Bmp)
         {
-
             return Bmp;
         }
 
@@ -404,10 +396,5 @@ namespace RuriLib
         //        Bmp.MakeTransparent(i);
         //    return Bmp;
         //}
-
-
-
-
-
     }
 }

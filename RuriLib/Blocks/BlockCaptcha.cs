@@ -39,7 +39,10 @@ namespace RuriLib
             TwoCaptcha,
 
             /// <summary>The service provided by https://rucaptcha.com/</summary>
-            RuCaptcha
+            RuCaptcha,
+
+            /// <summary>The service provided by Osher/</summary>
+            OsherCaptcha
         }
 
         /// <summary>The balance of the account of the captcha-solving service.</summary>
@@ -93,6 +96,10 @@ namespace RuriLib
 
                 case CaptchaService.CaptchasIO:
                     Balance = new CaptchasIO(data.GlobalSettings.Captchas.CIOToken, data.GlobalSettings.Captchas.Timeout).GetBalance();
+                    break;
+
+                case CaptchaService.OsherCaptcha:
+                    Balance = new OsherCaptcha(data.GlobalSettings.Captchas.OsherToken, data.GlobalSettings.Captchas.Timeout).GetBalance();
                     break;
 
                 default:

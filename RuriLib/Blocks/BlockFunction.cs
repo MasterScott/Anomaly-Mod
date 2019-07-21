@@ -675,7 +675,6 @@ namespace RuriLib
                                 outputString = ReplaceFirst(outputString, "?m", udchars[data.rand.Next(0, udchars.Length)].ToString());
                             else if (outputString.Contains("?i"))
                                 outputString = ReplaceFirst(outputString, "?i", ludchars[data.rand.Next(0, ludchars.Length)].ToString());
-
                         }
                         break;
 
