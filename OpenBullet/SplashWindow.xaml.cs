@@ -19,10 +19,10 @@ namespace OpenBullet
     public partial class SplashWindow : Window
     {
         // Local Version Number
-        public string CurrentVersion = "1.3.4".Trim();
+        public string CurrentVersion = "1.3.5".Trim();
 
         // URL for the Changelog
-        public static string ChangelogURL = "https://raw.githubusercontent.com/PurityWasHere/Anomally-Mod-Hosting/master/Changelog";
+        public static string ChangelogURL = "https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/Changelog";
         //Donator Check
         private bool KEYCHECK = false;
         //WebClient for Changelog
