@@ -149,10 +149,35 @@ namespace RuriLib
         /// <summary>Removing background noise of an Image.</summary>
         public bool RemoveNoise { get { return removeNoise; } set { removeNoise = value; OnPropertyChanged(); } }
 
+        private bool dilate = false;
+
+        /// <summary>Whether to add Dilation or not to an Image.</summary>
+        public bool Dilate { get { return dilate; } set { dilate = value; OnPropertyChanged(); } }
+
+        private float threshold = 1;
+
+        /// <summary>The amount of threshold.</summary>
+        public float Threshold { get { return threshold; } set { threshold = value; OnPropertyChanged(); } }
+
+        private float diffKeep = 0;
+
+        /// <summary>The amount of difference a pixel can have.</summary>
+        public float DiffKeep { get { return diffKeep; } set { diffKeep = value; OnPropertyChanged(); } }
+
+        private float diffHide = 0;
+
+        /// <summary>The amount of difference a pixel can have.</summary>
+        public float DiffHide { get { return diffHide; } set { diffHide = value; OnPropertyChanged(); } }
+
         private bool transparent = false;
 
         /// <summary>Setting transparnet colors in Image.</summary>
         public bool Transparent { get { return transparent; } set { transparent = value; OnPropertyChanged(); } }
+
+        private bool onlyShow = false;
+
+        /// <summary>Setting to show only specified colors in Image.</summary>
+        public bool OnlyShow { get { return onlyShow; } set { onlyShow = value; OnPropertyChanged(); } }
 
         private bool contrastGamma = false;
 

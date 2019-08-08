@@ -94,7 +94,8 @@ namespace OpenBullet
                 }
                 if (KEYCHECK == false)
                 {
-                    this.Close();
+                    MessageBox.Show("Donator not found!", "NOTICE");
+                    Environment.Exit(0);
                 }
             }
         }

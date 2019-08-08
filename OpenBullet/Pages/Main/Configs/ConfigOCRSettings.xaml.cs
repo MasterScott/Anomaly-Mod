@@ -56,7 +56,7 @@ namespace OpenBullet
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public void DoOCR()
         {
-            var OCRTess = new TesseractEngine(@".\tessdata", "eng", EngineMode.Default);
+            var OCRTess = new TesseractEngine(@".\tessdata", "eng", EngineMode.TesseractOnly);
 
             var result = OCRTess.Process(GetOCRImage()).GetText();
             //if (result.ToLower().Contains("c") && result.ToLower().Contains("h") && result.ToLower().Contains("3") && result.ToLower().Contains("n"))
@@ -88,17 +88,26 @@ namespace OpenBullet
                     appliedCaptcha = SetContrastGamma(appliedCaptcha);
                 }
 
+                if (vm.RemoveNoise)
+                {
+                    vm.Threshold = float.Parse(ThresholdAmt.Text);
+                    appliedCaptcha = AdjustThreshold(appliedCaptcha, vm.Threshold); //appliedCaptcha = RemoveNoise(appliedCaptcha);
+                }
+
                 if (vm.Transparent)
                     appliedCaptcha = SetTransparent(appliedCaptcha);
+
+                if (vm.Grayscale)
+                    appliedCaptcha = ToGrayScale(appliedCaptcha);
+
+                if (vm.OnlyShow)
+                    appliedCaptcha = SetOnlyShow(appliedCaptcha);
 
                 if (vm.RemoveLines)
                     appliedCaptcha = RemoveImageLines(appliedCaptcha);
 
-                if (vm.RemoveNoise)
-                    appliedCaptcha = RemoveNoise(appliedCaptcha);
-
-                if (vm.Grayscale)
-                    appliedCaptcha = ToGrayScale(appliedCaptcha);
+                if(vm.Dilate)
+                    appliedCaptcha = Dilate(appliedCaptcha);
 
                 AppliedImage.Source = ImageSourceFromBitmap(appliedCaptcha);
                 OCR = PixConverter.ToPix(appliedCaptcha);
@@ -124,8 +133,17 @@ namespace OpenBullet
                         appliedCaptcha = SetContrastGamma(appliedCaptcha);
                     }
 
+                    if (vm.RemoveNoise)
+                        appliedCaptcha = AdjustThreshold(appliedCaptcha, 0.5f); //appliedCaptcha = RemoveNoise(appliedCaptcha);
+
                     if (vm.Transparent)
                         appliedCaptcha = SetTransparent(appliedCaptcha);
+
+                    if (vm.Grayscale)
+                        appliedCaptcha = ToGrayScale(appliedCaptcha);
+
+                    if (vm.OnlyShow)
+                        appliedCaptcha = SetOnlyShow(appliedCaptcha);
 
                     if (vm.RemoveLines)
                     {
@@ -134,11 +152,8 @@ namespace OpenBullet
                         appliedCaptcha = RemoveImageLines(appliedCaptcha);
                     }
 
-                    if (vm.RemoveNoise)
-                        appliedCaptcha = RemoveNoise(appliedCaptcha);
-
-                    if (vm.Grayscale)
-                        appliedCaptcha = ToGrayScale(appliedCaptcha);
+                    if (vm.Dilate)
+                        appliedCaptcha = Dilate(appliedCaptcha);
                 }
                 AppliedImage.Source = ImageSourceFromBitmap(appliedCaptcha);
                 OCR = PixConverter.ToPix(appliedCaptcha);
@@ -208,7 +223,35 @@ namespace OpenBullet
             return Bmp;
         }
 
-        
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+        private Bitmap AdjustThreshold(Bitmap image, float threshold)
+        {
+            // Make the result bitmap.
+            Bitmap bm = new Bitmap(image.Width, image.Height);
+
+            // Make the ImageAttributes object and set the threshold.
+            ImageAttributes attributes = new ImageAttributes();
+            attributes.SetThreshold(threshold);
+
+            // Draw the image onto the new bitmap
+            // while applying the new ColorMatrix.
+            System.Drawing.Point[] points =
+            {
+                new System.Drawing.Point(0, 0),
+                new System.Drawing.Point(image.Width, 0),
+                new System.Drawing.Point(0, image.Height),
+            };
+            Rectangle rect =
+                new Rectangle(0, 0, image.Width, image.Height);
+            using (Graphics gr = Graphics.FromImage(bm))
+            {
+                gr.DrawImage(image, points, rect,
+                    GraphicsUnit.Pixel, attributes);
+            }
+
+            // Return the result.
+            return bm;
+        }
 
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public Bitmap RemoveImageLines(Bitmap Bmp)
@@ -217,26 +260,105 @@ namespace OpenBullet
             int amtMax = Int32.Parse(PixelAmtMax.Text);
             System.Drawing.Color c;
             System.Drawing.Color compare1;
+            System.Drawing.Color compare11;
             System.Drawing.Color compare2;
-            for(int x = 0; x < Bmp.Width; x++)
-                for(int y = 0; y < Bmp.Height; y++)
+            System.Drawing.Color compare22;
+
+
+
+            //    for (int i = 0; i < Bmp.Width; i++)
+            //    {
+            //        for (int j = 0; j < Bmp.Height; j++)
+            //        {
+            //            c = Bmp.GetPixel(i, j);
+            //            if (Bmp.GetPixel(i, j) == c)
+            //            {
+            //                if (i > 0 && Bmp.GetPixel(i - 1, j) != c) Bmp.SetPixel(i - 1, j, System.Drawing.Color.Transparent);
+            //                if (j > 0 && Bmp.GetPixel(i, j - 1) != c) Bmp.SetPixel(i, j - 1, System.Drawing.Color.Transparent);
+            //                if (i + 1 < Bmp.Width && Bmp.GetPixel(i + 1, j) != c) Bmp.SetPixel(i + 1,j, System.Drawing.Color.Transparent);
+            //                if (j + 1 < Bmp.Height && Bmp.GetPixel(i, j + 1) != c) Bmp.SetPixel(i, j + 1, System.Drawing.Color.Transparent);
+            //}
+            //        }
+            //    }
+            //    for (int i = 0; i < Bmp.Width; i++)
+            //    {
+            //        for (int j = 0; j < Bmp.Height; j++)
+            //        {
+            //            c = Bmp.GetPixel(i, j);
+            //            if (Bmp.GetPixel(i, j) != c)
+            //            {
+            //                Bmp.SetPixel(i, j, System.Drawing.Color.Transparent);
+            //            }
+            //        }
+            //    }
+            //    return Bmp;
+
+
+
+
+            //for (int x = 0; x < Bmp.Width; x++)
+            //    for (int y = 0; y < Bmp.Height; y++)
+            //    {
+            //        c = Bmp.GetPixel(x, y);
+            //        if (x - (amtMax + 1) > 0 && y - (amtMax + 1) > 0)
+            //        {
+            //            compare1 = Bmp.GetPixel(x - amtMin, y - amtMin);
+            //            compare11 = Bmp.GetPixel(x - (amtMin - 1), y - (amtMin - 1));
+            //            compare2 = Bmp.GetPixel(x - amtMax, y - amtMax);
+            //            compare22 = Bmp.GetPixel(x - (amtMax - 1), y - (amtMax - 1));
+
+            //            if (compare1 != compare2)
+            //            {
+            //                if (compare1 != c && compare11 != c)
+            //                    Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+            //                if (compare2 != c && compare22 != c)
+            //                    Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+            //            }
+            //        }
+            //        if (x + (amtMax + 1) < Bmp.Width && y + (amtMax + 1) < Bmp.Height)
+            //        {
+            //            compare1 = Bmp.GetPixel(x + amtMin, y + amtMin);
+            //            compare11 = Bmp.GetPixel(x + (amtMin - 1), y + (amtMin - 1));
+            //            compare2 = Bmp.GetPixel(x + amtMax, y + amtMax);
+            //            compare22 = Bmp.GetPixel(x + (amtMax - 1), y + (amtMax - 1));
+
+            //            if (compare1 != compare2)
+            //            {
+            //                if (compare1 != c && compare11 != c)
+            //                    Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+            //                if (compare2 != c && compare22 != c)
+            //                    Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+            //            }
+            //        }
+            //    }
+
+
+
+
+
+
+
+
+
+            for (int x = 0; x < Bmp.Width; x++)
+                for (int y = 0; y < Bmp.Height; y++)
                 {
                     c = Bmp.GetPixel(x, y);
 
-                    if(x - (amtMax+1) > 0 && y - (amtMax+1) > 0)
+                    if (x - (amtMax + 1) > 0 && y - (amtMax + 1) > 0)
                     {
                         compare1 = Bmp.GetPixel(x - amtMin, y - amtMin);
                         compare2 = Bmp.GetPixel(x - amtMax, y - amtMax);
-                        if(compare1 == compare2)
-                            if(c != compare1)
-                        {
-                            if(compare1 != Bmp.GetPixel(x - (amtMin - 1), y - (amtMin - 1)))
-                                Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
-                            if (compare2 != Bmp.GetPixel(x - (amtMax + 1), y - (amtMax + 1)))
-                                Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
-                        }
+                        if (compare1 == compare2)
+                            if (c != compare1)
+                            {
+                                if (compare1 != Bmp.GetPixel(x - (amtMin - 1), y - (amtMin - 1)))
+                                    Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                                if (compare2 != Bmp.GetPixel(x - (amtMax + 1), y - (amtMax + 1)))
+                                    Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                            }
                     }
-                    if (x + (amtMax+1) < Bmp.Width && y + (amtMax+1) < Bmp.Height)
+                    if (x + (amtMax + 1) < Bmp.Width && y + (amtMax + 1) < Bmp.Height)
                     {
                         compare1 = Bmp.GetPixel(x + amtMin, y + amtMin);
                         compare2 = Bmp.GetPixel(x + amtMax, y + amtMax);
@@ -249,6 +371,12 @@ namespace OpenBullet
                                     Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
                             }
                     }
+
+
+
+
+
+
 
 
 
@@ -267,17 +395,17 @@ namespace OpenBullet
                     //                        Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
                     //            }
                     //}
-                }
+                    }
 
-            return Bmp;
+                    return Bmp;
         }
 
-        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
-        public Bitmap RemoveNoise(Bitmap Bmp)
-        {
+        //[Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+        //public Bitmap RemoveNoise(Bitmap Bmp)
+        //{
 
-            return Bmp;
-        }
+        //    return Bmp;
+        //}
 
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public Bitmap SetTransparent(Bitmap Bmp)
@@ -286,6 +414,120 @@ namespace OpenBullet
                 Bmp.MakeTransparent(i);
             return Bmp;
         }
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+        public Bitmap SetOnlyShow(Bitmap Bmp)
+        {
+            for (int n = 0; n < (Bmp.Width - 1); n++)
+                for (int m = 0; m < (Bmp.Height - 1); m++)
+                    foreach (System.Drawing.Color i in ColorsListShow.Items)
+                        if (Bmp.GetPixel(n, m) != i)//if (!Bmp.GetPixel(n, m).ToString().Contains("B=0") && !Bmp.GetPixel(n, m).ToString().Contains("R=0") && !Bmp.GetPixel(n, m).ToString().Contains("G=0"))
+                            if (Math.Abs(Bmp.GetPixel(n, m).R - i.R) > vm.DiffKeep || Math.Abs(Bmp.GetPixel(n, m).G - i.G) > vm.DiffKeep || Math.Abs(Bmp.GetPixel(n, m).B - i.B) > vm.DiffKeep)
+                            {
+                                //if (n-3 > 1 && m-3 > 1 && n-3 < Bmp.Width && m-3 < Bmp.Height && Bmp.GetPixel(n-3, m-3) == Bmp.GetPixel(n+3, m+3))
+                                //{
+                                //    Bmp.SetPixel(n, m, Bmp.GetPixel(n - 3, m - 3));
+                                //}
+                                //else
+                                    Bmp.SetPixel(n, m, System.Drawing.Color.Transparent);
+                            }
+
+            return Bmp;
+        }
+
+
+
+
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+        public Bitmap Dilate(Bitmap SrcImage)
+        {
+            // Create Destination bitmap.
+            Bitmap tempbmp = new Bitmap(SrcImage.Width, SrcImage.Height);
+
+            // Take source bitmap data.
+            BitmapData SrcData = SrcImage.LockBits(new Rectangle(0, 0,
+                SrcImage.Width, SrcImage.Height), ImageLockMode.ReadOnly,
+                System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+
+            // Take destination bitmap data.
+            BitmapData DestData = tempbmp.LockBits(new Rectangle(0, 0, tempbmp.Width,
+                tempbmp.Height), ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+
+            // Element array to used to dilate.
+            byte[,] sElement = new byte[5, 5] {
+        {0,0,1,0,0},
+        {0,1,1,1,0},
+        {1,1,1,1,1},
+        {0,1,1,1,0},
+        {0,0,1,0,0}
+    };
+
+            // Element array size.
+            int size = 5;
+            byte max, clrValue;
+            int radius = size / 2;
+            int ir, jr;
+
+            unsafe
+            {
+
+                // Loop for Columns.
+                for (int colm = radius; colm < DestData.Height - radius; colm++)
+                {
+                    // Initialise pointers to at row start.
+                    byte* ptr = (byte*)SrcData.Scan0 + (colm * SrcData.Stride);
+                    byte* dstPtr = (byte*)DestData.Scan0 + (colm * SrcData.Stride);
+
+                    // Loop for Row item.
+                    for (int row = radius; row < DestData.Width - radius; row++)
+                    {
+                        max = 0;
+                        clrValue = 0;
+
+                        // Loops for element array.
+                        for (int eleColm = 0; eleColm < 5; eleColm++)
+                        {
+                            ir = eleColm - radius;
+                            byte* tempPtr = (byte*)SrcData.Scan0 +
+                                ((colm + ir) * SrcData.Stride);
+
+                            for (int eleRow = 0; eleRow < 5; eleRow++)
+                            {
+                                jr = eleRow - radius;
+
+                                // Get neightbour element color value.
+                                clrValue = (byte)((tempPtr[row * 3 + jr] +
+                                    tempPtr[row * 3 + jr + 1] + tempPtr[row * 3 + jr + 2]) / 3);
+
+                                if (max < clrValue)
+                                {
+                                    if (sElement[eleColm, eleRow] != 0)
+                                        max = clrValue;
+                                }
+                            }
+                        }
+
+                        dstPtr[0] = dstPtr[1] = dstPtr[2] = max;
+
+                        ptr += 3;
+                        dstPtr += 3;
+                    }
+                }
+            }
+
+            // Dispose all Bitmap data.
+            SrcImage.UnlockBits(SrcData);
+            tempbmp.UnlockBits(DestData);
+
+            // return dilated bitmap.
+            return tempbmp;
+        }
+
+
+
+
+
+
+
         System.Drawing.Color textColor;
         int posX;
         int posY;
@@ -303,7 +545,25 @@ namespace OpenBullet
             catch { }
         }
 
-        private void AppliedImage_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (ColorsList.Items.Count == 1)
+                ColorsList.Items.Clear();
+            else
+                ColorsList.Items.Remove(ColorsList.SelectedValue);
+            ColorsList.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(0,0,0,0));
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            if (ColorsListShow.Items.Count == 1)
+                ColorsListShow.Items.Clear();
+            else
+                ColorsListShow.Items.Remove(ColorsListShow.SelectedValue);
+            ColorsListShow.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(0, 0, 0, 0));
+        }
+
+        private void AppliedImage_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             try
             {
@@ -314,13 +574,15 @@ namespace OpenBullet
             catch { }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void AppliedImage_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (ColorsList.Items.Count == 1)
-                ColorsList.Items.Clear();
-            else
-                ColorsList.Items.Remove(ColorsList.SelectedValue);
-            ColorsList.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(0,0,0,0));
+            try
+            {
+                ColorsListShow.Items.Add(textColor);
+                ColorsListShow.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(textColor.A, textColor.R, textColor.G, textColor.B));
+                //ColorsList.Items.Add(appliedCaptcha.GetPixel((int)(posX * appliedCaptcha.Width / AppliedImage.Width), (int)(posY * appliedCaptcha.Height / AppliedImage.Height)).ToString());
+            }
+            catch { }
         }
     }
 }

@@ -89,6 +89,21 @@ namespace RuriLib
         /// <summary>If the image needs lines or pixels removed.</summary>
         public bool RemoveLines { get { return removeLines; } set { removeLines = value; OnPropertyChanged(); } }
 
+        private bool removeNoise = false;
+
+        /// <summary>If the image needs noise removed.</summary>
+        public bool RemoveNoise { get { return removeNoise; } set { removeNoise = value; OnPropertyChanged(); } }
+
+        private bool dilate = false;
+
+        /// <summary>If the image needs noise removed.</summary>
+        public bool Dilate { get { return dilate; } set { dilate = value; OnPropertyChanged(); } }
+
+        private float threshold = 1.0f;
+
+        /// <summary>If the image needs noise removed.</summary>
+        public float Threshold { get { return threshold; } set { threshold = value; OnPropertyChanged(); } }
+
         private string ocrLang = "eng";
 
         /// <summary>Language the Tesseract uses to read the Image.</summary>
@@ -145,14 +160,17 @@ namespace RuriLib
                     ////if (vm.Transparent)
                     ////    captcha = SetTransparent(captcha);
 
+                    if (GrayScale)
+                        appliedCaptcha = ToGrayScale(appliedCaptcha);
+
+                    if (RemoveNoise)
+                        appliedCaptcha = RemoveNoiseThreshold(appliedCaptcha, Threshold);
+
                     if (RemoveLines)
                         appliedCaptcha = RemoveImageLines(appliedCaptcha);
 
-                    //if (configData.ConfigSettings.RemoveNoise)
-                    //    captcha = RemoveNoise(captcha);
-
-                    if (GrayScale)
-                        appliedCaptcha = ToGrayScale(appliedCaptcha);
+                    if (Dilate)
+                        appliedCaptcha = DilateImage(appliedCaptcha);
 
                     OCR = PixConverter.ToPix(appliedCaptcha);
                 }
@@ -173,14 +191,17 @@ namespace RuriLib
                     ////if (vm.Transparent)
                     ////    captcha = SetTransparent(captcha);
 
-                    if (RemoveLines)
-                        appliedCaptcha = RemoveImageLines(appliedCaptcha);
-
-                    //if (configData.ConfigSettings.RemoveNoise)
-                    //    captcha = RemoveNoise(captcha);
+                    if (RemoveNoise)
+                        appliedCaptcha = RemoveNoiseThreshold(appliedCaptcha, Threshold);
 
                     if (GrayScale)
                         appliedCaptcha = ToGrayScale(appliedCaptcha);
+
+                    if (RemoveLines)
+                        appliedCaptcha = RemoveImageLines(appliedCaptcha);
+
+                    if(Dilate)
+                        appliedCaptcha = DilateImage(appliedCaptcha);
 
                     OCR = PixConverter.ToPix(appliedCaptcha);
                 }
@@ -210,6 +231,8 @@ namespace RuriLib
                 .Boolean(ConGamBri, "ConGamBri")
                 .Boolean(GrayScale, "GrayScale")
                 .Boolean(RemoveLines, "RemoveLines")
+                .Boolean(RemoveNoise, "RemoveNoise")
+                .Boolean(Dilate, "Dilate")
                 .Indent();
 
             if (ConGamBri)
@@ -223,6 +246,11 @@ namespace RuriLib
                 writer
                     .Integer(LinesMin)
                     .Integer(LinesMax)
+                    .Indent();
+
+            if (RemoveNoise)
+                writer
+                    .Float(Threshold)
                     .Return();
 
             return writer.ToString();
@@ -269,6 +297,8 @@ namespace RuriLib
 
                 LinesMin = LineParser.ParseInt(ref input, "LinesMin");
                 LinesMax = LineParser.ParseInt(ref input, "LinesMax");
+
+                Threshold = LineParser.ParseFloat(ref input, "Threshold");
             }
             catch { }
 
@@ -331,60 +361,129 @@ namespace RuriLib
             System.Drawing.Color c;
             System.Drawing.Color compare1;
             System.Drawing.Color compare2;
+            System.Drawing.Color compare11;
+            System.Drawing.Color compare22;
             for (int x = 0; x < Bmp.Width; x++)
                 for (int y = 0; y < Bmp.Height; y++)
                 {
                     c = Bmp.GetPixel(x, y);
 
-                    if (x - (LinesMax + 1) > 0 && y - (LinesMax + 1) > 0)
-                    {
-                        compare1 = Bmp.GetPixel(x - LinesMin, y - LinesMin);
-                        compare2 = Bmp.GetPixel(x - LinesMax, y - LinesMax);
-                        if (compare1 == compare2)
-                            if (c != compare1)
-                            {
-                                if (compare1 != Bmp.GetPixel(x - (LinesMin - 1), y - (LinesMin - 1)))
-                                    Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
-                                if (compare2 != Bmp.GetPixel(x - (LinesMax + 1), y - (LinesMax + 1)))
-                                    Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
-                            }
-                    }
-                    if (x + (LinesMax + 1) < Bmp.Width && y + (LinesMax + 1) < Bmp.Height)
-                    {
-                        compare1 = Bmp.GetPixel(x + LinesMin, y + LinesMin);
-                        compare2 = Bmp.GetPixel(x + LinesMax, y + LinesMax);
-                        if (compare1 == compare2)
-                            if (c != compare1)
-                            {
-                                if (compare1 != Bmp.GetPixel(x + (LinesMin - 1), y + (LinesMin - 1)))
-                                    Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
-                                if (compare2 != Bmp.GetPixel(x + (LinesMax + 1), y + (LinesMax + 1)))
-                                    Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
-                            }
-                    }
 
-                    //if (x - amtMax > 0 && y - amtMax > 0)
+                    //if (x - (LinesMax + 1) > 0 && y - (LinesMax + 1) > 0)
                     //{
-                    //    compare1 = Bmp.GetPixel(x - amtMin, y - amtMin);
-                    //    compare2 = Bmp.GetPixel(x - amtMax, y - amtMax);
-                    //    if (compare1 == compare2)
-                    //        if (c != compare1) //Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
-                    //            if (x + amtMax < Bmp.Width && y + amtMax < Bmp.Height)
-                    //            {
-                    //                compare1 = Bmp.GetPixel(x + amtMin, y + amtMin);
-                    //                compare2 = Bmp.GetPixel(x + amtMax, y + amtMax);
-                    //                if (compare1 == compare2)
-                    //                    if (c != compare1)
-                    //                        Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
-                    //            }
+                    //    compare1 = Bmp.GetPixel(x - LinesMin, y - LinesMin);
+                    //    compare11 = Bmp.GetPixel(x - (LinesMin - 1), y - (LinesMin - 1));
+                    //    compare2 = Bmp.GetPixel(x - LinesMax, y - LinesMax);
+                    //    compare22 = Bmp.GetPixel(x - (LinesMax - 1), y - (LinesMax - 1));
+
+                    //    if (compare1 != compare2)
+                    //    {
+                    //        if (compare1 != c && compare11 != c)
+                    //            Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                    //        if (compare2 != c && compare22 != c)
+                    //            Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                    //    }
                     //}
-                }
+                    //if (x + (LinesMax + 1) < Bmp.Width && y + (LinesMax + 1) < Bmp.Height)
+                    //{
+                    //    compare1 = Bmp.GetPixel(x + LinesMin, y + LinesMin);
+                    //    compare11 = Bmp.GetPixel(x + (LinesMin - 1), y + (LinesMin - 1));
+                    //    compare2 = Bmp.GetPixel(x + LinesMax, y + LinesMax);
+                    //    compare22 = Bmp.GetPixel(x + (LinesMax - 1), y + (LinesMax - 1));
+
+                    //    if (compare1 != compare2)
+                    //    {
+                    //        if (compare1 != c && compare11 != c)
+                    //            Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                    //        if (compare2 != c && compare22 != c)
+                    //            Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                    //    }
+                    //}
+
+
+                    //for (int x = 0; x < Bmp.Width; x++)
+                    //    for (int y = 0; y < Bmp.Height; y++)
+                    //    {
+                    //        c = Bmp.GetPixel(x, y);
+
+                            if (x - (LinesMax + 1) > 0 && y - (LinesMax + 1) > 0)
+                            {
+                                compare1 = Bmp.GetPixel(x - LinesMin, y - LinesMin);
+                                compare2 = Bmp.GetPixel(x - LinesMax, y - LinesMax);
+                                if (compare1 == compare2)
+                                    if (c != compare1)
+                                    {
+                                        if (compare1 != Bmp.GetPixel(x - (LinesMin - 1), y - (LinesMin - 1)))
+                                            Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                                        if (compare2 != Bmp.GetPixel(x - (LinesMax + 1), y - (LinesMax + 1)))
+                                            Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                                    }
+                            }
+                            if (x + (LinesMax + 1) < Bmp.Width && y + (LinesMax + 1) < Bmp.Height)
+                            {
+                                compare1 = Bmp.GetPixel(x + LinesMin, y + LinesMin);
+                                compare2 = Bmp.GetPixel(x + LinesMax, y + LinesMax);
+                                if (compare1 == compare2)
+                                    if (c != compare1)
+                                    {
+                                        if (compare1 != Bmp.GetPixel(x + (LinesMin - 1), y + (LinesMin - 1)))
+                                            Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                                        if (compare2 != Bmp.GetPixel(x + (LinesMax + 1), y + (LinesMax + 1)))
+                                            Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                                    }
+                            }
+
+
+
+                            //if (x - (LinesMax + 1) > 0 && y - (LinesMax + 1) > 0)
+                            //{
+                            //    compare1 = Bmp.GetPixel(x - LinesMin, y - LinesMin);
+                            //    compare2 = Bmp.GetPixel(x - LinesMax, y - LinesMax);
+                            //    if (compare1 == compare2)
+                            //        if (c != compare1)
+                            //        {
+                            //            if (compare1 != Bmp.GetPixel(x - (LinesMin - 1), y - (LinesMin - 1)))
+                            //                Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                            //            if (compare2 != Bmp.GetPixel(x - (LinesMax + 1), y - (LinesMax + 1)))
+                            //                Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                            //        }
+                            //}
+                            //if (x + (LinesMax + 1) < Bmp.Width && y + (LinesMax + 1) < Bmp.Height)
+                            //{
+                            //    compare1 = Bmp.GetPixel(x + LinesMin, y + LinesMin);
+                            //    compare2 = Bmp.GetPixel(x + LinesMax, y + LinesMax);
+                            //    if (compare1 == compare2)
+                            //        if (c != compare1)
+                            //        {
+                            //            if (compare1 != Bmp.GetPixel(x + (LinesMin - 1), y + (LinesMin - 1)))
+                            //                Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                            //            if (compare2 != Bmp.GetPixel(x + (LinesMax + 1), y + (LinesMax + 1)))
+                            //                Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                            //        }
+                            //}
+
+                            //if (x - amtMax > 0 && y - amtMax > 0)
+                            //{
+                            //    compare1 = Bmp.GetPixel(x - amtMin, y - amtMin);
+                            //    compare2 = Bmp.GetPixel(x - amtMax, y - amtMax);
+                            //    if (compare1 == compare2)
+                            //        if (c != compare1) //Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                            //            if (x + amtMax < Bmp.Width && y + amtMax < Bmp.Height)
+                            //            {
+                            //                compare1 = Bmp.GetPixel(x + amtMin, y + amtMin);
+                            //                compare2 = Bmp.GetPixel(x + amtMax, y + amtMax);
+                            //                if (compare1 == compare2)
+                            //                    if (c != compare1)
+                            //                        Bmp.SetPixel(x, y, System.Drawing.Color.Transparent);
+                            //            }
+                            //}
+                        }
 
             return Bmp;
         }
 
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
-        public Bitmap RemoveNoise(Bitmap Bmp)
+        public Bitmap RemoveNoiseThreshold(Bitmap Bmp, float threshold)
         {
             return Bmp;
         }
@@ -396,5 +495,91 @@ namespace RuriLib
         //        Bmp.MakeTransparent(i);
         //    return Bmp;
         //}
+
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+        public Bitmap DilateImage(Bitmap SrcImage)
+        {
+            // Create Destination bitmap.
+            Bitmap tempbmp = new Bitmap(SrcImage.Width, SrcImage.Height);
+
+            // Take source bitmap data.
+            BitmapData SrcData = SrcImage.LockBits(new Rectangle(0, 0,
+                SrcImage.Width, SrcImage.Height), ImageLockMode.ReadOnly,
+                PixelFormat.Format24bppRgb);
+
+            // Take destination bitmap data.
+            BitmapData DestData = tempbmp.LockBits(new Rectangle(0, 0, tempbmp.Width,
+                tempbmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            // Element array to used to dilate.
+            byte[,] sElement = new byte[5, 5] {
+        {0,0,1,0,0},
+        {0,1,1,1,0},
+        {1,1,1,1,1},
+        {0,1,1,1,0},
+        {0,0,1,0,0}
+    };
+
+            // Element array size.
+            int size = 5;
+            byte max, clrValue;
+            int radius = size / 2;
+            int ir, jr;
+
+            unsafe
+            {
+
+                // Loop for Columns.
+                for (int colm = radius; colm < DestData.Height - radius; colm++)
+                {
+                    // Initialise pointers to at row start.
+                    byte* ptr = (byte*)SrcData.Scan0 + (colm * SrcData.Stride);
+                    byte* dstPtr = (byte*)DestData.Scan0 + (colm * SrcData.Stride);
+
+                    // Loop for Row item.
+                    for (int row = radius; row < DestData.Width - radius; row++)
+                    {
+                        max = 0;
+                        clrValue = 0;
+
+                        // Loops for element array.
+                        for (int eleColm = 0; eleColm < 5; eleColm++)
+                        {
+                            ir = eleColm - radius;
+                            byte* tempPtr = (byte*)SrcData.Scan0 +
+                                ((colm + ir) * SrcData.Stride);
+
+                            for (int eleRow = 0; eleRow < 5; eleRow++)
+                            {
+                                jr = eleRow - radius;
+
+                                // Get neightbour element color value.
+                                clrValue = (byte)((tempPtr[row * 3 + jr] +
+                                    tempPtr[row * 3 + jr + 1] + tempPtr[row * 3 + jr + 2]) / 3);
+
+                                if (max < clrValue)
+                                {
+                                    if (sElement[eleColm, eleRow] != 0)
+                                        max = clrValue;
+                                }
+                            }
+                        }
+
+                        dstPtr[0] = dstPtr[1] = dstPtr[2] = max;
+
+                        ptr += 3;
+                        dstPtr += 3;
+                    }
+                }
+            }
+
+            // Dispose all Bitmap data.
+            SrcImage.UnlockBits(SrcData);
+            tempbmp.UnlockBits(DestData);
+
+            // return dilated bitmap.
+            return tempbmp;
+        }
+
     }
 }

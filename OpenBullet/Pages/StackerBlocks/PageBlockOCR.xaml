@@ -48,13 +48,15 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <CheckBox Grid.Row="0" Content="Set Contrast, Gamma, Brightness" IsChecked="{Binding ConGamBri, UpdateSourceTrigger=PropertyChanged}" />
             <CheckBox Grid.Row="1" Content="Set Colors Transparent" IsChecked="{Binding Transparent, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
             <CheckBox Grid.Row="2" Content="Grayscale" IsChecked="{Binding GrayScale, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox Grid.Row="3" Content="Remove Lines" IsChecked="{Binding RemoveLines, UpdateSourceTrigger=PropertyChanged}" ToolTip="This is still in beta!"/>
-            <CheckBox Grid.Row="4" Content="Remove Noise" IsChecked="{Binding RemoveNoise, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
+            <CheckBox Grid.Row="3" Content="Remove Lines" IsChecked="{Binding RemoveLines, UpdateSourceTrigger=PropertyChanged}" ToolTip="This is still in beta!" />
+            <CheckBox Grid.Row="4" Content="Remove Noise" IsChecked="{Binding RemoveNoise, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Grid.Row="5" Content="Dilate" IsChecked="{Binding Dilate, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBox Grid.Column="1" Text="{Binding Contrast, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="10,0,120,0" />
             <TextBox Grid.Column="1" Text="{Binding Gamma, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="65,0" />
@@ -62,6 +64,7 @@
             <ListBox Grid.Column="1" Grid.Row="1" IsEnabled="False"/>
             <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding LinesMin, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="10,0,120,0" />
             <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding LinesMax, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="120,0,10,0" />
+            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Threshold, UpdateSourceTrigger=PropertyChanged}" Width="50" />
         </Grid>
     </Grid>
 </Page>
