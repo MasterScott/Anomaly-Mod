@@ -160,11 +160,11 @@ namespace RuriLib
                     ////if (vm.Transparent)
                     ////    captcha = SetTransparent(captcha);
 
-                    if (GrayScale)
-                        appliedCaptcha = ToGrayScale(appliedCaptcha);
-
                     if (RemoveNoise)
                         appliedCaptcha = RemoveNoiseThreshold(appliedCaptcha, Threshold);
+
+                    if (GrayScale)
+                        appliedCaptcha = ToGrayScale(appliedCaptcha);
 
                     if (RemoveLines)
                         appliedCaptcha = RemoveImageLines(appliedCaptcha);

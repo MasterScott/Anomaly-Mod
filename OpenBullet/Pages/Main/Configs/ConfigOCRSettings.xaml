@@ -23,6 +23,7 @@
             <Label Content="Captcha URL:" VerticalAlignment="Top" Margin="0,2.5,0,0"/>
             <TextBox Name="OCRUrl" Text="{Binding CaptchaUrl, UpdateSourceTrigger=PropertyChanged}" Width="320" Margin="0,0,0,70"/>
         </StackPanel>
+        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom" Content="Since you guys want to keep pushing things, this only accepts english captchas" Foreground="Red" FontSize="8"/>
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
             <Label Content="Base64:" VerticalAlignment="Top" Margin="0,52.5,0,0"/>
             <TextBox x:Name="OCRB64" Text="{Binding Base64, UpdateSourceTrigger=PropertyChanged}" Width="320" Margin="30,50,0,20"/>

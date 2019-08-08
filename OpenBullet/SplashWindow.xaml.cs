@@ -19,7 +19,7 @@ namespace OpenBullet
     public partial class SplashWindow : Window
     {
         // Local Version Number
-        public string CurrentVersion = "1.3.5".Trim();
+        public string CurrentVersion = "1.3.6".Trim();
 
         // URL for the Changelog
         public static string ChangelogURL = "https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/Changelog";
@@ -94,8 +94,9 @@ namespace OpenBullet
                 }
                 if (KEYCHECK == false)
                 {
-                    MessageBox.Show("Donator not found!", "NOTICE");
-                    Environment.Exit(0);
+                    this.Close();
+                    //MessageBox.Show("Donator not found!", "NOTICE");
+                    //Environment.Exit(0);
                 }
             }
         }
