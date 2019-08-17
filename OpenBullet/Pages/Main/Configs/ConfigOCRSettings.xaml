@@ -57,28 +57,32 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <CheckBox Grid.Row="0" Content="Set Contrast, Gamma, Brightness" IsChecked="{Binding ContrastGamma, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox Grid.Row="1" Content="Set Colors Transparent" IsChecked="{Binding Transparent, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox Grid.Row="2" Content="Only Show" IsChecked="{Binding OnlyShow, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox Grid.Row="3" Content="GrayScale" IsChecked="{Binding Grayscale, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox Grid.Row="4" Content="Remove Lines" IsChecked="{Binding RemoveLines, UpdateSourceTrigger=PropertyChanged}" ToolTip="This is still in beta!" />
-            <CheckBox Grid.Row="5" Content="Remove Noise" IsChecked="{Binding RemoveNoise, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox Grid.Row="6" Content="Dilate" IsChecked="{Binding Dilate, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox VerticalContentAlignment="Center" Grid.Row="0" Content="Set Contrast, Gamma, Brightness" IsChecked="{Binding ContrastGamma, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox VerticalContentAlignment="Center" Grid.Row="1" Content="Saturate" IsChecked="{Binding Saturate, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox VerticalContentAlignment="Center" Grid.Row="2" Content="Set Colors Transparent" IsChecked="{Binding Transparent, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox VerticalContentAlignment="Center" Grid.Row="3" Content="Only Show" IsChecked="{Binding OnlyShow, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox VerticalContentAlignment="Center" Grid.Row="4" Content="GrayScale" IsChecked="{Binding Grayscale, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox VerticalContentAlignment="Center" Grid.Row="5" Content="Remove Lines" IsChecked="{Binding RemoveLines, UpdateSourceTrigger=PropertyChanged}" ToolTip="This is still in beta!" />
+            <CheckBox VerticalContentAlignment="Center" Grid.Row="6" Content="Remove Noise" IsChecked="{Binding RemoveNoise, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox VerticalContentAlignment="Center" Grid.Row="7" Content="Dilate" IsChecked="{Binding Dilate, UpdateSourceTrigger=PropertyChanged}" />
+            
 
             <TextBox Name="ContrastAmt" Grid.Column="1" Text="{Binding Contrast, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="10,0,120,0" />
             <TextBox Name="GammaAmt" Grid.Column="1" Text="{Binding Gamma, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="65,0" />
             <TextBox Name="BrightnessAmt" Grid.Column="1" Text="{Binding Brightness, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="120,0,10,0" />
-            <TextBox Name="DiffHideTxt" Grid.Row="1" Grid.Column="1" Width="36" Text="{Binding DiffHide, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,182,0" IsEnabled="False"/>
-            <ListBox Name="ColorsList" Grid.Column="1" Grid.Row="1" Width="150" Margin="36,0,30,0" />
-            <TextBox Name="DiffKeepTxt" Grid.Row="2" Grid.Column="1" Width="36" Text="{Binding DiffKeep, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,182,0" />
-            <ListBox Name="ColorsListShow" Grid.Column="1" Grid.Row="2" Width="150" Margin="36,0,30,0"/>
-            <Button Grid.Column="1" Grid.Row="1" Content="X" Width="30" Click="Button_Click_1" Margin="186,0,0,0"/>
-            <Button Grid.Column="1" Grid.Row="2" Content="X" Width="30" Click="Button_Click_2" Margin="186,0,0,0"/>
-            <TextBox Name="PixelAmtMin" Grid.Column="1" Grid.Row="4" Text="{Binding LinesMin, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="10,0,120,0" />
-            <TextBox Name="PixelAmtMax" Grid.Column="1" Grid.Row="4" Text="{Binding LinesMax, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="120,0,10,0" />
-            <TextBox Name="ThresholdAmt" Grid.Column="1" Grid.Row="5" Text="{Binding Threshold, UpdateSourceTrigger=PropertyChanged}" Width="50" />
+            <TextBox Name="SaturationAmt" Grid.Column="1" Grid.Row="1" Text="{Binding Saturation, UpdateSourceTrigger=PropertyChanged}" Width="50" />
+            <TextBox Name="DiffHideTxt" Grid.Row="2" Grid.Column="1" Width="36" Text="{Binding DiffHide, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,182,0" IsEnabled="False"/>
+            <ListBox Name="ColorsList" Grid.Column="2" Grid.Row="2" Width="150" Margin="36,0,30,0" />
+            <TextBox Name="DiffKeepTxt" Grid.Row="3" Grid.Column="1" Width="36" Text="{Binding DiffKeep, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,182,0" />
+            <ListBox Name="ColorsListShow" Grid.Column="1" Grid.Row="3" Width="150" Margin="36,0,30,0"/>
+            <Button Grid.Column="1" Grid.Row="2" Content="X" Width="30" Click="Button_Click_1" Margin="186,0,0,0"/>
+            <Button Grid.Column="1" Grid.Row="3" Content="X" Width="30" Click="Button_Click_2" Margin="186,0,0,0"/>
+            <TextBox Name="PixelAmtMin" Grid.Column="1" Grid.Row="5" Text="{Binding LinesMin, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="10,0,120,0" />
+            <TextBox Name="PixelAmtMax" Grid.Column="1" Grid.Row="5" Text="{Binding LinesMax, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="120,0,10,0" />
+            <TextBox Name="ThresholdAmt" Grid.Column="1" Grid.Row="6" Text="{Binding Threshold, UpdateSourceTrigger=PropertyChanged}" Width="50" />
         </Grid>
 
     </Grid>

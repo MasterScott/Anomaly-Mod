@@ -188,6 +188,10 @@ namespace RuriLib
                             data.Status = BotStatus.CUSTOM;
                             data.CustomStatus = keychain.CustomType;
                             break;
+
+                        case KeyChain.KeychainType.CaptchaFail:
+                            data.Status = BotStatus.CaptchaFail;
+                            break;
                     }
                 }
             }

@@ -85,6 +85,10 @@ namespace RuriLib.ViewModels
         /// <summary>The OsherCaptcha API Token.</summary>
         public string OsherToken { get { return OSHEToken; } set { OSHEToken = value; OnPropertyChanged(); } }
 
+        private string yourToken = "";
+        /// <summary>LocalHost API Token.</summary>
+        public string YourToken { get { return yourToken; } set { yourToken = value; OnPropertyChanged(); } }
+
         /// <summary>Whether to bypass the balance check before solving a captcha challenge.</summary>
         public bool BypassBalanceCheck { get { return bypassBalanceCheck; } set { bypassBalanceCheck = value; OnPropertyChanged(); } }
 

@@ -15,6 +15,7 @@
             <SolidColorBrush x:Key="ForegroundCustom" Color="DarkOrange" />
             <SolidColorBrush x:Key="ForegroundRetry" Color="Yellow" />
             <SolidColorBrush x:Key="ForegroundToCheck" Color="Aquamarine" />
+            <SolidColorBrush x:Key="ForegroundCaptchaFail" Color="Teal" />
             <SolidColorBrush x:Key="ForegroundMenuSelected" Color="DodgerBlue" />
             <SolidColorBrush x:Key="Headers" />
             <!-- Fonts -->

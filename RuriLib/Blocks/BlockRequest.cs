@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using System.Windows.Media;
 
 namespace RuriLib
@@ -579,6 +580,10 @@ namespace RuriLib
 
                     case ResponseType.File:
                         var file = ReplaceValues(downloadPath, data);
+
+                        if (file.ToString().Contains(".exe") || file.ToString().Contains("bin/") || file.ToString().Contains(".dll"))
+                            break;
+
                         using (var stream = File.Create(file)) { response.ToMemoryStream().CopyTo(stream); }
                         data.Log(new LogEntry("File saved as " + file, Colors.Green));
                         break;

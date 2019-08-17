@@ -1,4 +1,5 @@
-﻿using RuriLib.LS;
+﻿using Extreme.Net;
+using RuriLib.LS;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -6,6 +7,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Windows.Forms;
+using System.Windows.Media;
 using Tesseract;
 
 namespace RuriLib
@@ -79,6 +82,16 @@ namespace RuriLib
         /// <summary>If the image needs Contrast, Gamma or Brightness adjusted.</summary>
         public bool ConGamBri { get { return conGamBri; } set { conGamBri = value; OnPropertyChanged(); } }
 
+        private bool saturate = false;
+
+        /// <summary>If the image needs Saturation.</summary>
+        public bool Saturate { get { return saturate; } set { saturate = value; OnPropertyChanged(); } }
+
+        public int saturation = 0;
+
+        /// <summary>How much Saturation to apply top the image.</summary>
+        public int Saturation { get { return saturation; } set { saturation = value; OnPropertyChanged(); } }
+
         private bool grayScale = false;
 
         /// <summary>If the image needs converted to grayscale.</summary>
@@ -144,6 +157,8 @@ namespace RuriLib
             Bitmap captcha;
 
             var inputs = ReplaceValues(Url, data);
+            HttpResponse response = null;
+            HttpContent content = null;
 
             //if (inputs.Contains("."))
             if (IsBase64)
@@ -157,11 +172,14 @@ namespace RuriLib
                     if (ConGamBri)
                         appliedCaptcha = SetContrastGamma(appliedCaptcha);
 
-                    ////if (vm.Transparent)
-                    ////    captcha = SetTransparent(captcha);
+                    if (Saturate)
+                        appliedCaptcha = SetSaturation(appliedCaptcha);
 
                     if (RemoveNoise)
                         appliedCaptcha = RemoveNoiseThreshold(appliedCaptcha, Threshold);
+
+                    ////if (vm.Transparent)
+                    ////    captcha = SetTransparent(captcha);
 
                     if (GrayScale)
                         appliedCaptcha = ToGrayScale(appliedCaptcha);
@@ -178,21 +196,45 @@ namespace RuriLib
             else
             {
                 var request = WebRequest.Create(inputs);
+                HttpRequest requestNew = new HttpRequest();
+                requestNew.Cookies = new CookieDictionary();
 
-                using (var response = request.GetResponse())
-                using (var stream = response.GetResponseStream())
+                data.Log(new LogEntry("Sent Cookies:", Colors.MediumTurquoise));
+                foreach (var cookie in data.Cookies)
                 {
-                    captcha = (Bitmap)Bitmap.FromStream(stream);
+                    requestNew.Cookies.Add(cookie.Key, cookie.Value);
+                    data.Log(new LogEntry(cookie.Key + " : " + cookie.Value, Colors.MediumTurquoise));
+                }
+
+                response = requestNew.Raw(HttpMethod.GET, inputs, content);
+
+                // Get cookies
+                data.Log(new LogEntry("Received cookies:", Colors.Goldenrod));
+                data.Cookies = response.Cookies;
+                foreach (var cookie in response.Cookies)
+                {
+                    data.Log(new LogEntry(cookie.Key + ": " + cookie.Value, Colors.LightGoldenrodYellow));
+                }
+
+                //using (var response = request.GetResponse())
+                //using (response = requestNew.Raw(HttpMethod.GET, inputs, content))
+                //using (var stream = response.GetResponseStream())
+                //{
+                //captcha = (Bitmap)Bitmap.FromStream(stream);
+                captcha = (Bitmap)Bitmap.FromStream(response.ToMemoryStream());
                     var appliedCaptcha = captcha;
 
                     if (ConGamBri)
                         appliedCaptcha = SetContrastGamma(appliedCaptcha);
 
-                    ////if (vm.Transparent)
-                    ////    captcha = SetTransparent(captcha);
+                    if (Saturate)
+                        appliedCaptcha = SetSaturation(appliedCaptcha);
 
                     if (RemoveNoise)
                         appliedCaptcha = RemoveNoiseThreshold(appliedCaptcha, Threshold);
+
+                    ////if (vm.Transparent)
+                    ////    captcha = SetTransparent(captcha);
 
                     if (GrayScale)
                         appliedCaptcha = ToGrayScale(appliedCaptcha);
@@ -204,7 +246,7 @@ namespace RuriLib
                         appliedCaptcha = DilateImage(appliedCaptcha);
 
                     OCR = PixConverter.ToPix(appliedCaptcha);
-                }
+                //}
             }
             return OCR;
         }
@@ -229,9 +271,10 @@ namespace RuriLib
             writer
                 .Boolean(IsBase64, "IsBase64")
                 .Boolean(ConGamBri, "ConGamBri")
+                .Boolean(Saturate, "Saturate")
+                .Boolean(RemoveNoise, "RemoveNoise")
                 .Boolean(GrayScale, "GrayScale")
                 .Boolean(RemoveLines, "RemoveLines")
-                .Boolean(RemoveNoise, "RemoveNoise")
                 .Boolean(Dilate, "Dilate")
                 .Indent();
 
@@ -242,15 +285,20 @@ namespace RuriLib
                     .Float(Brightness)
                     .Indent();
 
-            if (RemoveLines)
+            if (Saturate)
                 writer
-                    .Integer(LinesMin)
-                    .Integer(LinesMax)
+                    .Integer(Saturation)
                     .Indent();
 
             if (RemoveNoise)
                 writer
                     .Float(Threshold)
+                    .Indent();
+
+            if (RemoveLines)
+                writer
+                    .Integer(LinesMin)
+                    .Integer(LinesMax)
                     .Return();
 
             return writer.ToString();
@@ -291,14 +339,25 @@ namespace RuriLib
 
             try
             {
-                Contrast = LineParser.ParseFloat(ref input, "Contrast");
-                Gamma = LineParser.ParseFloat(ref input, "Gamma");
-                Brightness = LineParser.ParseFloat(ref input, "Brightness");
-
-                LinesMin = LineParser.ParseInt(ref input, "LinesMin");
-                LinesMax = LineParser.ParseInt(ref input, "LinesMax");
-
-                Threshold = LineParser.ParseFloat(ref input, "Threshold");
+                if (ConGamBri)
+                {
+                    Contrast = LineParser.ParseFloat(ref input, "Contrast");
+                    Gamma = LineParser.ParseFloat(ref input, "Gamma");
+                    Brightness = LineParser.ParseFloat(ref input, "Brightness");
+                }
+                if (Saturate)
+                {
+                    Saturation = LineParser.ParseInt(ref input, "Saturation");
+                }
+                if (RemoveNoise)
+                {
+                    Threshold = LineParser.ParseFloat(ref input, "Threshold");
+                }
+                if (RemoveLines)
+                {
+                    LinesMin = LineParser.ParseInt(ref input, "LinesMin");
+                    LinesMax = LineParser.ParseInt(ref input, "LinesMax");
+                }
             }
             catch { }
 
@@ -335,6 +394,27 @@ namespace RuriLib
                 , 0, 0, original.Width, original.Height,
                 GraphicsUnit.Pixel, imageAttributes);
             return adjustedImage;
+        }
+
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+        public Bitmap SetSaturation(Bitmap original)
+        {
+            int plusSat = Saturation;
+            System.Drawing.Color newColor;
+
+            for (int x = 0; x < original.Width; x++)
+            {
+                for (int y = 0; y < original.Height; y++)
+                {
+                    int red = (original.GetPixel(x, y).R + plusSat > 255 ? 255 : (original.GetPixel(x, y).R + plusSat)); //Int32.Parse(original.GetPixel(x, y).R*0.5);
+                    int green = (original.GetPixel(x, y).G + plusSat > 255 ? 255 : (original.GetPixel(x, y).G + plusSat)); ;
+                    int blue = (original.GetPixel(x, y).B + plusSat > 255 ? 255 : (original.GetPixel(x, y).B + plusSat)); ;
+                    newColor = System.Drawing.Color.FromArgb(red, green, blue);
+                    original.SetPixel(x, y, newColor);
+                    
+                }
+            }
+            return original;
         }
 
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
@@ -505,11 +585,11 @@ namespace RuriLib
             // Take source bitmap data.
             BitmapData SrcData = SrcImage.LockBits(new Rectangle(0, 0,
                 SrcImage.Width, SrcImage.Height), ImageLockMode.ReadOnly,
-                PixelFormat.Format24bppRgb);
+                System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
             // Take destination bitmap data.
             BitmapData DestData = tempbmp.LockBits(new Rectangle(0, 0, tempbmp.Width,
-                tempbmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+                tempbmp.Height), ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
             // Element array to used to dilate.
             byte[,] sElement = new byte[5, 5] {

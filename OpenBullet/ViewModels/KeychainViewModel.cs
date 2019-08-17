@@ -53,6 +53,10 @@ namespace OpenBullet.ViewModels
                     case KeyChain.KeychainType.Retry:
                         color = (Color)ColorConverter.ConvertFromString("#cc9900");
                         break;
+
+                    case KeyChain.KeychainType.CaptchaFail:
+                        color = (Color)ColorConverter.ConvertFromString("#008080");
+                        break;
                 }
                 return new SolidColorBrush(color);
             }

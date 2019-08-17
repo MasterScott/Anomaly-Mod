@@ -258,6 +258,11 @@ namespace RuriLib.Runner
         /// <summary>Amount of data lines retried due to a BAN, RETRY or ERROR outcome.</summary>
         public int RetryCount { get { return retryCount; } set { retryCount = value; OnPropertyChanged(); } }
 
+        private int captchaFailCount = 0;
+
+        /// <summary>Amount of data lines retried due to a OCR or CAPTCHA failing outcome.</summary>
+        public int CaptchaFailCount { get { return captchaFailCount; } set { captchaFailCount = value; OnPropertyChanged(); } }
+
         /// <summary>Total amount of successfully tested data lines.</summary>
         public int TestedCount { get { return FailCount + HitCount + CustomCount + ToCheckCount; } }
 
@@ -869,6 +874,10 @@ namespace RuriLib.Runner
 
                     case BotStatus.RETRY:
                         RetryCount++;
+                        goto GETPROXY;
+
+                    case BotStatus.CaptchaFail:
+                        CaptchaFailCount++;
                         goto GETPROXY;
 
                     case BotStatus.NONE:

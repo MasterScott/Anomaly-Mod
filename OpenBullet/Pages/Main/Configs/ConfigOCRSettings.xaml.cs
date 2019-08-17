@@ -88,6 +88,9 @@ namespace OpenBullet
                     appliedCaptcha = SetContrastGamma(appliedCaptcha);
                 }
 
+                if (vm.Saturate)
+                    appliedCaptcha = SetSaturation(appliedCaptcha);
+
                 if (vm.RemoveNoise)
                 {
                     vm.Threshold = float.Parse(ThresholdAmt.Text);
@@ -133,8 +136,14 @@ namespace OpenBullet
                         appliedCaptcha = SetContrastGamma(appliedCaptcha);
                     }
 
+                    if (vm.Saturate)
+                        appliedCaptcha = SetSaturation(appliedCaptcha);
+
                     if (vm.RemoveNoise)
-                        appliedCaptcha = AdjustThreshold(appliedCaptcha, 0.5f); //appliedCaptcha = RemoveNoise(appliedCaptcha);
+                    {
+                        vm.Threshold = float.Parse(ThresholdAmt.Text);
+                        appliedCaptcha = AdjustThreshold(appliedCaptcha, vm.Threshold); //appliedCaptcha = RemoveNoise(appliedCaptcha);
+                    }
 
                     if (vm.Transparent)
                         appliedCaptcha = SetTransparent(appliedCaptcha);
@@ -154,6 +163,11 @@ namespace OpenBullet
 
                     if (vm.Dilate)
                         appliedCaptcha = Dilate(appliedCaptcha);
+
+                    //Rectangle cropping = new Rectangle();
+                    //cropping.Width = appliedCaptcha.Width - 20;
+                    //cropping.Height = appliedCaptcha.Height - 15;
+                    //appliedCaptcha = cropImage(appliedCaptcha, cropping);
                 }
                 AppliedImage.Source = ImageSourceFromBitmap(appliedCaptcha);
                 OCR = PixConverter.ToPix(appliedCaptcha);
@@ -174,6 +188,31 @@ namespace OpenBullet
             catch(Exception ex) { System.Windows.Forms.MessageBox.Show(ex.ToString()); }
         }
 
+        private static Bitmap cropImage(Bitmap img, Rectangle cropArea)
+        {
+            Bitmap bmpCrop = img.Clone(cropArea, img.PixelFormat);
+            return bmpCrop;
+        }
+
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+        public Bitmap SetSaturation(Bitmap original)
+        {
+            int saturationAmt = int.Parse(SaturationAmt.Text);
+            int saturation = saturationAmt;
+
+            for (int x = 0; x < original.Width; x++)
+            {
+                for (int y = 0; y < original.Height; y++)
+                {
+                    int red = (original.GetPixel(x, y).R + saturation > 255 ? 255 : (original.GetPixel(x, y).R + saturation)); //Int32.Parse(original.GetPixel(x, y).R*0.5);
+                    int green = (original.GetPixel(x, y).G + saturation > 255 ? 255 : (original.GetPixel(x, y).G + saturation)); ;
+                    int blue = (original.GetPixel(x, y).B + saturation > 255 ? 255 : (original.GetPixel(x, y).B + saturation)); ;
+                    System.Drawing.Color newColor = System.Drawing.Color.FromArgb(original.GetPixel(x, y).A, red, green, blue);
+                    original.SetPixel(x, y, newColor);
+                }
+            }
+            return original;
+        }
 
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public Bitmap SetContrastGamma(Bitmap original)

@@ -34,7 +34,10 @@ namespace RuriLib
         RETRY,
 
         /// <summary>The data line will be registered as a Custom.</summary>
-        CUSTOM
+        CUSTOM,
+
+        /// <summary>The data line will be registered as a Captcha Failure.</summary>
+        CaptchaFail
     }
 
     /// <summary>

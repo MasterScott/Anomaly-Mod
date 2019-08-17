@@ -78,6 +78,10 @@ namespace OpenBullet
                         balance = new OsherCaptcha(Globals.rlSettings.Captchas.OsherToken, Globals.rlSettings.Captchas.Timeout).GetBalance();
                         break;
 
+                    case BlockCaptcha.CaptchaService.YourCaptcha:
+                        balance = new YourCaptcha(Globals.rlSettings.Captchas.YourToken, Globals.rlSettings.Captchas.Timeout).GetBalance();
+                        break;
+
                     default:
                         balance = 999;
                         break;

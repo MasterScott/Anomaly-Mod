@@ -28,7 +28,10 @@ namespace RuriLib.Models
             Custom,
 
             /// <summary>Sets a CUSTOM status in the bot.</summary>
-            Created
+            Created,
+
+            /// <summary>Sets a CAPTCHA-FAILURE status in the bot.</summary>
+            CaptchaFail
         }
 
         /// <summary>The mode in which the keys should be checked.</summary>

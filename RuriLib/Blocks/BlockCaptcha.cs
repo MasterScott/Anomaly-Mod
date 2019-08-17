@@ -42,7 +42,10 @@ namespace RuriLib
             RuCaptcha,
 
             /// <summary>The service provided by Osher/</summary>
-            OsherCaptcha
+            OsherCaptcha,
+
+            /// <summary>The service provided by yourself/</summary>
+            YourCaptcha
         }
 
         /// <summary>The balance of the account of the captcha-solving service.</summary>

@@ -437,6 +437,8 @@
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Retries:" Foreground="{DynamicResource ForegroundRetry}" />
                         <Label Content="{Binding RetryCount}" Foreground="{DynamicResource ForegroundRetry}" />
+                        <Label Content=" | " Foreground="{DynamicResource ForegroundRetry}" />
+                        <Label Content="{Binding CaptchaFailCount}" Foreground="{DynamicResource ForegroundRetry}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="To Check:" Foreground="{DynamicResource ForegroundToCheck}" />

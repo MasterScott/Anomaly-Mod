@@ -166,6 +166,10 @@ namespace RuriLib
                         service = new OsherCaptcha(data.GlobalSettings.Captchas.OsherToken, data.GlobalSettings.Captchas.Timeout);
                         break;
 
+                    case CaptchaService.YourCaptcha:
+                        service = new YourCaptcha(data.GlobalSettings.Captchas.YourToken, data.GlobalSettings.Captchas.Timeout);
+                        break;
+
                     default:
                         throw new Exception("This service cannot solve normal captchas!");
                 }

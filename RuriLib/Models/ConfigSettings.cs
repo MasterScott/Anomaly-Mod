@@ -169,6 +169,16 @@ namespace RuriLib
         /// <summary>The amount of difference a pixel can have.</summary>
         public float DiffHide { get { return diffHide; } set { diffHide = value; OnPropertyChanged(); } }
 
+        private bool saturate = false;
+
+        /// <summary>Whether to add Dilation or not to an Image.</summary>
+        public bool Saturate { get { return saturate; } set { saturate = value; OnPropertyChanged(); } }
+
+        private float saturation = 0;
+
+        /// <summary>The amount of difference a pixel can have.</summary>
+        public float Saturation { get { return saturation; } set { saturation = value; OnPropertyChanged(); } }
+
         private bool transparent = false;
 
         /// <summary>Setting transparnet colors in Image.</summary>
