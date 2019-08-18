@@ -26,6 +26,8 @@ namespace OpenBullet
         ListGenerator,
         SeleniumTools,
         ComboSuite,
+        LolixDecrypt,
+        TessDataDownloads,
         About
     }
 

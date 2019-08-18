@@ -30,11 +30,6 @@ namespace OpenBullet.Pages.StackerBlocks
             block.OcrLang = (string)LanguageList.SelectedItem;//.ToString().Split('.')[0];
         }
 
-        public void setAppliedCaptcha()
-        {
-            
-        }
-
         private void Page_Initialized(object sender, EventArgs e)
         {
             try

@@ -33,9 +33,7 @@
             </StackPanel>
             <Label FontSize="8.5" HorizontalContentAlignment="Center" Content="I'm aware the set language in the list looks like it's reset when switching to/from loliscipt, IT DOES NOT." />
             <Label FontSize="8.5" HorizontalContentAlignment="Center" Content="Use the buttons to scroll through languages, using your mouse scroll wheel will skip alot." />
-            <Image Name="NotApplied" Height="200" Margin="25,25,25,25" Source="{Binding Url, UpdateSourceTrigger=PropertyChanged}" />
-            <Image Name="Applied" Height="200" Margin="25,25,25,25" Visibility="Hidden" />
-            <Button Content="Test" />
+            <Image Name="Captcha" Margin="25,25,25,25" Source="{Binding Url, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <Grid Grid.Row="1"
               VerticalAlignment="Center">

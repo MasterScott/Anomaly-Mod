@@ -341,6 +341,9 @@
     </Compile>
     <Compile Include="Pages\Main\Tools\ComboSuite.xaml.cs" />
     <Compile Include="Pages\Main\Tools\LolixDecrypt.cs" />
+    <Compile Include="Pages\Main\Tools\TessDataDownloads.xaml.cs">
+      <DependentUpon>TessDataDownloads.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\StackerBlocks\PageBlockBypassCF.xaml.cs">
       <DependentUpon>PageBlockBypassCF.xaml</DependentUpon>
     </Compile>
@@ -605,6 +608,10 @@
     <Page Include="Pages\Main\ProxyManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Main\Tools\TessDataDownloads.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\Main\Tools\LolixDecrypt.xaml">
       <Generator>MSBuild:Compile</Generator>

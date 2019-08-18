@@ -13,6 +13,7 @@ namespace OpenBullet
         private ToolsSeleniumTools SeleniumTools;
         private ComboSuite ComboSuiteTools;
         private LolixDecrypt LolixTools;
+        private TessDataDownloads TessDataTools;
 
         public Tools()
         {
@@ -22,6 +23,8 @@ namespace OpenBullet
             SeleniumTools = new ToolsSeleniumTools();
             ComboSuiteTools = new ComboSuite();
             LolixTools = new LolixDecrypt();
+            TessDataTools = new TessDataDownloads();
+
 
             menuOptionListGenerator_MouseDown(this, null);
         }
@@ -50,6 +53,12 @@ namespace OpenBullet
         {
             Main.Content = LolixTools;
             menuOptionSelected(menuOptionLolixDecrypt);
+        }
+
+        private void menuOptionTessData_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Main.Content = TessDataTools;
+            menuOptionSelected(menuOptionTessDataDownloads);
         }
 
         private void menuOptionSelected(object sender)
