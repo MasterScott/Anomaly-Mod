@@ -56,8 +56,8 @@
             </Grid.ColumnDefinitions>
             <ListBox Grid.Column="0" Name="LanguageList" />
 
-            <Button Content=">" Grid.Column="1" Height="90" VerticalAlignment="Top" Click="Button_Click" />
-            <Button Content="X" Grid.Column="1" Height="90" VerticalAlignment="Bottom" Click="Button_Click_1" />
+            <Button Content=">" ToolTip="Right click to add all" Grid.Column="1" Height="90" VerticalAlignment="Top" Click="Button_Click" MouseRightButtonDown="Button_MouseRightButtonDown" />
+            <Button Content="X" ToolTip="Right click to remove all" Grid.Column="1" Height="90" VerticalAlignment="Bottom" Click="Button_Click_1" MouseRightButtonDown="Button_MouseRightButtonDown_1" />
 
             <ListBox Grid.Column="2" Name="DownloadList" />
         </Grid>

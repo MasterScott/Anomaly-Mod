@@ -41,7 +41,7 @@ namespace OpenBullet.Pages.Main.Tools
             foreach (string item in DownloadList.Items)
             {
                 i++;
-                LogsText.Text += String.Format("{0}/{1} | Downloading: {2}...", i, DownloadList.Items.Count, item);// + Environment.NewLine;
+                LogsText.Text += String.Format("{0}/{1} | Downloading: {2}..", i, DownloadList.Items.Count, item);// + Environment.NewLine;
                 System.Windows.Forms.Application.DoEvents();
                 try
                 {
@@ -57,7 +57,7 @@ namespace OpenBullet.Pages.Main.Tools
             //    DownloadLanguage(line.Groups[1].Value);
             //    i++;
             //}
-            LogsText.Text += "Your chosen languages downloaded";
+            LogsText.Text += "Your chosen languages have been downloaded";
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -75,7 +75,7 @@ namespace OpenBullet.Pages.Main.Tools
 
             language += ".traineddata";
             loadSite.DownloadFile("https://github.com/tesseract-ocr/tessdata/raw/3.04.00/" + language, AppDomain.CurrentDomain.BaseDirectory + "/tessdata/" + language);
-            LogsText.Text += "          | Finished!" + Environment.NewLine;
+            LogsText.Text += "\t\t\t\t| Finished!" + Environment.NewLine;
             System.Windows.Forms.Application.DoEvents();
         }
 
@@ -87,6 +87,19 @@ namespace OpenBullet.Pages.Main.Tools
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             DownloadList.Items.Remove(DownloadList.SelectedItem);
+        }
+
+        private void Button_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (System.Windows.Forms.MessageBox.Show("This button will add ALL languages to the download list", "ALERT", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                foreach (string item in LanguageList.Items)
+                    DownloadList.Items.Add(item);
+        }
+
+        private void Button_MouseRightButtonDown_1(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (System.Windows.Forms.MessageBox.Show("This button will remove ALL languages to the download list", "ALERT", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                DownloadList.Items.Clear();
         }
     }
 }
