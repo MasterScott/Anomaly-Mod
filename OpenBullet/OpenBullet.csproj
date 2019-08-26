@@ -344,6 +344,9 @@
     <Compile Include="Pages\Main\Tools\TessDataDownloads.xaml.cs">
       <DependentUpon>TessDataDownloads.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\StackerBlocks\PageBlockBlockchainDNS.xaml.cs">
+      <DependentUpon>PageBlockBlockchainDNS.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\StackerBlocks\PageBlockBypassCF.xaml.cs">
       <DependentUpon>PageBlockBypassCF.xaml</DependentUpon>
     </Compile>
@@ -620,6 +623,10 @@
     <Page Include="Pages\Main\Tools\ComboSuite.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\StackerBlocks\PageBlockBlockchainDNS.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\StackerBlocks\PageBlockBypassCF.xaml">
       <SubType>Designer</SubType>

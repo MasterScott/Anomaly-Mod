@@ -24,7 +24,7 @@
                 <TextBox DockPanel.Dock="Left" Text="{Binding TwoCapToken}" />
             </DockPanel>
             <DockPanel>
-                <Label DockPanel.Dock="Left" Content="OsherCaptcha API Key" />
+                <Label DockPanel.Dock="Left" Content="Solve-Captcha API Key" />
                 <TextBox DockPanel.Dock="Left" Text="{Binding OsherToken}" />
             </DockPanel>
             <DockPanel>

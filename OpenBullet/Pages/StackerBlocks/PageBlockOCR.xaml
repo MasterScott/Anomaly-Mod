@@ -29,10 +29,21 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="Language:" VerticalContentAlignment="Center"/>
                 <ListBox ToolTip="Only sets language when clicked!" Name="LanguageList" Width="175" Height="60" MaxHeight="60" SelectionChanged="LanguageList_SelectionChanged" />
-                <Label FontSize="8.5" Content="YOU HAVE TO CLICK TO SET LANGUAGE" />
+                <Label FontSize="8" Content="YOU HAVE TO CLICK TO SET A LANGUAGE" />
             </StackPanel>
             <Label FontSize="8.5" HorizontalContentAlignment="Center" Content="I'm aware the set language in the list looks like it's reset when switching to/from loliscipt, IT DOES NOT." />
             <Label FontSize="8.5" HorizontalContentAlignment="Center" Content="Use the buttons to scroll through languages, using your mouse scroll wheel will skip alot." />
+            <Label Content="Custom Headers:" />
+            <RichTextBox x:Name="customHeadersRTB" FontFamily="Consolas" Height="100" VerticalScrollBarVisibility="Auto" LostFocus="customHeadersRTB_LostFocus" Background="{DynamicResource BackgroundSecondary}" Foreground="{DynamicResource ForegroundMain}">
+                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0" />
+                    </Style>
+                </RichTextBox.Resources>
+                <RichTextBox.ToolTip>
+                    <TextBlock>Syntax:<LineBreak />name: value</TextBlock>
+                </RichTextBox.ToolTip>
+            </RichTextBox>
             <Image Name="Captcha" Margin="25,25,25,25" Source="{Binding Url, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <Grid Grid.Row="1"
@@ -50,24 +61,29 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <CheckBox Grid.Row="0" Content="Set Contrast, Gamma, Brightness" IsChecked="{Binding ConGamBri, UpdateSourceTrigger=PropertyChanged}" />
             <CheckBox Grid.Row="1" Content="Set Saturation" IsChecked="{Binding Saturate, UpdateSourceTrigger=PropertyChanged}" />
             <CheckBox Grid.Row="2" Content="Set Colors Transparent" IsChecked="{Binding Transparent, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
-            <CheckBox Grid.Row="3" Content="Grayscale" IsChecked="{Binding GrayScale, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox Grid.Row="4" Content="Remove Lines" IsChecked="{Binding RemoveLines, UpdateSourceTrigger=PropertyChanged}" ToolTip="This is still in beta!" />
-            <CheckBox Grid.Row="5" Content="Remove Noise" IsChecked="{Binding RemoveNoise, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox Grid.Row="6" Content="Dilate" IsChecked="{Binding Dilate, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Grid.Row="3" Content="OnlyShow" IsChecked="{Binding OnlyShow, UpdateSourceTrigger=PropertyChanged}" ToolTip="Currently only show black (0,0,0)" />
+            <CheckBox Grid.Row="4" Content="Grayscale" IsChecked="{Binding GrayScale, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Grid.Row="5" Content="Remove Lines" IsChecked="{Binding RemoveLines, UpdateSourceTrigger=PropertyChanged}" ToolTip="This is still in beta!" />
+            <CheckBox Grid.Row="6" Content="Remove Noise" IsChecked="{Binding RemoveNoise, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Grid.Row="7" Content="Dilate" IsChecked="{Binding Dilate, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBox Grid.Column="1" Text="{Binding Contrast, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="10,0,120,0" />
             <TextBox Grid.Column="1" Text="{Binding Gamma, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="65,0" />
             <TextBox Grid.Column="1" Text="{Binding Brightness, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="120,0,10,0" />
             <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Saturation, UpdateSourceTrigger=PropertyChanged}" Width="50" />
-            <ListBox Grid.Column="1" Grid.Row="2" IsEnabled="False"/>
-            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding LinesMin, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="10,0,120,0" />
-            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding LinesMax, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="120,0,10,0" />
-            <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding Threshold, UpdateSourceTrigger=PropertyChanged}" Width="50" />
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="2" Text="{Binding TransDiff, UpdateSourceTrigger=PropertyChanged}" Width="50" />
+            <ListBox Name="TransparentList" Grid.Column="1" Grid.Row="2" IsEnabled="False" Margin="50,0,0,0"/>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" Text="{Binding ShowDiff, UpdateSourceTrigger=PropertyChanged}" Width="50" />
+            <ListBox Name="ShowList" Grid.Column="1" Grid.Row="3" Margin="50,0,0,0" />
+            <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding LinesMin, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="10,0,120,0" />
+            <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding LinesMax, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="120,0,10,0" />
+            <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding Threshold, UpdateSourceTrigger=PropertyChanged}" Width="50" />
         </Grid>
     </Grid>
 </Page>

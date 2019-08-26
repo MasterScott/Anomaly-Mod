@@ -162,7 +162,7 @@ namespace RuriLib
                         service = new CaptchasIO(data.GlobalSettings.Captchas.CIOToken, data.GlobalSettings.Captchas.Timeout);
                         break;
 
-                    case CaptchaService.OsherCaptcha:
+                    case CaptchaService.SolveCaptcha:
                         service = new OsherCaptcha(data.GlobalSettings.Captchas.OsherToken, data.GlobalSettings.Captchas.Timeout);
                         break;
 

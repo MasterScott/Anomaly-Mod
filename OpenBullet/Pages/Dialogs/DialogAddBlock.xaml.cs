@@ -67,6 +67,11 @@ namespace OpenBullet
             SendBack(new BlockOCR());
         }
 
+        private void blockBlockchainButton_Click(object sender, RoutedEventArgs e)
+        {
+            SendBack(new BlockBlockchainDNS());
+        }
+
         private void blockNavigateButton_Click(object sender, RoutedEventArgs e)
         {
             SendBack(new SBlockNavigate());

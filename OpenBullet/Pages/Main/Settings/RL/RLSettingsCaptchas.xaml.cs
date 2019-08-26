@@ -74,7 +74,7 @@ namespace OpenBullet
                         balance = new CaptchasIO(Globals.rlSettings.Captchas.CIOToken, Globals.rlSettings.Captchas.Timeout).GetBalance();
                         break;
 
-                    case BlockCaptcha.CaptchaService.OsherCaptcha:
+                    case BlockCaptcha.CaptchaService.SolveCaptcha:
                         balance = new OsherCaptcha(Globals.rlSettings.Captchas.OsherToken, Globals.rlSettings.Captchas.Timeout).GetBalance();
                         break;
 

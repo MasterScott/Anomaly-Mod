@@ -160,6 +160,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blocks\BlockBlockchainDNS.cs" />
     <Compile Include="Blocks\BlockLSCode.cs" />
     <Compile Include="Blocks\BlockOCR.cs" />
     <Compile Include="Blocks\BlockTCP.cs" />

@@ -23,6 +23,8 @@ namespace OpenBullet.Pages.StackerBlocks
             InitializeComponent();
             this.block = block;
             DataContext = this.block;
+
+            customHeadersRTB.AppendText(block.GetCustomHeaders());
         }
 
         private void LanguageList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -43,6 +45,11 @@ namespace OpenBullet.Pages.StackerBlocks
                 }
             }
             catch { System.Windows.Forms.MessageBox.Show("Missing folder \"tessdata\"! Please go make one and put your language files in it!", "NOTICE"); }
+        }
+
+        private void customHeadersRTB_LostFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+            block.SetCustomHeaders(customHeadersRTB.Lines());
         }
     }
 }

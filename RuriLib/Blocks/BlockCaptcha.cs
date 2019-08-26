@@ -42,7 +42,7 @@ namespace RuriLib
             RuCaptcha,
 
             /// <summary>The service provided by Osher/</summary>
-            OsherCaptcha,
+            SolveCaptcha,
 
             /// <summary>The service provided by yourself/</summary>
             YourCaptcha
@@ -101,7 +101,7 @@ namespace RuriLib
                     Balance = new CaptchasIO(data.GlobalSettings.Captchas.CIOToken, data.GlobalSettings.Captchas.Timeout).GetBalance();
                     break;
 
-                case CaptchaService.OsherCaptcha:
+                case CaptchaService.SolveCaptcha:
                     Balance = new OsherCaptcha(data.GlobalSettings.Captchas.OsherToken, data.GlobalSettings.Captchas.Timeout).GetBalance();
                     break;
 

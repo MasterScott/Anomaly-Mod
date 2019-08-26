@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 using System.Windows.Media;
 using Tesseract;
@@ -41,6 +43,13 @@ namespace RuriLib
 
         /// <summary>The User-Agent header to use when grabbing the image.</summary>
         public string UserAgent { get { return userAgent; } set { userAgent = value; OnPropertyChanged(); } }
+
+        /// <summary>The custom headers that are sent in the HTTP request.</summary>
+        public Dictionary<string, string> CustomHeaders { get; set; } = new Dictionary<string, string>() {
+            { "User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko" },
+            { "Pragma", "no-cache" },
+            { "Accept", "*/*" }
+        };
 
         private string ocrString = "";
 
@@ -112,6 +121,26 @@ namespace RuriLib
         /// <summary>If the image needs noise removed.</summary>
         public bool Dilate { get { return dilate; } set { dilate = value; OnPropertyChanged(); } }
 
+        private bool transparent = false;
+
+        /// <summary>If the image needs to set specific colors to transparent.</summary>
+        public bool Transparent { get { return transparent; } set { transparent = value; OnPropertyChanged(); } }
+
+        private bool onlyShow = false;
+
+        public int showDiff = 0;
+
+        /// <summary>How much difference is allowed.</summary>
+        public int ShowDiff { get { return showDiff; } set { showDiff = value; OnPropertyChanged(); } }
+
+        public int transDiff = 0;
+
+        /// <summary>How much difference is allowed.</summary>
+        public int TransDiff { get { return transDiff; } set { transDiff = value; OnPropertyChanged(); } }
+
+        /// <summary>If the image needs to only show these colors.</summary>
+        public bool OnlyShow { get { return onlyShow; } set { onlyShow = value; OnPropertyChanged(); } }
+
         private float threshold = 1.0f;
 
         /// <summary>If the image needs noise removed.</summary>
@@ -135,6 +164,7 @@ namespace RuriLib
         public override void Process(BotData data)
         {
             base.Process(data);
+
 
             InsertVariables(data, IsCapture, false, GetOCR(data), VariableName, "", "", false, true);
         }
@@ -178,8 +208,11 @@ namespace RuriLib
                     if (RemoveNoise)
                         appliedCaptcha = RemoveNoiseThreshold(appliedCaptcha, Threshold);
 
-                    ////if (vm.Transparent)
-                    ////    captcha = SetTransparent(captcha);
+                    if (Transparent)
+                        appliedCaptcha = SetTransparent(appliedCaptcha);
+
+                    if (OnlyShow)
+                        appliedCaptcha = SetOnlyShow(appliedCaptcha);
 
                     if (GrayScale)
                         appliedCaptcha = ToGrayScale(appliedCaptcha);
@@ -199,12 +232,38 @@ namespace RuriLib
                 HttpRequest requestNew = new HttpRequest();
                 requestNew.Cookies = new CookieDictionary();
 
+                data.Log(new LogEntry($"Calling Image URL: {inputs}", Colors.MediumTurquoise));
                 data.Log(new LogEntry("Sent Cookies:", Colors.MediumTurquoise));
                 foreach (var cookie in data.Cookies)
                 {
                     requestNew.Cookies.Add(cookie.Key, cookie.Value);
                     data.Log(new LogEntry(cookie.Key + " : " + cookie.Value, Colors.MediumTurquoise));
                 }
+
+
+
+                // Set headers
+                data.Log(new LogEntry("Sent Headers:", Colors.DarkTurquoise));
+                // var fixedNames = Enum.GetNames(typeof(HttpHeader)).Select(n => n.ToLower());
+                foreach (var header in CustomHeaders)
+                {
+                    try
+                    {
+                        var key = ReplaceValues(header.Key, data);
+                        var replacedKey = key.Replace("-", "").ToLower(); // Used to compare with the HttpHeader enum
+                        var val = ReplaceValues(header.Value, data);
+
+                        if (replacedKey == "contenttype" && content != null) { continue; } // Disregard additional Content-Type headers
+                                                                                           //if (replacedKey == "acceptencoding" && acceptEncoding) { continue; } // Disregard additional Accept-Encoding headers
+                                                                                           // else if (fixedNames.Contains(replacedKey)) request.AddHeader((HttpHeader)Enum.Parse(typeof(HttpHeader), replacedKey, true), val);
+                        else requestNew.AddHeader(key, val);
+
+                        data.Log(new LogEntry(key + ": " + val, Colors.MediumTurquoise));
+                    }
+                    catch { }
+                }
+
+
 
                 response = requestNew.Raw(HttpMethod.GET, inputs, content);
 
@@ -233,8 +292,11 @@ namespace RuriLib
                     if (RemoveNoise)
                         appliedCaptcha = RemoveNoiseThreshold(appliedCaptcha, Threshold);
 
-                    ////if (vm.Transparent)
-                    ////    captcha = SetTransparent(captcha);
+                    if (Transparent)
+                        appliedCaptcha = SetTransparent(appliedCaptcha);
+
+                    if (OnlyShow)
+                        appliedCaptcha = SetOnlyShow(appliedCaptcha);
 
                     if (GrayScale)
                         appliedCaptcha = ToGrayScale(appliedCaptcha);
@@ -249,6 +311,54 @@ namespace RuriLib
                 //}
             }
             return OCR;
+        }
+
+        /// <summary>
+        /// Builds a string containing custom headers.
+        /// </summary>
+        /// <returns>One header per line, with name and value separated by a colon</returns>
+        public string GetCustomHeaders()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var pair in CustomHeaders)
+            {
+                sb.Append($"{pair.Key}: {pair.Value}");
+                if (!pair.Equals(CustomHeaders.Last())) sb.Append(Environment.NewLine);
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Sets custom headers from an array of lines.
+        /// </summary>
+        /// <param name="lines">The lines containing the colon-separated name and value of the headers</param>
+        public void SetCustomHeaders(string[] lines)
+        {
+            CustomHeaders.Clear();
+            foreach (var line in lines)
+            {
+                if (line.Contains(':'))
+                {
+                    var split = line.Split(new[] { ':' }, 2);
+                    CustomHeaders[split[0].Trim()] = split[1].Trim();
+                }
+            }
+        }
+
+        public Bitmap SetOnlyShow(Bitmap appliedCaptcha)
+        {
+            System.Drawing.Color test = System.Drawing.Color.FromArgb(0,0,0) ;
+            for (int x = 0; x < appliedCaptcha.Width; x++)
+                for (int y = 0; y < appliedCaptcha.Height; y++)
+                    if(appliedCaptcha.GetPixel(x,y) != test)
+                        appliedCaptcha.SetPixel(x, y, System.Drawing.Color.Transparent);
+
+            return appliedCaptcha;
+        }
+
+        public Bitmap SetTransparent(Bitmap appliedCaptcha)
+        {
+            return appliedCaptcha;
         }
 
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
@@ -273,31 +383,60 @@ namespace RuriLib
                 .Boolean(ConGamBri, "ConGamBri")
                 .Boolean(Saturate, "Saturate")
                 .Boolean(RemoveNoise, "RemoveNoise")
+                .Boolean(Transparent, "Transparent")
+                .Boolean(OnlyShow, "OnlyShow")
                 .Boolean(GrayScale, "GrayScale")
                 .Boolean(RemoveLines, "RemoveLines")
                 .Boolean(Dilate, "Dilate")
                 .Indent();
 
+            foreach (var h in CustomHeaders)
+            {
+                writer
+                    .Token("HEADER")
+                    .Literal($"{h.Key}: {h.Value}")
+                    .Indent();
+            }
+
             if (ConGamBri)
                 writer
+                    .Token("CONTRAST")
                     .Float(Contrast)
+                    .Token("GAMMA")
                     .Float(Gamma)
+                    .Token("BRIGHTNESS")
                     .Float(Brightness)
                     .Indent();
 
             if (Saturate)
                 writer
+                    .Token("SATURATION")
                     .Integer(Saturation)
                     .Indent();
 
             if (RemoveNoise)
                 writer
+                    .Token("THRESHOLD")
                     .Float(Threshold)
+                    .Indent();
+
+            if (Transparent)
+                writer
+                    .Token("TRANSDIFF")
+                    .Integer(TransDiff)
+                    .Indent();
+
+            if (OnlyShow)
+                writer
+                    .Token("SHOWDIFF")
+                    .Integer(ShowDiff)
                     .Indent();
 
             if (RemoveLines)
                 writer
+                    .Token("LINESMIN")
                     .Integer(LinesMin)
+                    .Token("LINESMAX")
                     .Integer(LinesMax)
                     .Return();
 
@@ -337,31 +476,63 @@ namespace RuriLib
             while (LineParser.Lookahead(ref input) == TokenType.Boolean)
                 LineParser.SetBool(ref input, this);
 
-            try
+            while (input != "" && LineParser.Lookahead(ref input) == TokenType.Parameter)
             {
-                if (ConGamBri)
+                var parsed = LineParser.ParseToken(ref input, TokenType.Parameter, true).ToUpper();
+                switch (parsed)
                 {
-                    Contrast = LineParser.ParseFloat(ref input, "Contrast");
-                    Gamma = LineParser.ParseFloat(ref input, "Gamma");
-                    Brightness = LineParser.ParseFloat(ref input, "Brightness");
-                }
-                if (Saturate)
-                {
-                    Saturation = LineParser.ParseInt(ref input, "Saturation");
-                }
-                if (RemoveNoise)
-                {
-                    Threshold = LineParser.ParseFloat(ref input, "Threshold");
-                }
-                if (RemoveLines)
-                {
-                    LinesMin = LineParser.ParseInt(ref input, "LinesMin");
-                    LinesMax = LineParser.ParseInt(ref input, "LinesMax");
+                    case "HEADER":
+                        var headerPair = ParsePair(LineParser.ParseLiteral(ref input, "HEADER VALUE"));
+                        CustomHeaders[headerPair.Key] = headerPair.Value;
+                        break;
+
+                    case "CONTRAST":
+                        Contrast = LineParser.ParseFloat(ref input, "Contrast");
+                        break;
+
+                    case "GAMMA":
+                        Gamma = LineParser.ParseFloat(ref input, "Gamma");
+                        break;
+
+                    case "BRIGHTNESS":
+                        Brightness = LineParser.ParseFloat(ref input, "Brightness");
+                        break;
+
+                    case "SATURATION":
+                        Saturation = LineParser.ParseInt(ref input, "Saturation");
+                        break;
+
+                    case "THRESHOLD":
+                        Threshold = LineParser.ParseFloat(ref input, "Threshold");
+                        break;
+
+                    case "TRANSDIFF":
+                        TransDiff = LineParser.ParseInt(ref input, "TransDiff");
+                        break;
+
+                    case "SHOWDIFF":
+                        ShowDiff = LineParser.ParseInt(ref input, "ShowDiff");
+                        break;
+
+                    case "LINESMIN":
+                        LinesMin = LineParser.ParseInt(ref input, "LinesMin");
+                        break;
+
+                    case "LINESMAX":
+                        LinesMax = LineParser.ParseInt(ref input, "LinesMax");
+                        break;
+
+                    default:
+                        break;
                 }
             }
-            catch { }
+                return this;
+        }
 
-            return this;
+        public static KeyValuePair<string, string> ParsePair(string pair)
+        {
+            var split = pair.Split(new[] { ':' }, 2);
+            return new KeyValuePair<string, string>(split[0].Trim(), split[1].Trim());
         }
 
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
@@ -565,7 +736,31 @@ namespace RuriLib
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public Bitmap RemoveNoiseThreshold(Bitmap Bmp, float threshold)
         {
-            return Bmp;
+            // Make the result bitmap.
+            Bitmap bm = new Bitmap(Bmp.Width, Bmp.Height);
+
+            // Make the ImageAttributes object and set the threshold.
+            ImageAttributes attributes = new ImageAttributes();
+            attributes.SetThreshold(threshold);
+
+            // Draw the image onto the new bitmap
+            // while applying the new ColorMatrix.
+            System.Drawing.Point[] points =
+            {
+                new System.Drawing.Point(0, 0),
+                new System.Drawing.Point(Bmp.Width, 0),
+                new System.Drawing.Point(0, Bmp.Height),
+            };
+            Rectangle rect =
+                new Rectangle(0, 0, Bmp.Width, Bmp.Height);
+            using (Graphics gr = Graphics.FromImage(bm))
+            {
+                gr.DrawImage(Bmp, points, rect,
+                    GraphicsUnit.Pixel, attributes);
+            }
+
+            // Return the result.
+            return bm;
         }
 
         //[Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]

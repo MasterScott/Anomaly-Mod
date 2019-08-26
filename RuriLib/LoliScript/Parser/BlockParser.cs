@@ -32,6 +32,9 @@ namespace RuriLib.LS
             /// <summary>The RECAPTCHA block.</summary>
             RECAPTCHA,
 
+            /// <summary>The BLOCKCHAINDNS block</summary>
+            BLOCKCHAINDNS,
+
             /// <summary>The REQUEST block.</summary>
             REQUEST,
 
@@ -113,6 +116,10 @@ namespace RuriLib.LS
 
                 case BlockName.KEYCHECK:
                     block = (new BlockKeycheck()).FromLS(input);
+                    break;
+
+                case BlockName.BLOCKCHAINDNS:
+                    block = (new BlockBlockchainDNS()).FromLS(input);
                     break;
 
                 case BlockName.RECAPTCHA:

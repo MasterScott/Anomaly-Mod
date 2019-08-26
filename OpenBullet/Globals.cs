@@ -33,8 +33,9 @@ namespace OpenBullet
 
     public static class Globals
     {
+
         // Version
-        public static string obVersion = "1.3.8 [Anomaly]";
+        public static string obVersion = "1.3.9 [Anomaly]";
 
         // Main Window
         public static MainWindow mainWindow;
