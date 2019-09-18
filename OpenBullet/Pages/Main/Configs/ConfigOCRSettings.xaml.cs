@@ -64,6 +64,16 @@ namespace OpenBullet
             OCRResult.Text = result;
         }
 
+        public Bitmap CreateNonIndexedImage(Bitmap src)
+        {
+            Bitmap newImage = new Bitmap(src.Width, src.Height);
+            using (Graphics graphics = Graphics.FromImage(newImage))
+            {
+                graphics.DrawImage(src, 0, 0);
+            }
+            return newImage;
+        }
+
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public Pix GetOCRImage()
         {
@@ -75,10 +85,12 @@ namespace OpenBullet
                 using (var stream = response.GetResponseStream())
                 {
                     captcha = (Bitmap)Bitmap.FromStream(stream);
-                    appliedCaptcha = captcha;
+                    appliedCaptcha = CreateNonIndexedImage(captcha);
                 }
                 //System.Windows.Forms.MessageBox.Show(appliedCaptcha.Width + " < W | H > " + appliedCaptcha.Height);
                 OcrImage.Source = ImageSourceFromBitmap(captcha);
+
+                //appliedCaptcha = CreateNonIndexedImage(appliedCaptcha);
 
                 if (vm.ContrastGamma)
                 {
@@ -124,7 +136,7 @@ namespace OpenBullet
                 {
 
                     captcha = (Bitmap)Bitmap.FromStream(ms);
-                    appliedCaptcha = captcha;
+                    appliedCaptcha = CreateNonIndexedImage(captcha);
 
                     OcrImage.Source = ImageSourceFromBitmap(captcha);
 

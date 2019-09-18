@@ -181,6 +181,17 @@ namespace RuriLib
         }
 
         [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+        public Bitmap CreateNonIndexedImage(Bitmap src)
+        {
+            Bitmap newImage = new Bitmap(src.Width, src.Height);
+            using (Graphics graphics = Graphics.FromImage(newImage))
+            {
+                graphics.DrawImage(src, 0, 0);
+            }
+            return newImage;
+        }
+
+        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
         public Pix GetOCRImage(BotData data)
         {
             Pix OCR;
@@ -197,7 +208,7 @@ namespace RuriLib
                 using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
                 {
                     captcha = (Bitmap)Bitmap.FromStream(ms);
-                    var appliedCaptcha = captcha;
+                    var appliedCaptcha = CreateNonIndexedImage(captcha);
 
                     if (ConGamBri)
                         appliedCaptcha = SetContrastGamma(appliedCaptcha);
@@ -281,7 +292,7 @@ namespace RuriLib
                 //{
                 //captcha = (Bitmap)Bitmap.FromStream(stream);
                 captcha = (Bitmap)Bitmap.FromStream(response.ToMemoryStream());
-                    var appliedCaptcha = captcha;
+                    var appliedCaptcha = CreateNonIndexedImage(captcha);
 
                     if (ConGamBri)
                         appliedCaptcha = SetContrastGamma(appliedCaptcha);
