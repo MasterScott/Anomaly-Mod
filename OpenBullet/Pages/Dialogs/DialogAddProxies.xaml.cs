@@ -39,6 +39,8 @@ namespace OpenBullet
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.proxyscrape.com/?request=lastupdated&proxytype=http");
                 request.Proxy = null;
+                request.Timeout = 5000;
+                request.ReadWriteTimeout = 5000;
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 using (System.IO.Stream stream = response.GetResponseStream())
                 using (System.IO.StreamReader reader = new System.IO.StreamReader(stream))
@@ -48,6 +50,8 @@ namespace OpenBullet
 
                 request = (HttpWebRequest)WebRequest.Create("https://api.proxyscrape.com/?request=lastupdated&proxytype=socks4");
                 request.Proxy = null;
+                request.Timeout = 5000;
+                request.ReadWriteTimeout = 5000;
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 using (System.IO.Stream stream = response.GetResponseStream())
                 using (System.IO.StreamReader reader = new System.IO.StreamReader(stream))
@@ -57,6 +61,8 @@ namespace OpenBullet
 
                 request = (HttpWebRequest)WebRequest.Create("https://api.proxyscrape.com/?request=lastupdated&proxytype=socks5");
                 request.Proxy = null;
+                request.Timeout = 5000;
+                request.ReadWriteTimeout = 5000;
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 using (System.IO.Stream stream = response.GetResponseStream())
                 using (System.IO.StreamReader reader = new System.IO.StreamReader(stream))
@@ -66,9 +72,9 @@ namespace OpenBullet
             }
             catch
             {
-                PSHTTP = "5 minutes ago";
-                PSSOCKS4 = "10 minutes ago";
-                PSSOCKS5 = "12 minutes ago";
+                PSHTTP = "Error Connecting";
+                PSSOCKS4 = "Error Connecting";
+                PSSOCKS5 = "Error Connecting";
             }
         }
 
@@ -98,6 +104,8 @@ namespace OpenBullet
             {
                 string html = "0";
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.proxyscrape.com/?request=getproxies&proxytype=http&timeout=10000&country=all&ssl=all&anonymity=all");
+                request.Timeout = 5000;
+                request.ReadWriteTimeout = 5000;
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 using (System.IO.Stream stream = response.GetResponseStream())
                 using (System.IO.StreamReader reader = new System.IO.StreamReader(stream))
@@ -121,6 +129,8 @@ namespace OpenBullet
                 string html = "0";
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.proxyscrape.com/?request=getproxies&proxytype=socks4&timeout=10000&country=all");
                 request.Proxy = null;
+                request.Timeout = 5000;
+                request.ReadWriteTimeout = 5000;
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 using (System.IO.Stream stream = response.GetResponseStream())
                 using (System.IO.StreamReader reader = new System.IO.StreamReader(stream))
@@ -143,6 +153,8 @@ namespace OpenBullet
                 string html = "0";
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.proxyscrape.com/?request=getproxies&proxytype=socks5&timeout=10000&country=all");
                 request.Proxy = null;
+                request.Timeout = 5000;
+                request.ReadWriteTimeout = 5000;
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 using (System.IO.Stream stream = response.GetResponseStream())
                 using (System.IO.StreamReader reader = new System.IO.StreamReader(stream))

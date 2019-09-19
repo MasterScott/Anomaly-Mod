@@ -25,6 +25,7 @@ namespace OpenBullet
         Settings,
         ListGenerator,
         SeleniumTools,
+        Database,
         ComboSuite,
         LolixDecrypt,
         TessDataDownloads,
@@ -35,7 +36,7 @@ namespace OpenBullet
     {
 
         // Version
-        public static string obVersion = "1.4 [Anomaly]";
+        public static string obVersion = "1.4.1 [Anomaly]";
 
         // Main Window
         public static MainWindow mainWindow;
@@ -109,6 +110,13 @@ namespace OpenBullet
             try
             {
                 log.List.Insert(0, entry);
+
+
+                var count = log.List.Count;
+                if (count > obSettings.General.LogBufferSize)
+                {
+                    log.List.RemoveAt(count - 1);
+                }
             }
             catch { }
         }

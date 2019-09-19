@@ -11,6 +11,7 @@ namespace OpenBullet
     {
         private ToolsListGenerator ListGenerator;
         private ToolsSeleniumTools SeleniumTools;
+        ToolsDatabase Database;
         private ComboSuite ComboSuiteTools;
         private LolixDecrypt LolixTools;
         private TessDataDownloads TessDataTools;
@@ -24,6 +25,7 @@ namespace OpenBullet
             ComboSuiteTools = new ComboSuite();
             LolixTools = new LolixDecrypt();
             TessDataTools = new TessDataDownloads();
+            Database = new ToolsDatabase();
 
 
             menuOptionListGenerator_MouseDown(this, null);
@@ -59,6 +61,12 @@ namespace OpenBullet
         {
             Main.Content = TessDataTools;
             menuOptionSelected(menuOptionTessDataDownloads);
+        }
+
+        private void MenuOptionDatabase_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Main.Content = Database;
+            menuOptionSelected(menuOptionDatabase);
         }
 
         private void menuOptionSelected(object sender)

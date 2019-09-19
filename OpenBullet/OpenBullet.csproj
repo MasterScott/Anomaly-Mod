@@ -95,7 +95,7 @@
       <HintPath>..\packages\AngleSharp.0.9.9.2\lib\net45\AngleSharp.dll</HintPath>
     </Reference>
     <Reference Include="Extreme.Net">
-      <HintPath>bin\Updater\bin\Extreme.Net.dll</HintPath>
+      <HintPath>..\..\Release\bin\Extreme.Net.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.7.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.7\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -118,8 +118,8 @@
     <Reference Include="Jint, Version=0.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
       <HintPath>..\packages\Jint.2.11.58\lib\net451\Jint.dll</HintPath>
     </Reference>
-    <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
+    <Reference Include="LiteDB">
+      <HintPath>..\..\Release\bin\LiteDB.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamic, Version=1.2.2.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicLanguageRuntime.1.2.2\lib\net45\Microsoft.Dynamic.dll</HintPath>
@@ -343,6 +343,9 @@
     <Compile Include="Pages\Main\Tools\LolixDecrypt.cs" />
     <Compile Include="Pages\Main\Tools\TessDataDownloads.xaml.cs">
       <DependentUpon>TessDataDownloads.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Main\Tools\ToolsDatabase.xaml.cs">
+      <DependentUpon>ToolsDatabase.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\StackerBlocks\PageBlockBlockchainDNS.xaml.cs">
       <DependentUpon>PageBlockBlockchainDNS.xaml</DependentUpon>
@@ -623,6 +626,10 @@
     <Page Include="Pages\Main\Tools\ComboSuite.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Main\Tools\ToolsDatabase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\StackerBlocks\PageBlockBlockchainDNS.xaml">
       <SubType>Designer</SubType>

@@ -30,6 +30,7 @@
             <Label x:Name="menuOptionComboSuite" Content="Combo Suite" MouseDown="menuOptionComboSuite_MouseDown" Margin="0,3,5,0" VerticalAlignment="Top" />
             <Label x:Name="menuOptionLolixDecrypt" Content="Lolix Decrypt" MouseDown="menuOptionLolixDecrypt_MouseDown" Margin="0,3,5,0" VerticalAlignment="Top" />
             <Label x:Name="menuOptionTessDataDownloads" Content="TessData" MouseDown="menuOptionTessData_MouseDown" Margin="0,3,5,0" VerticalAlignment="Top" />
+            <Label x:Name="menuOptionDatabase" Content="Database" MouseDown="MenuOptionDatabase_MouseDown" />
         </StackPanel>
 
         <Frame Grid.Row="1" x:Name="Main" NavigationUIVisibility="Hidden" />

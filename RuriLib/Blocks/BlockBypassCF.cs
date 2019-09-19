@@ -1,11 +1,15 @@
-﻿using Cloudflare;
-using Cloudflare.CaptchaProviders;
-using RuriLib.LS;
+﻿using RuriLib.LS;
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Windows.Media;
+using System.Threading;
+using Jint;
+using System.Net;
+using CloudflareSolverRe;
+using System.Net.Http;
+using CloudflareSolverRe.Types;
+using CloudflareSolverRe.CaptchaProviders;
 
 namespace RuriLib
 {
@@ -15,12 +19,10 @@ namespace RuriLib
     public class BlockBypassCF : BlockBase
     {
         private string url = "";
-
         /// <summary>The URL of the Cloudflare-protected website.</summary>
         public string Url { get { return url; } set { url = value; OnPropertyChanged(); } }
 
         private string userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko";
-
         /// <summary>The User-Agent header to use when solving the challenge.</summary>
         public string UserAgent { get { return userAgent; } set { userAgent = value; OnPropertyChanged(); } }
 
@@ -83,6 +85,7 @@ namespace RuriLib
             }
 
             var localUrl = ReplaceValues(url, data);
+            var uri = new Uri(localUrl);
 
             var timeout = data.GlobalSettings.General.RequestTimeout * 1000;
 
@@ -102,13 +105,15 @@ namespace RuriLib
                     cf = new CloudflareSolver();
                     break;
             }
+            cf.MaxTries = 3;
+            cf.ClearanceDelay = 3000;
 
             // Initialize the handler with the Proxy and the previous cookies
             HttpClientHandler handler = null;
 
             CookieContainer cookies = new CookieContainer();
             foreach (var cookie in data.Cookies)
-                cookies.Add(new Cookie(cookie.Key, cookie.Value));
+                cookies.Add(new Cookie(cookie.Key, cookie.Value, "/", uri.Host));
 
             if (data.UseProxies)
             {
@@ -143,14 +148,12 @@ namespace RuriLib
             }
 
             // Initialize the HttpClient with the given handler, timeout, user-agent
-            var httpClient = new HttpClient(handler);
+            HttpClient httpClient = new HttpClient(handler);
             httpClient.Timeout = TimeSpan.FromMinutes(timeout);
             httpClient.DefaultRequestHeaders.Add("User-Agent", ReplaceValues(userAgent, data));
 
-            var uri = new Uri(localUrl);
-
             // Solve the CF challenge
-            var result = cf.Solve(httpClient, handler, uri).Result;
+            var result = cf.Solve(httpClient, handler, uri, userAgent: ReplaceValues(userAgent, data)).Result;
             if (result.Success)
             {
                 data.Log(new LogEntry($"[Success] Protection bypassed: {result.DetectResult.Protection}", Colors.GreenYellow));

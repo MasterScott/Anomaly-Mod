@@ -3,6 +3,7 @@ using LiteDB;
 using RuriLib;
 using RuriLib.Models;
 using RuriLib.Runner;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;

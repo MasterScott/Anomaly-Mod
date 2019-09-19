@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Newtonsoft.Json;
 
 namespace RuriLib.Runner
 {
@@ -900,6 +901,23 @@ namespace RuriLib.Runner
                     RaiseFoundHit(hit);
                 }
 
+                // Call the webhook
+                if (Settings.General.WebhookEnabled && (botData.Status == BotStatus.SUCCESS || botData.Status == BotStatus.CUSTOM))
+                {
+                    HttpRequest request = new HttpRequest();
+                    try
+                    {
+                        var toSend = new WebhookFormat(data, hitType, capturedData.ToCaptureString(), DateTime.Now, Config.Settings.Name, Config.Settings.Author);
+                        var json = JsonConvert.SerializeObject(toSend);
+                        //wc.UploadStringAsync(new Uri(Settings.General.WebhookURL), json);
+                        request.PostAsync(Settings.General.WebhookURL, json, "application/json");
+                    }
+                    catch
+                    {
+                       //RaiseMessageArrived(LogLevel.Error, $"Could not register the hit to webhook {Settings.General.WebhookURL}");
+                    }
+                }
+
                 // Wait time
                 if (Settings.General.WaitTime > 0)
                     Thread.Sleep(Settings.General.WaitTime);
@@ -1098,6 +1116,8 @@ namespace RuriLib.Runner
             var proxies = new List<CProxy>();
 
             HttpRequest req = new HttpRequest();
+            req.ConnectTimeout = 5000;
+            req.ReadWriteTimeout = 5000;
             req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36 OPR/52.0.2871.64";
             var resp = req.Get(url).ToString();
 

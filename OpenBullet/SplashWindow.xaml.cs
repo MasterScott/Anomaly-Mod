@@ -19,7 +19,7 @@ namespace OpenBullet
     public partial class SplashWindow : Window
     {
         // Local Version Number
-        public string CurrentVersion = "1.4".Trim();
+        public string CurrentVersion = "1.4.1".Trim();
 
         // URL for the Changelog
         public static string ChangelogURL = "https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/Changelog";
@@ -49,57 +49,6 @@ namespace OpenBullet
         {
             Close();
         }
-
-        //[Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
-        //public void login(object sender, RoutedEventArgs e)
-        //{
-        //    //Gets HWID for HDD
-        //    ManagementClass mangnmt = new ManagementClass("Win32_LogicalDisk");
-        //    ManagementObjectCollection mcol = mangnmt.GetInstances();
-        //    string HDDID = "";
-        //    foreach (ManagementObject strt in mcol)
-        //    {
-        //        HDDID += Convert.ToString(strt["VolumeSerialNumber"]);
-        //    }
-
-        //    // Use input string to calculate MD5 hash
-        //    using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
-        //    {
-        //        byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(HDDID);
-        //        byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-        //        // Convert the byte array to hexadecimal string
-        //        StringBuilder sb = new StringBuilder();
-        //        for (int i = 0; i < hashBytes.Length; i++)
-        //        {
-        //            sb.Append(hashBytes[i].ToString("X2"));
-        //        }
-        //        HDDID = sb.ToString();
-
-
-        //        //Downloads and checks Keys
-        //        WebClient KEYS = new WebClient();
-
-        //        string[] Donators = KEYS.DownloadString("https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/Donators").Split('\n');
-
-        //        foreach (string i in Donators)
-        //        {
-        //            if (HDDID == i)
-        //            {
-        //                KEYCHECK = true;
-        //                MessageBox.Show("Donator Found! Thank you for your Support =D", "NOTICE");
-        //                this.Close();
-        //                break;
-        //            }
-        //        }
-        //        if (KEYCHECK == false)
-        //        {
-        //            this.Close();
-        //            //MessageBox.Show("Donator not found!", "NOTICE");
-        //            //Environment.Exit(0);
-        //        }
-        //    }
-        //}
 
         private void HandleInput(object sender, TextCompositionEventArgs e)
         {

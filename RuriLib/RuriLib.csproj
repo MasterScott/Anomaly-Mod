@@ -68,6 +68,12 @@
     <Reference Include="CloudflareSolver, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CloudflareSolver.1.4.1\lib\netstandard2.0\CloudflareSolver.dll</HintPath>
     </Reference>
+    <Reference Include="CloudflareSolverRe">
+      <HintPath>..\..\Release\bin\CloudflareSolverRe.dll</HintPath>
+    </Reference>
+    <Reference Include="CloudflareSolverRe.Captcha">
+      <HintPath>..\..\Release\bin\CloudflareSolverRe.Captcha.dll</HintPath>
+    </Reference>
     <Reference Include="Extreme.Net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Extreme.Net.dll</HintPath>
@@ -177,6 +183,7 @@
     <Compile Include="Models\RemoteProxySource.cs" />
     <Compile Include="Models\DataPool.cs" />
     <Compile Include="Models\ProxyPool.cs" />
+    <Compile Include="Models\WebhookFormat.cs" />
     <Compile Include="Runner\AbortableBackgroundWorker.cs">
       <SubType>Component</SubType>
     </Compile>
