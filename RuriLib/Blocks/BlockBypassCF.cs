@@ -6,8 +6,8 @@ using System.Windows.Media;
 using System.Threading;
 using Jint;
 using System.Net;
-using CloudflareSolverRe;
 using System.Net.Http;
+using CloudflareSolverRe;
 using CloudflareSolverRe.Types;
 using CloudflareSolverRe.CaptchaProviders;
 

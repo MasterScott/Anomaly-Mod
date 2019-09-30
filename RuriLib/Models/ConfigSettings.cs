@@ -184,6 +184,11 @@ namespace RuriLib
         /// <summary>Setting transparnet colors in Image.</summary>
         public bool Transparent { get { return transparent; } set { transparent = value; OnPropertyChanged(); } }
 
+        private bool contour = false;
+
+        /// <summary>Setting transparnet colors in Image.</summary>
+        public bool Contour { get { return contour; } set { contour = value; OnPropertyChanged(); } }
+
         private bool onlyShow = false;
 
         /// <summary>Setting to show only specified colors in Image.</summary>

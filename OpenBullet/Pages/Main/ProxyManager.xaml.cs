@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -354,7 +355,7 @@ namespace OpenBullet
 
             using (var db = new LiteDatabase(Globals.dataBaseFile))
             {
-                db.GetCollection<CProxy>("proxies").Delete(p => p.Working == ProxyWorking.NO);
+                db.GetCollection<CProxy>("proxies").Delete(0);
                 var list = vm.ProxyList.Where(p => p.Working == ProxyWorking.NO);
                 while (list.Count() > 0)
                 {
@@ -413,7 +414,7 @@ namespace OpenBullet
 
             using (var db = new LiteDatabase(Globals.dataBaseFile))
             {
-                db.GetCollection<CProxy>("proxies").Delete(p => p.Working == ProxyWorking.UNTESTED);
+                db.GetCollection<CProxy>("proxies").Delete(0);
                 var list = vm.ProxyList.Where(p => p.Working == ProxyWorking.UNTESTED);
                 while (list.Count() > 0)
                 {

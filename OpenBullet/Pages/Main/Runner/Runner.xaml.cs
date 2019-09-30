@@ -368,7 +368,7 @@ namespace OpenBullet
                 var coll = db.GetCollection<Record>("records");
                 var record = new Record(vm.ConfigName, vm.Wordlist.Path, vm.TestedCount + vm.StartingPoint);
 
-                coll.Delete(r => r.ConfigName == vm.ConfigName && r.WordlistLocation == vm.Wordlist.Path);
+                coll.Delete(0);
                 coll.Insert(record);
             }
         }

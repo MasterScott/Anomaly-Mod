@@ -121,6 +121,9 @@ namespace OpenBullet
                 if (vm.RemoveLines)
                     appliedCaptcha = RemoveImageLines(appliedCaptcha);
 
+                //if (vm.Contour)
+                    appliedCaptcha = ContourImage(appliedCaptcha);
+
                 if(vm.Dilate)
                     appliedCaptcha = Dilate(appliedCaptcha);
 
@@ -173,6 +176,9 @@ namespace OpenBullet
                         appliedCaptcha = RemoveImageLines(appliedCaptcha);
                     }
 
+                    //if (vm.Contour)
+                        appliedCaptcha = ContourImage(appliedCaptcha);
+
                     if (vm.Dilate)
                         appliedCaptcha = Dilate(appliedCaptcha);
 
@@ -185,6 +191,30 @@ namespace OpenBullet
                 OCR = PixConverter.ToPix(appliedCaptcha);
                 return OCR;
             }
+        }
+
+        public Bitmap ContourImage(Bitmap original)
+        {
+            System.Drawing.Color current;
+            for (int x = 0; x < original.Width; x++)
+            {
+                for (int y = 0; y < original.Height; y++)
+                {
+                    current = original.GetPixel(x, y);
+
+
+                    if (original.GetPixel(x - 1, y) == current &&
+                        original.GetPixel(x, y - 1) == current &&
+                        original.GetPixel(x + 1, y) == current &&
+                        original.GetPixel(x, y + 1) == current &&
+                        original.GetPixel(x - 1, y - 1) == current &&
+                        original.GetPixel(x + 1, y + 1) == current &&
+                        original.GetPixel(x - 1, y + 1) == current &&
+                        original.GetPixel(x + 1, y - 1) == current)
+                        System.Windows.Forms.MessageBox.Show(original.GetPixel(x, y).ToString());
+                }
+            }
+            return original;
         }
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)

@@ -1,4 +1,4 @@
-﻿using AngleSharp.Parser.Html;
+﻿using AngleSharp.Html.Parser;
 using Newtonsoft.Json.Linq;
 using RuriLib.LS;
 using System;
@@ -398,8 +398,8 @@ namespace RuriLib
                 case ParseType.CSS:
 
                     HtmlParser parser = new HtmlParser();
-                    AngleSharp.Dom.Html.IHtmlDocument document = null;
-                    try { document = parser.Parse(original); } catch { }
+                    AngleSharp.Html.Dom.IHtmlDocument document = null;
+                    try { document = parser.ParseDocument(original); } catch { }
 
                     try
                     {
