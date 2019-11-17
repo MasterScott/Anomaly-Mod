@@ -1,4 +1,5 @@
 ﻿using Extreme.Net;
+using Microsoft.IdentityModel.Tokens;
 using RuriLib.Functions.Crypto;
 using RuriLib.Functions.Formats;
 using RuriLib.Functions.Time;
@@ -143,7 +144,10 @@ namespace RuriLib
             AESDecrypt,
 
             /// <summary>Generates a key using a password based KDF.</summary>
-            PBKDF2PKCS5
+            PBKDF2PKCS5,
+
+            /// <summary>Generates an OAuth Verfier
+            GenerateOAuthVerifier
         }
 
         #region General Properties
@@ -778,6 +782,22 @@ namespace RuriLib
 
                     case Function.PBKDF2PKCS5:
                         outputString = Crypto.PBKDF2PKCS5(localInputString, ReplaceValues(KdfSalt, data), KdfSaltSize, KdfIterations, KdfKeySize, KdfAlgorithm);
+                        break;
+
+                    case Function.GenerateOAuthVerifier:
+
+                        byte[] number = new byte[32];
+
+                        RandomNumberGenerator rng = RandomNumberGenerator.Create();
+
+                        rng.GetBytes(number);
+
+                        var bytes = (BitConverter.ToString(number));
+
+                        string encodedStr = Base64UrlEncoder.Encode(bytes);
+
+                        outputString = encodedStr;
+
                         break;
                 }
                 
