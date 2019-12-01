@@ -350,7 +350,6 @@ namespace RuriLib
 
             return writer.ToString();
         }
-
         /// <inheritdoc />
         public override void Process(BotData data)
         {

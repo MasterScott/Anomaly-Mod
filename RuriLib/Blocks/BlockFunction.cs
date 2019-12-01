@@ -150,7 +150,11 @@ namespace RuriLib
             GenerateOAuthVerifier,
 
             ///<summary>Generates a GUID</summary>
-            GenerateGUID
+            GenerateGUID,
+
+            ///<summary>Generates a certain amount of bytes based on input</summary>
+            GenerateBytes
+
         }
 
         #region General Properties
@@ -799,6 +803,23 @@ namespace RuriLib
                     case Function.GenerateGUID:
                         outputString = Guid.NewGuid().ToString();
                         break;
+
+                    case Function.GenerateBytes:
+                        int z = 0;
+                        try
+                        {
+                            z = System.Convert.ToInt32(localInputString);
+                            byte[] genbyte = new byte[z];
+                            RandomNumberGenerator rando = RandomNumberGenerator.Create();
+                            rando.GetBytes(genbyte);
+                            var end = (BitConverter.ToString(genbyte));
+                            outputString = end.ToString();
+                        }
+                        catch (FormatException)
+                        { outputString = "INTEGERS ONLY"; }
+                        catch (OverflowException)
+                        { outputString = "BYTE SIZE TOO LARGE FOR 32BIT INTEGER"; }
+                            break;
                 }
                 
                
