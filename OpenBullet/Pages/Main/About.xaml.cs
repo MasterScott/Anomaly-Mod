@@ -18,9 +18,9 @@ namespace OpenBullet
             Process.Start("https://github.com/openbullet/openbullet");
         }
 
-        private void docuButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void KoFiButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Process.Start("https://openbullet.github.io/");
+            Process.Start("https://ko-fi.com/openbulletanomaly");
         }
     }
 }

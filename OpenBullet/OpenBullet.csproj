@@ -862,6 +862,7 @@
     <Resource Include="Images\Icons\retry.png" />
     <Resource Include="Images\Logo.png" />
     <Resource Include="Images\LogoInverted.png" />
+    <Resource Include="Images\Icons\Kofi.png" />
     <Content Include="Sounds\rifle_hit.wav" />
     <Content Include="Sounds\rifle_reload.wav" />
   </ItemGroup>
