@@ -135,6 +135,7 @@ namespace OpenBullet
                     Globals.LogInfo(Components.Main, "Backed up the DB");
                 }
             }
+
             catch (Exception ex)
             {
                 Globals.LogError(Components.Main, $"Could not backup the DB: {ex.Message}");
@@ -142,6 +143,9 @@ namespace OpenBullet
 
             
             Topmost = Globals.obSettings.General.AlwaysOnTop;
+
+            (new SplashWindow()).ShowDialog();
+            menuOptionRunner_MouseDown(this, null);
 
             RunnerManagerPage = new RunnerManager(Globals.obSettings.General.AutoCreateRunner);
             if (Globals.obSettings.General.AutoCreateRunner)
