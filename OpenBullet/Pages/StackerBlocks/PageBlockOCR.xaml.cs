@@ -33,6 +33,7 @@ namespace OpenBullet.Pages.StackerBlocks
         {
             try
             {
+                Directory.CreateDirectory(@".\tessdata");
                 DirectoryInfo d = new DirectoryInfo(@".\tessdata");
 
                 foreach (var file in d.GetFiles("."))

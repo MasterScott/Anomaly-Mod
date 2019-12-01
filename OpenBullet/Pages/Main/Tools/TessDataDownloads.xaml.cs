@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -41,7 +42,9 @@ namespace OpenBullet.Pages.Main.Tools
                 {
                     DownloadLanguage(i, item.ToString());
                 }
-                catch { System.Windows.Forms.MessageBox.Show("Please create a folder named 'tessdata' in your Openbullet directory", "FOLDER MISSING", MessageBoxButtons.OK); }
+                catch {
+                    System.Windows.Forms.MessageBox.Show("Please create a folder named 'tessdata' in your Openbullet directory", "FOLDER MISSING", MessageBoxButtons.OK);
+                }
             }
 
             //foreach (Match line in lang.Matches(siteResponse))
