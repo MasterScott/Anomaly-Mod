@@ -35,6 +35,7 @@ namespace OpenBullet.Pages.Main.Tools
 
             foreach (string item in DownloadList.Items)
             {
+                Directory.CreateDirectory(@".\tessdata");
                 i++;
                 LogsText.Text += String.Format("{0}/{1} | Downloading: {2}..", i, DownloadList.Items.Count, item);// + Environment.NewLine;
                 System.Windows.Forms.Application.DoEvents();
