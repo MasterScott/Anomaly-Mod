@@ -135,7 +135,9 @@ namespace OpenBullet.Pages.StackerBlocks
             { "CharAt", "Returns the character at the specified index of the string in the input field" },
             { "AESEncrypt", "Encrypts data with AES. All parameters must be provided as base64 strings. Uses SHA-256 to get a 256 bit key" },
             { "AESDecrypt", "Decrypts data with AES. All parameters must be provided as base64 strings. Uses SHA-256 to get a 256 bit key" },
-            { "PBKDF2PKCS5", "Generates a key based on a password. The salt, if provided, must be a base64 string" }
+            { "PBKDF2PKCS5", "Generates a key based on a password. The salt, if provided, must be a base64 string" },
+            {"GenerateOAuthVerifier","Generates a OAuth Verifier (32Bytes URLSafe Base64 Encoded)"},
+            {"GenerateOAuthChallenge","Generates a OAuth Challenge (Input result of GenerateOAuthVerifier)"}
         };
 
         private void dictionaryRTB_TextChanged(object sender, TextChangedEventArgs e)
