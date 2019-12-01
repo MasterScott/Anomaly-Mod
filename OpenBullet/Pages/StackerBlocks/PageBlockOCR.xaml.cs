@@ -10,7 +10,7 @@ namespace OpenBullet.Pages.StackerBlocks
     /// Interaction logic for PageBlockOCR.xaml
     /// </summary>
     ///
-    [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+    
     public partial class PageBlockOCR : Page
     {
         private BlockOCR block;

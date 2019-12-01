@@ -12,7 +12,7 @@ namespace OpenBullet
     ///     Logica di interazione per SplashWindow.xaml
     /// </summary>
     ///
-    [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+    
     public partial class SplashWindow : Window
     {
         // Local Version Number
@@ -72,7 +72,7 @@ namespace OpenBullet
             Environment.Exit(0);
         }
 
-        [Obfuscation(Exclude = false, Feature = "+koi;-ctrl flow")]
+        
         private void Update(object sender, RoutedEventArgs e)
         {
             //Update Check. Checks the Version Number from a URL and compares it to the Local Version
