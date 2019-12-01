@@ -52,6 +52,16 @@ namespace OpenBullet
             SendBack(new BlockImageCaptcha());
         }
 
+        private void blockOCRButton_Click(object sender, RoutedEventArgs e)
+        {
+            SendBack(new BlockOCR());
+        }
+
+        private void blockBlockchainButton_Click(object sender, RoutedEventArgs e)
+        {
+            SendBack(new BlockBlockchainDNS());
+        }
+
         private void blockBypassCFButton_Click(object sender, RoutedEventArgs e)
         {
             SendBack(new BlockBypassCF());

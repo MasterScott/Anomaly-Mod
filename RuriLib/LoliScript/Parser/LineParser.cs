@@ -26,7 +26,10 @@ namespace RuriLib.LS
         Boolean,
 
         /// <summary>An integer value.</summary>
-        Integer
+        Integer,
+
+        /// <summary>A float value</summary>
+        Float
     }
 
     /// <summary>
@@ -145,6 +148,18 @@ namespace RuriLib.LS
         public static int ParseInt(ref string input, string label)
         {
             try { return int.Parse(LineParser.ParseToken(ref input, TokenType.Parameter, true)); }
+            catch { throw new ArgumentException($"Expected Integer value for '{label}'"); }
+        }
+
+        /// <summary>
+        /// Parses a float value from a line.
+        /// </summary>
+        /// <param name="input">The reference to the line of code</param>
+        /// <param name="label">Debug information about the expected integer</param>
+        /// <returns>The flaot value</returns>
+        public static float ParseFloat(ref string input, string label)
+        {
+            try { return float.Parse(LineParser.ParseToken(ref input, TokenType.Parameter, true)); }
             catch { throw new ArgumentException($"Expected Integer value for '{label}'"); }
         }
 

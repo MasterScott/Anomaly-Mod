@@ -41,6 +41,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -56,6 +57,7 @@
        -->
       .allowedextension
     </AllowedReferenceRelatedFileExtensions>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>OBlogoIcon.ico</ApplicationIcon>
@@ -155,6 +157,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Tesseract, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Tesseract.3.3.0\lib\net45\Tesseract.dll</HintPath>
+    </Reference>
     <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
     </Reference>
@@ -207,6 +212,7 @@
     <Compile Include="Pages\Dialogs\DialogSetProxies.xaml.cs">
       <DependentUpon>DialogSetProxies.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Main\Configs\ConfigOCRSettings.xaml.cs" />
     <Compile Include="Pages\Main\Configs\OtherOptions\ConfigOtherOptionsRequests.xaml.cs">
       <DependentUpon>ConfigOtherOptionsRequests.xaml</DependentUpon>
     </Compile>
@@ -315,9 +321,13 @@
     <Compile Include="Pages\Main\ProxyManager.xaml.cs">
       <DependentUpon>ProxyManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Main\Tools\ComboSuite.xaml.cs" />
+    <Compile Include="Pages\Main\Tools\LolixDecrypt.cs" />
+    <Compile Include="Pages\Main\Tools\TessDataDownloads.xaml.cs" />
     <Compile Include="Pages\Main\Tools\ToolsDatabase.xaml.cs">
       <DependentUpon>ToolsDatabase.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\StackerBlocks\PageBlockBlockchainDNS.xaml.cs" />
     <Compile Include="Pages\StackerBlocks\PageBlockBypassCF.xaml.cs">
       <DependentUpon>PageBlockBypassCF.xaml</DependentUpon>
     </Compile>
@@ -333,6 +343,7 @@
     <Compile Include="Pages\StackerBlocks\PageBlockLSCode.xaml.cs">
       <DependentUpon>PageBlockLSCode.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\StackerBlocks\PageBlockOCR.xaml.cs" />
     <Compile Include="Pages\StackerBlocks\PageBlockParse.xaml.cs">
       <DependentUpon>PageBlockParse.xaml</DependentUpon>
     </Compile>
@@ -420,6 +431,10 @@
     <Page Include="Pages\Dialogs\DialogSetProxies.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Main\Configs\ConfigOCRSettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\Main\Configs\OtherOptions\ConfigOtherOptionsRequests.xaml">
       <SubType>Designer</SubType>
@@ -576,9 +591,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Main\Tools\ComboSuite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Main\Tools\LolixDecrypt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Main\Tools\TessDataDownloads.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Main\Tools\ToolsDatabase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\StackerBlocks\PageBlockBlockchainDNS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\StackerBlocks\PageBlockBypassCF.xaml">
       <SubType>Designer</SubType>
@@ -599,6 +630,10 @@
     <Page Include="Pages\StackerBlocks\PageBlockLSCode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\StackerBlocks\PageBlockOCR.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\StackerBlocks\PageBlockParse.xaml">
       <SubType>Designer</SubType>
@@ -825,6 +860,8 @@
     <Resource Include="Images\Icons\stack.png" />
     <Resource Include="Images\Icons\git.png" />
     <Resource Include="Images\Icons\retry.png" />
+    <Resource Include="Images\Logo.png" />
+    <Resource Include="Images\LogoInverted.png" />
     <Content Include="Sounds\rifle_hit.wav" />
     <Content Include="Sounds\rifle_reload.wav" />
   </ItemGroup>
@@ -838,6 +875,8 @@
     <Error Condition="!Exists('..\packages\Selenium.Firefox.WebDriver.0.24.0\build\Selenium.Firefox.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Firefox.WebDriver.0.24.0\build\Selenium.Firefox.WebDriver.targets'))" />
     <Error Condition="!Exists('..\packages\Selenium.WebDriver.ChromeDriver.77.0.3865.4000\build\Selenium.WebDriver.ChromeDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.ChromeDriver.77.0.3865.4000\build\Selenium.WebDriver.ChromeDriver.targets'))" />
     <Error Condition="!Exists('..\packages\Selenium.WebDriver.GeckoDriver.Win64.0.25.0\build\Selenium.WebDriver.GeckoDriver.Win64.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.GeckoDriver.Win64.0.25.0\build\Selenium.WebDriver.GeckoDriver.Win64.targets'))" />
+    <Error Condition="!Exists('..\packages\Tesseract-test.4.0.0-beta16\build\Tesseract-test.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Tesseract-test.4.0.0-beta16\build\Tesseract-test.targets'))" />
+    <Error Condition="!Exists('..\packages\Tesseract.3.3.0\build\Tesseract.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Tesseract.3.3.0\build\Tesseract.targets'))" />
   </Target>
   <PropertyGroup>
     <PostBuildEvent>if not exist "$(TargetDir)bin" mkdir "$(TargetDir)bin"
@@ -863,4 +902,6 @@ copy "$(ProjectDir)Sounds\rifle_reload.wav" "$(TargetDir)Sounds\rifle_reload.wav
   <Import Project="..\packages\Selenium.Firefox.WebDriver.0.24.0\build\Selenium.Firefox.WebDriver.targets" Condition="Exists('..\packages\Selenium.Firefox.WebDriver.0.24.0\build\Selenium.Firefox.WebDriver.targets')" />
   <Import Project="..\packages\Selenium.WebDriver.ChromeDriver.77.0.3865.4000\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.ChromeDriver.77.0.3865.4000\build\Selenium.WebDriver.ChromeDriver.targets')" />
   <Import Project="..\packages\Selenium.WebDriver.GeckoDriver.Win64.0.25.0\build\Selenium.WebDriver.GeckoDriver.Win64.targets" Condition="Exists('..\packages\Selenium.WebDriver.GeckoDriver.Win64.0.25.0\build\Selenium.WebDriver.GeckoDriver.Win64.targets')" />
+  <Import Project="..\packages\Tesseract-test.4.0.0-beta16\build\Tesseract-test.targets" Condition="Exists('..\packages\Tesseract-test.4.0.0-beta16\build\Tesseract-test.targets')" />
+  <Import Project="..\packages\Tesseract.3.3.0\build\Tesseract.targets" Condition="Exists('..\packages\Tesseract.3.3.0\build\Tesseract.targets')" />
 </Project>

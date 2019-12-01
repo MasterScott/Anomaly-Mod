@@ -146,8 +146,11 @@ namespace RuriLib
             /// <summary>Generates a key using a password based KDF.</summary>
             PBKDF2PKCS5,
 
-            /// <summary>Generates an OAuth Verfier
-            GenerateOAuthVerifier
+            /// <summary>Generates an OAuth Verfier.</summary>
+            GenerateOAuthVerifier,
+
+            ///<summary>Generates a GUID</summary>
+            GenerateGUID
         }
 
         #region General Properties
@@ -785,22 +788,21 @@ namespace RuriLib
                         break;
 
                     case Function.GenerateOAuthVerifier:
-
                         byte[] number = new byte[32];
-
                         RandomNumberGenerator rng = RandomNumberGenerator.Create();
-
                         rng.GetBytes(number);
-
                         var bytes = (BitConverter.ToString(number));
-
                         string encodedStr = Base64UrlEncoder.Encode(bytes);
-
                         outputString = encodedStr;
+                        break;
 
+                    case Function.GenerateGUID:
+                        outputString = Guid.NewGuid().ToString();
                         break;
                 }
                 
+               
+
                 data.Log(new LogEntry(string.Format("Executed function {0} on input {1} with outcome {2}", functionType, localInputString, outputString), Colors.GreenYellow));
 
                 // Add to the outputs

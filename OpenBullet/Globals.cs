@@ -34,7 +34,7 @@ namespace OpenBullet
     public static class Globals
     {
         // Version
-        public static string obVersion = "1.1.5";
+        public static string obVersion = "1.4.2 [Anomaly]";
 
         // Main Window
         public static MainWindow mainWindow;
@@ -52,6 +52,7 @@ namespace OpenBullet
         public static string licenseFile = @"Settings/License.txt";
         public static string logFile = @"Log.txt";
         public static string configFolder = @"Configs";
+        public static string Blank = "";
 
         // Settings
         public static OBSettingsViewModel obSettings;
