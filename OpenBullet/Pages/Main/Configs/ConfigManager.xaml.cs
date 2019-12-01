@@ -206,7 +206,7 @@ namespace OpenBullet
         public void CreateConfig(string name, string category, string author)
         {
             // Build the filename
-            var path = Globals.configFolder + "\\" + (category == "Default" ? "" : (category + "\\")) + name + ".loli";
+            var path = Globals.configFolder + "\\" + (category == "Default" ? "" : (category + "\\")) + name + ".anom";
 
             // Create the Category folder if it doesn't exist
             if(category != "Default")

@@ -140,6 +140,7 @@ namespace OpenBullet
                 Globals.LogError(Components.Main, $"Could not backup the DB: {ex.Message}");
             }
 
+            
             Topmost = Globals.obSettings.General.AlwaysOnTop;
 
             RunnerManagerPage = new RunnerManager(Globals.obSettings.General.AutoCreateRunner);
