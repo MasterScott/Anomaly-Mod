@@ -815,10 +815,18 @@ namespace RuriLib
                             var end = (BitConverter.ToString(genbyte));
                             outputString = end.ToString();
                         }
-                        catch (FormatException)
-                        { outputString = "INTEGERS ONLY"; }
-                        catch (OverflowException)
-                        { outputString = "BYTE SIZE TOO LARGE FOR 32BIT INTEGER"; }
+                        catch (FormatException ex)
+                        {
+                            data.Status = BotStatus.ERROR;
+                            data.LogBuffer.Add(new LogEntry("ERROR: " + ex.Message, Colors.Tomato));
+                            outputString = "INTEGERS ONLY";
+                        }
+                        catch (OverflowException ex)
+                        {
+                            data.Status = BotStatus.ERROR;
+                            data.LogBuffer.Add(new LogEntry("ERROR: " + ex.Message, Colors.Tomato));
+                            outputString = "BYTE SIZE TOO LARGE FOR 32BIT INTEGER";
+                        }
                             break;
                 }
                 
