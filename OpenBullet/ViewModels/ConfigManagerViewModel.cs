@@ -118,10 +118,24 @@ namespace OpenBullet.ViewModels
 
         public List<ConfigViewModel> GetConfigsFromSources()
         {
+            Source gitHub = new Source(6698);
             var list = new List<ConfigViewModel>();
             cachedConfigs = new List<ConfigViewModel>();
 
-            foreach(var source in Globals.obSettings.Sources.Sources)
+            if (Globals.obSettings.Sources.Sources.Count == 0)
+            {
+                try
+                {
+                    gitHub.ApiUrl = "https://github.com/PurityWasHere/Anomaly-Mod-Hosting/blob/master/Configs.zip?raw=true";
+
+                    //counter++;
+                    Globals.obSettings.Sources.Sources.Add(gitHub);
+                }
+                catch { }
+            }
+
+
+            foreach (var source in Globals.obSettings.Sources.Sources)
             {
                 WebClient wc = new WebClient();
                 switch (source.Auth)
@@ -146,14 +160,16 @@ namespace OpenBullet.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Could not contact API {source.ApiUrl}\r\nReason: {ex.Message}");
+                    if (!source.ApiUrl.Contains("Anomaly-Mod-Hosting"))
+                        MessageBox.Show($"Could not contact API {source.ApiUrl}\r\nReason: {ex.Message}");
                     continue;
                 }
 
                 var status = wc.ResponseHeaders["Result"];
                 if (status != null && status == "Error")
                 {
-                    MessageBox.Show($"Error from API {source.ApiUrl}\r\nThe server says: {Encoding.ASCII.GetString(file)}");
+                    if (!source.ApiUrl.Contains("Anomaly-Mod-Hosting"))
+                        MessageBox.Show($"Error from API {source.ApiUrl}\r\nThe server says: {Encoding.ASCII.GetString(file)}");
                     continue;
                 }
 
@@ -171,8 +187,16 @@ namespace OpenBullet.ViewModels
                                 {
                                     var text = tr.ReadToEnd();
                                     var cfg = IOManager.DeserializeConfig(text);
-                                    list.Add(new ConfigViewModel("", category, cfg, true));
-                                    cachedConfigs.Add(new ConfigViewModel("", category, cfg, true));
+                                    if (entry.FullName.Contains("REPO.anom") && Globals.obSettings.General.DisableRepo == false)
+                                    {
+                                        list.Add(new ConfigViewModel("", "Repository", cfg, true));
+                                        cachedConfigs.Add(new ConfigViewModel("", "Repository", cfg, true));
+                                    }
+                                    else if (!entry.FullName.Contains("REPO.anom"))
+                                    {
+                                        list.Add(new ConfigViewModel("", "Remote", cfg, true));
+                                        cachedConfigs.Add(new ConfigViewModel("", "Remote", cfg, true));
+                                    }
                                 }
                             }
                         }

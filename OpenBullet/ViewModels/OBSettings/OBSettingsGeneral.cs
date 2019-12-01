@@ -51,6 +51,9 @@ namespace OpenBullet.ViewModels
         private bool backupDB = true;
         public bool BackupDB { get { return backupDB; } set { backupDB = value; OnPropertyChanged(); } }
 
+        private bool Disablerepo = false;
+        public bool DisableRepo { get { return Disablerepo; } set { Disablerepo = value; OnPropertyChanged(); } }
+
         public void Reset()
         {
             OBSettingsGeneral def = new OBSettingsGeneral();

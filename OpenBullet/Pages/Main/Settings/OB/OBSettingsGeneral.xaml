@@ -30,6 +30,7 @@
             <CheckBox Content="Disable Syntax Helper" IsChecked="{Binding DisableSyntaxHelper}" VerticalAlignment="Center" VerticalContentAlignment="Center" />
             <CheckBox Content="Display Captures Last in Debugger" IsChecked="{Binding DisplayCapturesLast}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
             <CheckBox Content="Backup the Database daily upon start" IsChecked="{Binding BackupDB}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+            <CheckBox Content="Disable Repository" IsChecked="{Binding DisableRepo}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1">
