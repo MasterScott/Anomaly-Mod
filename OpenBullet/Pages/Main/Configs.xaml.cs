@@ -12,6 +12,7 @@ namespace OpenBullet
         public ConfigManager ConfigManagerPage;
         public Stacker StackerPage;
         public ConfigOtherOptions OtherOptionsPage;
+        public ConfigOCRSettings OCRSettingsPage;
         public ConfigViewModel CurrentConfig { get; set; }
 
         public Configs()
@@ -53,6 +54,21 @@ namespace OpenBullet
                 
                 Main.Content = OtherOptionsPage;
                 menuOptionSelected(menuOptionOtherOptions);
+            }
+            else
+            {
+                Globals.LogError(Components.ConfigManager, "Cannot switch to other options since no config is loaded");
+            }
+        }
+
+        private void menuOptionOCRSettings_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (CurrentConfig != null)
+            {
+                OCRSettingsPage = new ConfigOCRSettings();
+
+                Main.Content = OCRSettingsPage;
+                menuOptionSelected(menuOptionOCRSettings);
             }
             else
             {
