@@ -118,7 +118,7 @@ namespace OpenBullet
                     appliedCaptcha = RemoveImageLines(appliedCaptcha);
 
                 //if (vm.Contour)
-                appliedCaptcha = ContourImage(appliedCaptcha);
+                //appliedCaptcha = ContourImage(appliedCaptcha);
 
                 if (vm.Dilate)
                     appliedCaptcha = Dilate(appliedCaptcha);
