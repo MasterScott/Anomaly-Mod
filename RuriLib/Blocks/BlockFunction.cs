@@ -149,6 +149,9 @@ namespace RuriLib
             /// <summary>Generates an OAuth Verfier.</summary>
             GenerateOAuthVerifier,
 
+            ///<summary>Generates an OAuth Challenge using the Verifer as Input.</summary>
+            GenerateOAuthChallenge,
+
             ///<summary>Generates a GUID</summary>
             GenerateGUID,
 
@@ -800,6 +803,12 @@ namespace RuriLib
                         outputString = encodedStr;
                         break;
 
+                    case Function.GenerateOAuthChallenge:
+                        var HashedVerifier = localInputString = GetHash(localInputString, Hash.SHA256).ToLower();
+                        var encodedHash = Base64UrlEncoder.Encode(HashedVerifier);
+                        outputString = encodedHash;
+                        break;
+
                     case Function.GenerateGUID:
                         outputString = Guid.NewGuid().ToString();
                         break;
@@ -815,10 +824,18 @@ namespace RuriLib
                             var end = (BitConverter.ToString(genbyte));
                             outputString = end.ToString();
                         }
-                        catch (FormatException)
-                        { outputString = "INTEGERS ONLY"; }
-                        catch (OverflowException)
-                        { outputString = "BYTE SIZE TOO LARGE FOR 32BIT INTEGER"; }
+                        catch (FormatException ex)
+                        {
+                            data.Status = BotStatus.ERROR;
+                            data.LogBuffer.Add(new LogEntry("ERROR: " + ex.Message, Colors.Tomato));
+                            outputString = "INTEGERS ONLY";
+                        }
+                        catch (OverflowException ex)
+                        {
+                            data.Status = BotStatus.ERROR;
+                            data.LogBuffer.Add(new LogEntry("ERROR: " + ex.Message, Colors.Tomato));
+                            outputString = "BYTE SIZE TOO LARGE FOR 32BIT INTEGER";
+                        }
                             break;
                 }
                 
