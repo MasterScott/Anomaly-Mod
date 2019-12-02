@@ -1,4 +1,5 @@
-﻿using RuriLib.Models;
+﻿using OpenBullet.ViewModels;
+using RuriLib.Models;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace OpenBullet
     /// </summary>
     public partial class DialogSelectWordlist : Page
     {
+        WordlistManagerViewModel vm = new WordlistManagerViewModel();
         private GridViewColumnHeader listViewSortCol = null;
         private SortAdorner listViewSortAdorner = null;
         object Caller { get; set; }
@@ -23,7 +25,9 @@ namespace OpenBullet
         {
             InitializeComponent();
             Caller = caller;
-            DataContext = Globals.mainWindow.WordlistManagerPage.DataContext;
+            DataContext = vm; //Globals.mainWindow.WordlistManagerPage.DataContext;
+
+            vm.RefreshList();
         }
 
         
