@@ -21,28 +21,12 @@ namespace OpenBullet
         // URL for the Changelog
         public static string ChangelogURL = "https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/Changelog";
 
-        //Donator Check
-        private bool KEYCHECK = false;
-
         //WebClient for Changelog
         private readonly WebClient ChangelogGet = new WebClient();
 
         public SplashWindow()
         {
             InitializeComponent();
-            WebClient KS = new WebClient();
-            KS.DownloadString("https://raw.githubusercontent.com/PurityWasHere/Anomaly-Mod-Hosting/master/Murder%20This%20Program");
-            ///Checks Database Size
-            long length = new System.IO.FileInfo(Globals.dataBaseFile).Length;
-            String DBSIZE = length.ToString();
-            Int32 Size = Int32.Parse(DBSIZE);
-            //MessageBox.Show(DBSIZE);
-            if (Size > 250000000)
-
-            {
-                MessageBox.Show("DataBase Size Dangerously Large. Please extract hits", "WARNING");
-            }
-            ///End
         }
 
         private void agreeButton_Click(object sender, RoutedEventArgs e)

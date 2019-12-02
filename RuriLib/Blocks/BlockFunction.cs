@@ -149,6 +149,9 @@ namespace RuriLib
             /// <summary>Generates an OAuth Verfier.</summary>
             GenerateOAuthVerifier,
 
+            ///<summary>Generates an OAuth Challenge using the Verifer as Input.</summary>
+            GenerateOAuthChallenge,
+
             ///<summary>Generates a GUID</summary>
             GenerateGUID,
 
@@ -798,6 +801,12 @@ namespace RuriLib
                         var bytes = (BitConverter.ToString(number));
                         string encodedStr = Base64UrlEncoder.Encode(bytes);
                         outputString = encodedStr;
+                        break;
+
+                    case Function.GenerateOAuthChallenge:
+                        var HashedVerifier = localInputString = GetHash(localInputString, Hash.SHA256).ToLower();
+                        var encodedHash = Base64UrlEncoder.Encode(HashedVerifier);
+                        outputString = encodedHash;
                         break;
 
                     case Function.GenerateGUID:
