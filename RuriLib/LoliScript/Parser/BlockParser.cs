@@ -41,6 +41,12 @@ namespace RuriLib.LS
             /// <summary>The TCP block.</summary>
             TCP,
 
+            /// <summary>The TCP block.</summary>
+            OCR,
+
+            /// <summary>The TCP block.</summary>
+            BlockchainDNS,
+
             /// <summary>The UTILITY block.</summary>
             UTILITY,
 
@@ -141,6 +147,14 @@ namespace RuriLib.LS
 
                 case BlockName.TCP:
                     block = (new BlockTCP()).FromLS(input);
+                    break;
+
+                case BlockName.OCR:
+                    block = (new BlockOCR()).FromLS(input);
+                    break;
+
+                case BlockName.BlockchainDNS:
+                    block = (new BlockBlockchainDNS()).FromLS(input);
                     break;
 
                 case BlockName.NAVIGATE:
