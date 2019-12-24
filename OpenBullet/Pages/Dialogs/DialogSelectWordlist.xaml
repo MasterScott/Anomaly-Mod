@@ -115,14 +115,8 @@
                     </VirtualizingStackPanel>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
-            <CheckBox IsChecked="{Binding Active}" VerticalAlignment="Center" />
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="30">
-                    <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Inline" Click="listViewColumnHeader_Click">List</GridViewColumnHeader>
-                        </GridViewColumn.Header>
-                    </GridViewColumn>
                     <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=Name}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name" Click="listViewColumnHeader_Click">Name</GridViewColumnHeader>

@@ -30,7 +30,7 @@ namespace OpenBullet
         {
             InitializeComponent();
             Caller = caller;
-            DataContext = vm; //Globals.mainWindow.WordlistManagerPage.DataContext;
+            DataContext = Globals.mainWindow.WordlistManagerPage.DataContext; //vm;
 
             vm.RefreshList();
         }

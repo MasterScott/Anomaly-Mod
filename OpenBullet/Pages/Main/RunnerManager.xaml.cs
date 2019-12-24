@@ -92,12 +92,15 @@ namespace OpenBullet
         {
             var id = (int)(FindParent<Grid>(sender as DependencyObject)).Tag;
             var runner = Globals.mainWindow.RunnerManagerPage.vm.GetRunnerById(id);
-
-            if (!runner.Runner.Busy)
+            try
             {
-                DelegateCalled = true;
-                (new MainDialog(new DialogSelectWordlist(runner.Page), "Select Wordlist")).ShowDialog();
+                if (!runner.Runner.Busy)
+                {
+                    DelegateCalled = true;
+                    (new MainDialog(new DialogSelectWordlist(runner.Page), "Select Wordlist")).ShowDialog();
+                }
             }
+            catch { }
         }
 
         private void selectProxies_MouseDown(object sender, MouseButtonEventArgs e)
