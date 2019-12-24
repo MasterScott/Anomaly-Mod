@@ -1,5 +1,8 @@
 ﻿using OpenBullet.ViewModels;
 using RuriLib.Models;
+using RuriLib.ViewModels;
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -16,10 +19,12 @@ namespace OpenBullet
     /// </summary>
     public partial class DialogSelectWordlist : Page
     {
+        private ObservableCollection<Wordlist> WordList;
         WordlistManagerViewModel vm = new WordlistManagerViewModel();
         private GridViewColumnHeader listViewSortCol = null;
         private SortAdorner listViewSortAdorner = null;
         object Caller { get; set; }
+        System.Windows.Forms.CheckBox checkBox = new System.Windows.Forms.CheckBox();
 
         public DialogSelectWordlist(object caller)
         {
@@ -95,6 +100,17 @@ namespace OpenBullet
                 ((MainDialog)Parent).Close();
             }
             catch { }
+        }
+
+        private void SearchBox_TextChanged(object sender, EventArgs e)
+        {
+            WordList = new ObservableCollection<Wordlist>(vm.WordlistList.Where(c => c.Name.ToLower().Contains(searchBox.Text.ToLower())));
+            wordlistsListView.ItemsSource = WordList;
+        }
+
+        private void wordlistsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

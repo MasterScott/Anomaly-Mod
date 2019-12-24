@@ -166,5 +166,23 @@ namespace OpenBullet
                 }
             }
         }
+
+        //private void deleteDupeWordlistsButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    int lastWL = 0;
+        //    Globals.LogWarning(Components.WordlistManager, "Deleting duplicates wordlists of same file path.");
+        //    using (var db = new LiteDatabase(Globals.dataBaseFile))
+        //    {
+        //        foreach (var wordlist in wordlistListView.Items.Cast<Wordlist>().ToList())
+        //        {
+        //            if (wordlist.Total == lastWL)
+        //            {
+        //                db.GetCollection<Wordlist>("wordlists").Delete(wordlist.Id);
+        //                vm.WordlistList.Remove(wordlist);
+        //            }
+        //            lastWL = wordlist.Total;
+        //        }
+        //    }
+        //}
     }
 }

@@ -1,7 +1,10 @@
 ﻿using OpenBullet.ViewModels;
 using RuriLib;
 using RuriLib.ViewModels;
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -14,6 +17,7 @@ namespace OpenBullet
     /// </summary>
     public partial class DialogSelectConfig : Page
     {
+        private ObservableCollection<ConfigViewModel> configsList;
         private GridViewColumnHeader listViewSortCol = null;
         private SortAdorner listViewSortAdorner = null;
         object Caller { get; set; }
@@ -80,6 +84,12 @@ namespace OpenBullet
         {
             if (e.Key == Key.Enter)
                 searchButton_Click(this, null);
+        }
+
+        private void SearchBox_TextChanged(object sender, EventArgs e)
+        {
+            configsList = new ObservableCollection<ConfigViewModel>(vm.ConfigsList.Where(c => c.Name.ToLower().Contains(searchBox.Text.ToLower())));
+            configsListView.ItemsSource = configsList;
         }
     }
 }

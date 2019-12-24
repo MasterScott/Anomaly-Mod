@@ -184,7 +184,8 @@
             </ListView.View>
         </ListView>
 
-        <Button Grid.Row="2" x:Name="selectButton" Content="Select" Click="selectButton_Click" />
+        <TextBox Grid.Row="2" x:Name="searchBox" Margin="0,0,545,0" TextChanged="SearchBox_TextChanged" />
+        <Button Grid.Row="2" x:Name="selectButton" Content="Select" Click="selectButton_Click" Margin="165,0,0,0" />
 
     </Grid>
 </Page>
