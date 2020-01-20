@@ -1153,7 +1153,7 @@ namespace RuriLib.Runner
             HttpRequest req = new HttpRequest();
             req.ConnectTimeout = 5000;
             req.ReadWriteTimeout = 5000;
-            req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36 OPR/52.0.2871.64";
+            req.UserAgent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
             var resp = req.Get(url).ToString();
 
             try
@@ -1186,7 +1186,7 @@ namespace RuriLib.Runner
             try
             {
                 HttpRequest req = new HttpRequest();
-                req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36 OPR/52.0.2871.64";
+                req.UserAgent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
                 var resp = (await req.GetAsync(url)).ToString();
 
                 var matches = Regex.Matches(resp, pattern);
